@@ -16,6 +16,7 @@ public class Main extends Application {
         primaryStage.show();
         //sex ibo varol
         //exactly varol
+        //apply de pust
     }
 
 
