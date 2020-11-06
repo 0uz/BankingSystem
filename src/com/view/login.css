@@ -1,0 +1,26 @@
+.button1
+{
+    -fx-background-color : black;
+    -fx-background-radius :  10 0 0 10;
+    -fx-text-fill: white;
+}
+.button1:hover
+{
+    -fx-background-color : white ;
+    -fx-background-radius :  0 10 10 0;
+    -fx-text-fill: black;
+}
+
+
+.button2
+{
+    -fx-background-color : black;
+    -fx-background-radius : 0 10 10 0;
+    -fx-text-fill: white;
+}
+.button2:hover
+{
+    -fx-background-color : white ;
+    -fx-background-radius :  10 0 0 10;
+    -fx-text-fill: black;
+}

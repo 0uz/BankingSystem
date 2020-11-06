@@ -1,55 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 
-<BorderPane fx:controller="com.LoginScreenController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <HBox alignment="CENTER_RIGHT" prefHeight="36.0" prefWidth="600.0" style="-fx-background-color: red;" BorderPane.alignment="CENTER">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.LoginScreenController">
+   <children>
+      <HBox alignment="CENTER_RIGHT" layoutX="2.0" prefHeight="30.0" prefWidth="800.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label prefHeight="17.0" prefWidth="557.0" text="Banking Project">
+            <Label prefHeight="17.0" prefWidth="734.0" text="OVI Banking APP" />
+            <Button mnemonicParsing="false" styleClass="button1" stylesheets="@login.css" text="--" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
-                  <Insets left="5.0" right="5.0" />
-               </HBox.margin>
-            </Label>
-            <Button fx:id="minimizeButton" mnemonicParsing="false" onAction="#minimizeButton" prefHeight="25.0" prefWidth="33.0" text="_">
-               <HBox.margin>
-                  <Insets right="5.0" />
+                  <Insets />
                </HBox.margin>
             </Button>
-            <Button fx:id="exitButton" mnemonicParsing="false" onAction="#exitButton" text="X">
+            <Button mnemonicParsing="false" styleClass="button2" stylesheets="@login.css" text="X" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
-                  <Insets right="5.0" />
+                  <Insets right="10.0" />
                </HBox.margin>
+               <effect>
+                  <ColorAdjust />
+               </effect>
             </Button>
          </children>
       </HBox>
-   </top>
-   <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label text="Username">
-               <VBox.margin>
-                  <Insets left="20.0" right="50.0" top="10.0" />
-               </VBox.margin>
-            </Label>
-            <TextField promptText="lutfen username girin">
-               <VBox.margin>
-                  <Insets left="20.0" right="50.0" top="10.0" />
-               </VBox.margin>
-            </TextField>
-            <Label text="Password">
-               <VBox.margin>
-                  <Insets left="20.0" right="50.0" top="10.0" />
-               </VBox.margin>
-            </Label>
-            <PasswordField promptText="şifre giriniz">
-               <VBox.margin>
-                  <Insets left="20.0" right="50.0" top="10.0" />
-               </VBox.margin>
-            </PasswordField>
-         </children>
-      </VBox>
-   </center>
-</BorderPane>
+   </children>
+</AnchorPane>
