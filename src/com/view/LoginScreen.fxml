@@ -8,20 +8,20 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.LoginScreenController">
    <children>
-      <HBox alignment="CENTER_RIGHT" layoutX="736.0" prefHeight="30.0" prefWidth="64.0" AnchorPane.leftAnchor="736.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER_RIGHT" layoutX="724.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button mnemonicParsing="false" styleClass="button1" stylesheets="@login.css" text="--" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="minimizeButton" maxHeight="25.0" maxWidth="30.0" mnemonicParsing="false" onAction="#minimizeButton" styleClass="button1" stylesheets="@login.css" text="--" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
-                  <Insets />
+                  <Insets top="5.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" styleClass="button2" stylesheets="@login.css" text="X" textAlignment="CENTER" textFill="WHITE">
-               <HBox.margin>
-                  <Insets right="10.0" />
-               </HBox.margin>
+            <Button fx:id="exitButton" maxHeight="25.0" maxWidth="30.0" mnemonicParsing="false" onAction="#exitButton" styleClass="button2" stylesheets="@login.css" text="X" textAlignment="CENTER" textFill="WHITE">
                <effect>
                   <ColorAdjust />
                </effect>
+               <HBox.margin>
+                  <Insets right="5.0" top="5.0" />
+               </HBox.margin>
             </Button>
          </children>
       </HBox>
