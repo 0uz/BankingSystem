@@ -16,7 +16,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 800, 550));
         primaryStage.initStyle(StageStyle.TRANSPARENT);
         primaryStage.show();
-
+        //Varol sex
     }
 
 
