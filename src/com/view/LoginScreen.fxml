@@ -10,12 +10,12 @@
    <children>
       <HBox alignment="CENTER_RIGHT" layoutX="724.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button fx:id="minimizeButton" maxHeight="25.0" maxWidth="30.0" mnemonicParsing="false" onAction="#minimizeButton" styleClass="button1" stylesheets="@login.css" text="--" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="minimizeButton" maxHeight="25.0" maxWidth="30.0" mnemonicParsing="false" onAction="#minimizeButton" styleClass="buttonMin" stylesheets="@login.css" text="--" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
                   <Insets top="5.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="exitButton" maxHeight="25.0" maxWidth="30.0" mnemonicParsing="false" onAction="#exitButton" styleClass="button2" stylesheets="@login.css" text="X" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="exitButton" maxHeight="25.0" maxWidth="30.0" mnemonicParsing="false" onAction="#exitButton" styleClass="buttonExit" stylesheets="@login.css" text="X" textAlignment="CENTER" textFill="WHITE">
                <effect>
                   <ColorAdjust />
                </effect>
