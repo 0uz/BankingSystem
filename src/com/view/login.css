@@ -1,13 +1,14 @@
 .buttonExit
 {
     -fx-background-color : #F4F4F4;
-    -fx-background-radius :  0 10 10 0;
+    -fx-border-color: red;
+    -fx-border-radius :  10 10 10 10;
     -fx-text-fill: black;
 }
 .buttonExit:hover
 {
     -fx-background-color : #419A1C ;
-    -fx-background-radius :  0 10 10 0;
+    -fx-background-radius :  10 10 10 10;
     -fx-text-fill: #F4F4F4;
 }
 
