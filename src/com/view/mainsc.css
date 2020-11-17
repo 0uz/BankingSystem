@@ -1,0 +1,12 @@
+.leftunderpane
+{
+    -fx-background-color : #0A014D;
+}
+
+.leftuppane
+{
+    -fx-border-radius: 50 50 0 0;
+    -fx-background-radius: 25 25 0 0;
+    -fx-background-color:  #3A3370;
+    
+}
