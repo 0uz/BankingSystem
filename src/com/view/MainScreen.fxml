@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.effect.ColorAdjust?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.MainScreenController">
    <children>
-      <AnchorPane prefHeight="550.0" prefWidth="210.0" styleClass="leftunderpane" stylesheets="@mainsc.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="550.0" prefWidth="210.0" styleClass="leftUnderPane" stylesheets="@mainsc.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="350.0" prefWidth="210.0" styleClass="leftuppane" stylesheets="@mainsc.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <VBox prefHeight="350.0" prefWidth="210.0" styleClass="leftUpPane" stylesheets="@mainsc.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
          </children>
       </AnchorPane>
       <HBox alignment="CENTER_RIGHT" layoutX="724.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="minimizeButton" maxHeight="25.0" maxWidth="30.0" mnemonicParsing="false" onAction="#minimizeButton" styleClass="buttonMin" stylesheets="@login.css" text="--" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="minimizeButton" maxHeight="25.0" maxWidth="30.0" mnemonicParsing="false" styleClass="buttonMin" stylesheets="@login.css" text="--" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
                   <Insets top="5.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="exitButton" maxHeight="25.0" maxWidth="30.0" mnemonicParsing="false" onAction="#exitButton" styleClass="buttonExit" stylesheets="@login.css" text="X" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="exitButton" maxHeight="25.0" maxWidth="30.0" mnemonicParsing="false" styleClass="buttonExit" stylesheets="@login.css" text="X" textAlignment="CENTER" textFill="WHITE">
                <effect>
                   <ColorAdjust />
                </effect>
