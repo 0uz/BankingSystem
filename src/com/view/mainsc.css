@@ -1,12 +1,23 @@
 .leftUnderPane
 {
-    -fx-background-color : #0A014D;
+    -fx-background-color : #419A1C;
 }
 
 .leftUpPane
 {
     -fx-border-radius: 50 50 0 0;
     -fx-background-radius: 25 25 0 0;
-    -fx-background-color:  #3A3370;
-    
+    -fx-background-color: #1761A0;
+
+}
+
+.buttons{
+    -fx-background-color: #1761A0;
+    -fx-text-fill: black;
+}
+
+.buttons:hover{
+    -fx-background-color: #0F406A;
+    -fx-text-fill: white;
+
 }

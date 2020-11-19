@@ -1,18 +1,45 @@
 package com;
 
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
-import java.io.File;
 
 public class MainScreenController {
 
+    public Pane accountPage;
+    public Pane transactionPage;
+    public Pane settingsPage;
+
     public void initialize(){
+        accountPage.setVisible(false);
+        transactionPage.setVisible(false);
+        settingsPage.setVisible(false);
     }
 
+    public void accountsButtonAction(){
+        accountPage.setVisible(true);
+        transactionPage.setVisible(false);
+        settingsPage.setVisible(false);
+    }
 
+    public void transactionButtonAction(){
+        accountPage.setVisible(false);
+        transactionPage.setVisible(true);
+        settingsPage.setVisible(false);
+    }
+
+    public void settingsButtonAction(){
+        accountPage.setVisible(false);
+        transactionPage.setVisible(false);
+        settingsPage.setVisible(true);
+    }
+
+    public void exitButtonAction(){
+        System.exit(1);
+    }
+
+    public void minimizeButtonAction(){
+        Stage stage = (Stage) accountPage.getScene().getWindow();
+        stage.setIconified(true);
+    }
 }
 

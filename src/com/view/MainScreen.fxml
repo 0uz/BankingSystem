@@ -9,17 +9,34 @@
    <children>
       <AnchorPane prefHeight="550.0" prefWidth="210.0" styleClass="leftUnderPane" stylesheets="@mainsc.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox prefHeight="350.0" prefWidth="210.0" styleClass="leftUpPane" stylesheets="@mainsc.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <VBox alignment="TOP_CENTER" prefHeight="348.0" prefWidth="210.0" styleClass="leftUpPane" stylesheets="@mainsc.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#accountsButtonAction" prefHeight="40.0" prefWidth="263.0" styleClass="buttons" stylesheets="@mainsc.css" text="Accounts">
+                     <VBox.margin>
+                        <Insets top="50.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#transactionButtonAction" prefHeight="40.0" prefWidth="257.0" styleClass="buttons" stylesheets="@mainsc.css" text="Transaction">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#settingsButtonAction" prefHeight="40.0" prefWidth="317.0" styleClass="buttons" stylesheets="@mainsc.css" text="Settings">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                  </Button>
+               </children></VBox>
          </children>
       </AnchorPane>
       <HBox alignment="CENTER_RIGHT" layoutX="724.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Button fx:id="minimizeButton" maxHeight="25.0" maxWidth="30.0" mnemonicParsing="false" styleClass="buttonMin" stylesheets="@login.css" text="--" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="minimizeButton" maxHeight="25.0" maxWidth="30.0" mnemonicParsing="false" onAction="#minimizeButtonAction" styleClass="buttonMin" stylesheets="@login.css" text="--" textAlignment="CENTER" textFill="WHITE">
                <HBox.margin>
                   <Insets top="5.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="exitButton" maxHeight="25.0" maxWidth="30.0" mnemonicParsing="false" styleClass="buttonExit" stylesheets="@login.css" text="X" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="exitButton" maxHeight="25.0" maxWidth="30.0" mnemonicParsing="false" onAction="#exitButtonAction" styleClass="buttonExit" stylesheets="@login.css" text="X" textAlignment="CENTER" textFill="WHITE">
                <effect>
                   <ColorAdjust />
                </effect>
@@ -29,5 +46,20 @@
             </Button>
          </children>
       </HBox>
+      <Pane fx:id="accountPage" layoutX="210.0" layoutY="30.0" prefHeight="200.0" prefWidth="592.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <Label layoutX="246.0" layoutY="252.0" text="BURASI ACCOUNT" />
+         </children>
+      </Pane>
+      <Pane fx:id="transactionPage" layoutX="220.0" layoutY="40.0" prefHeight="200.0" prefWidth="592.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <Label layoutX="234.0" layoutY="252.0" text="BURASI TRANSACTION" />
+         </children>
+      </Pane>
+      <Pane fx:id="settingsPage" layoutX="220.0" layoutY="40.0" prefHeight="200.0" prefWidth="592.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <Label layoutX="246.0" layoutY="252.0" text="BURASI SETTINGS" />
+         </children>
+      </Pane>
    </children>
 </AnchorPane>
