@@ -8,16 +8,18 @@
     -fx-border-radius: 50 50 0 0;
     -fx-background-radius: 25 25 0 0;
     -fx-background-color: #1761A0;
-
 }
 
 .buttons{
     -fx-background-color: #1761A0;
-    -fx-text-fill: black;
+    -fx-text-fill: white;
 }
 
 .buttons:hover{
     -fx-background-color: #0F406A;
-    -fx-text-fill: white;
-
 }
+
+.buttons:pressed{
+    -fx-background-color: #1761A0;
+}
+
