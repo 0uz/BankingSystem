@@ -1,13 +1,13 @@
 package com;
 
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class MainScreenController {
 
-    public Pane accountPage;
-    public Pane transactionPage;
-    public Pane settingsPage;
+    public AnchorPane accountPage;
+    public AnchorPane transactionPage;
+    public AnchorPane settingsPage;
 
     public void initialize(){
         accountPage.setVisible(false);
