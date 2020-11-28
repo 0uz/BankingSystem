@@ -1,9 +1,9 @@
 package com;
 
+import com.util.DatabaseLayer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,8 +19,7 @@ public class MainScreenController {
         accountPage.setVisible(false);
         transactionPage.setVisible(false);
         settingsPage.setVisible(false);
-
-
+        DatabaseLayer layer = new DatabaseLayer();
     }
 
     public void accountsButtonAction(){
@@ -49,6 +48,7 @@ public class MainScreenController {
         Stage stage = (Stage) accountPage.getScene().getWindow();
         stage.setIconified(true);
     }
+
     int accountNum = 1;
     public void addAccountHandle() throws IOException {
         CardController control = new CardController("Hesap "+(Integer.toString(accountNum)));
@@ -62,6 +62,8 @@ public class MainScreenController {
 
         }
         accountNum++;
+
+
     }
 }
 
