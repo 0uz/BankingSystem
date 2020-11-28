@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="102.0" prefWidth="192.0" styleClass="pane" stylesheets="@mainsc.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <padding>
+      <Insets left="5.0" />
+   </padding>
+   <children>
+      <Label fx:id="accountID" alignment="CENTER" layoutX="64.0" layoutY="43.0" prefHeight="17.0" prefWidth="57.0" style="-fx-text-fill: white;" textAlignment="CENTER" />
+   </children>
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+</Pane>

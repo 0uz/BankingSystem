@@ -1,18 +1,26 @@
 package com;
 
+import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class MainScreenController {
 
     public AnchorPane accountPage;
     public AnchorPane transactionPage;
     public AnchorPane settingsPage;
+    public GridPane accountGridPane;
 
-    public void initialize(){
+    public void initialize() {
         accountPage.setVisible(false);
         transactionPage.setVisible(false);
         settingsPage.setVisible(false);
+
+
     }
 
     public void accountsButtonAction(){
@@ -40,6 +48,20 @@ public class MainScreenController {
     public void minimizeButtonAction(){
         Stage stage = (Stage) accountPage.getScene().getWindow();
         stage.setIconified(true);
+    }
+    int accountNum = 1;
+    public void addAccountHandle() throws IOException {
+        CardController control = new CardController("Hesap "+(Integer.toString(accountNum)));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/card.fxml"));
+        loader.setController(control);
+        if(accountNum <=3){
+            accountGridPane.add(loader.load(),(accountNum%4)-1,0);
+        }else if(accountNum<=6){
+            accountGridPane.add(loader.load(),(accountNum%4),1);
+        }else{
+
+        }
+        accountNum++;
     }
 }
 
