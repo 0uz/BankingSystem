@@ -2,11 +2,11 @@ package com;
 
 import javafx.scene.control.Label;
 
-public class CardController {
+public class AccountViewController {
     public Label accountID;
     String a;
 
-    public CardController(String accountID) {
+    public AccountViewController(String accountID) {
         a=accountID;
     }
 

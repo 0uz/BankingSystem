@@ -27,3 +27,12 @@
     -fx-background-radius: 20 ;
     -fx-background-color: #419A1C;
 }
+
+
+.error{
+    -fx-border-color: red;
+}
+
+.notError{
+    -fx-border-color: #419A1C;
+}

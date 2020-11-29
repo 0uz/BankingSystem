@@ -13,10 +13,14 @@ public class LoginScreenController {
     public Button minimizeButton;
     public ImageView logo;
 
+    static void imageLoader(ImageView image,String path){
+        File file = new File(path);
+        Image imageFile = new Image(file.toURI().toString());
+        image.setImage(imageFile);
+    }
+
     public void initialize(){
-        File file = new File("images/logo.png");
-        Image image = new Image(file.toURI().toString());
-        logo.setImage(image);
+        imageLoader(logo,"images/logo.png");
     }
 
     public void exitButton(){

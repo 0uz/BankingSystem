@@ -51,8 +51,8 @@ public class MainScreenController {
 
     int accountNum = 1;
     public void addAccountHandle() throws IOException {
-        CardController control = new CardController("Hesap "+(Integer.toString(accountNum)));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/card.fxml"));
+        AccountViewController control = new AccountViewController("Hesap "+(Integer.toString(accountNum)));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AccountView.fxml"));
         loader.setController(control);
         if(accountNum <=3){
             accountGridPane.add(loader.load(),(accountNum%4)-1,0);
