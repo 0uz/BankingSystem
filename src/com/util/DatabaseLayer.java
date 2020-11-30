@@ -20,20 +20,22 @@ public class DatabaseLayer {
         }
     }
 
-    public void insertUser(String FName, String LName, Float TC, String eMail, String password, Date BDate, String address){
+    public boolean insertUser(String FName, String LName, Double TC, String eMail, String password, Date BDate, String address){
         try {
             PreparedStatement statement = connection.prepareStatement("insert into users (F_Name, L_Name, TC, address, mail, password, B_Date) VALUES (?,?,?,?,?,?,?)");
             statement.setString(1,FName);
             statement.setString(2,LName);
-            statement.setFloat(3,TC);
+            statement.setDouble(3,TC);
             statement.setString(4,address);
             statement.setString(5,eMail);
             statement.setString(6,password);
             statement.setDate(7,BDate);
             statement.execute();
             connection.close();
+            return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+            return false;
         }
 
 

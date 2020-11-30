@@ -1,15 +1,17 @@
 package com;
-
 import com.util.DatabaseLayer;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.apache.commons.validator.routines.IntegerValidator;
-
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Optional;
 
 public class RegisterScreenController {
 
@@ -152,13 +154,43 @@ public class RegisterScreenController {
 
     public void registerButtonHandle(){
         java.sql.Date gettedDate = java.sql.Date.valueOf(BDateDP.getValue());
-        layer.insertUser(FNameTF.getText(),
+        boolean succes = layer.insertUser(FNameTF.getText(),
                 LNameTF.getText(),
-                Float.parseFloat(TCTF.getText()),
+                Double.parseDouble(TCTF.getText()),
                 mailTF.getText(),
                 passwordPF.getText(),
                 gettedDate,
                 addressTF.getText());
+        System.out.println(TCTF.getText());
+
+        Alert alert ;
+        if (succes){
+            alert =  new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setContentText("Your registration is succeed");
+            alert.initOwner(registerButton.getParent().getScene().getWindow());
+            alert.setHeaderText(null);
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                try {
+                    Parent root = FXMLLoader.load(getClass().getResource("view/LoginScreen.fxml"));
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+                    stage.show();
+                    ((Stage) registerButton.getScene().getWindow()).close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }else{
+            alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error!");
+            alert.setContentText("Something went wrong\nPlease try again");
+            alert.initOwner(registerButton.getParent().getScene().getWindow());
+            alert.setHeaderText(null);
+            alert.showAndWait();
+        }
+
     }
 
 
