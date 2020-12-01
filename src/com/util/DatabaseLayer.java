@@ -42,5 +42,22 @@ public class DatabaseLayer {
     }
 
 
+    public boolean loginUserControl(Double TC , String password){
+        try {
+            PreparedStatement statement =  connection.prepareStatement("select password,TC from users where password = ? AND TC = ?");
+            statement.setString(1,password);
+            statement.setDouble(2,TC);
+            ResultSet rs = statement.executeQuery();
+            rs.next();
+            System.out.println(rs.getString(1));
+            System.out.println(TC + " "+ password);
+            return true;
+        } catch (SQLException | RuntimeException throwables) {
+            return false;
+        }
+
+    }
+
+
 
 }

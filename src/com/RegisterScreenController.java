@@ -38,39 +38,11 @@ public class RegisterScreenController {
 
     }
 
-    static void addCSS (Control node,String path, String className){
-            node.getStyleClass().clear();
-            node.getStyleClass().addAll("text-field", "text-input");
-            node.getStylesheets().add(path);
-            node.getStyleClass().add(className);
-    }
 
-    static void removeCSS(Control node){
-        node.getStyleClass().clear();
-        node.getStyleClass().addAll("text-field", "text-input");
-    }
 
-    static boolean lengthController(Control node , String t1,int max,int min){
-        if (t1.length()<=max && t1.length()>=min){
-            addCSS(node,"com/view/css/mainsc.css","notError");
-            return true;
-        }else if (t1.length() == 0){
-            removeCSS(node);
-            return false;
-        }else{
-            addCSS(node,"com/view/css/mainsc.css","error");
-            return false;
-        }
-    }
 
-    public static boolean isInteger(String s) {
-        try {
-            Long.parseLong(s);
-        } catch(NumberFormatException | NullPointerException e) {
-            return false;
-        }
-        return true;
-    }
+
+
 
     void makeDisableButton(){
         for (boolean a : disableButton){
@@ -85,32 +57,32 @@ public class RegisterScreenController {
 
     void lengthListeners(){
         FNameTF.textProperty().addListener((observableValue, s,t1) ->{
-            disableButton[0] = lengthController(FNameTF,t1,20,3);
+            disableButton[0] = StaticMethod.lengthController(FNameTF,t1,20,3);
             makeDisableButton();
         } );
 
         LNameTF.textProperty().addListener((observableValue, s,t1) ->{
-            disableButton[1] = lengthController(LNameTF,t1,20,3);
+            disableButton[1] = StaticMethod.lengthController(LNameTF,t1,20,3);
             makeDisableButton();
         } );
 
         passwordPF.textProperty().addListener((observableValue, s, t1) -> {
-            disableButton[2] = lengthController(passwordPF,t1,30,5);
+            disableButton[2] = StaticMethod.lengthController(passwordPF,t1,30,5);
             makeDisableButton();
         });
 
         addressTF.textProperty().addListener((observableValue, s, t1) ->{
-            disableButton[3] = lengthController(addressTF,t1,50,5);
+            disableButton[3] = StaticMethod.lengthController(addressTF,t1,50,5);
             makeDisableButton();
         } );
 
         TCTF.textProperty().addListener((observableValue, s, t1) -> {
-            if (lengthController(TCTF,t1,11,11)){
-                if(isInteger(t1)){
-                    addCSS(TCTF,"com/view/css/mainsc.css","notError");
+            if (StaticMethod.lengthController(TCTF,t1,11,11)){
+                if(StaticMethod.isInteger(t1)){
+                    StaticMethod.addCSS(TCTF,"com/view/css/mainsc.css","notError");
                     disableButton[4]= true;
                 }else{
-                    addCSS(TCTF,"com/view/css/mainsc.css","error");
+                    StaticMethod.addCSS(TCTF,"com/view/css/mainsc.css","error");
                     disableButton[4] = false;
                 }
             }
@@ -122,13 +94,13 @@ public class RegisterScreenController {
     void emailTFListener(){
         mailTF.textProperty().addListener((observableValue, s, t1) -> {
             if (EmailValidator.getInstance().isValid(t1)){
-                addCSS(mailTF,"com/view/css/mainsc.css","notError");
+                StaticMethod.addCSS(mailTF,"com/view/css/mainsc.css","notError");
                 disableButton[5] = true;
             }else if(t1.length()==0){
-                removeCSS(mailTF);
+                StaticMethod.removeCSS(mailTF);
                 disableButton[5] = false;
             }else{
-                addCSS(mailTF,"com/view/css/mainsc.css","error");
+                StaticMethod.addCSS(mailTF,"com/view/css/mainsc.css","error");
                 disableButton[5] = false;
             }
             makeDisableButton();
@@ -173,10 +145,8 @@ public class RegisterScreenController {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 try {
-                    Parent root = FXMLLoader.load(getClass().getResource("view/LoginScreen.fxml"));
-                    Stage stage = new Stage();
-                    stage.setScene(new Scene(root));
-                    stage.show();
+                    Main main =  new Main();
+                    main.loader("view/LoginScreen.fxml");
                     ((Stage) registerButton.getScene().getWindow()).close();
                 } catch (IOException e) {
                     e.printStackTrace();

@@ -1,12 +1,8 @@
 package com;
 
 import com.util.DatabaseLayer;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.input.MouseDragEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -27,22 +23,21 @@ public class MainScreenController {
         DatabaseLayer layer = new DatabaseLayer();
     }
 
+    public void passScreenHandle(boolean account,boolean trans,boolean settings){
+        accountPage.setVisible(account);
+        transactionPage.setVisible(trans);
+        settingsPage.setVisible(settings);
+    }
     public void accountsButtonAction(){
-        accountPage.setVisible(true);
-        transactionPage.setVisible(false);
-        settingsPage.setVisible(false);
+        passScreenHandle(true,false,false);
     }
 
     public void transactionButtonAction(){
-        accountPage.setVisible(false);
-        transactionPage.setVisible(true);
-        settingsPage.setVisible(false);
+        passScreenHandle(false,true,false);
     }
 
     public void settingsButtonAction(){
-        accountPage.setVisible(false);
-        transactionPage.setVisible(false);
-        settingsPage.setVisible(true);
+        passScreenHandle(false,false,true);
     }
 
     public void exitButtonAction(){
