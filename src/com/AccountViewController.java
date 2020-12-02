@@ -20,11 +20,6 @@ public class AccountViewController {
 
     public void accountButton(){
         accountButton.setOnAction(actionEvent -> {
-            if (accountButton.getHeight()==30){
-                accountButton.setMinHeight(100);
-            }else{
-                accountButton.setMinHeight(30);
-            }
             System.out.println(a);
         });
     }

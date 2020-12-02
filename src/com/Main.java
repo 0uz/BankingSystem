@@ -17,6 +17,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         loader("view/MainScreen.fxml");
+
     }
 
     public void loader (String url) throws IOException {

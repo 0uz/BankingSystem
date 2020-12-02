@@ -3,7 +3,7 @@ USER
     Fname  Lname  TC#  Address  PhoNum  Mail  Password Bdate Type
 
 ACCOUNT
-    TCNum  IBAN  Currency
+    TCNum  IBAN  Amount Currency
 
 TRANSACTION
     senderIBAn  ReceiverIBAN  Amount  Date  isRead

@@ -9,7 +9,7 @@ import java.sql.*;
 
 public class DatabaseLayer {
     private static final String url = "jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2379001";
-    private static final String username = "sql2379001";
+    private static final String username = "sql237900";
     private static final String password = "vU8%eR4*";
     Connection connection;
     public DatabaseLayer() {
@@ -54,15 +54,13 @@ public class DatabaseLayer {
             statement.setDouble(2,TC);
             ResultSet rs = statement.executeQuery();
             rs.next();
-            System.out.println(rs.getString(1));
-            System.out.println(TC + " "+ password);
+            rs.getString(1);
             return true;
         } catch (SQLException | RuntimeException throwables) {
             return false;
         }
 
     }
-
 
 
 }

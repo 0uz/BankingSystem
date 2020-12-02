@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.VBox?>
 
-<Button fx:id="accountButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="590.0" style="-fx-background-color: #419A1C; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Button fx:id="accountButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="590.0" style="-fx-background-color: #419A1C; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <graphic>
       <VBox alignment="CENTER">
          <children>

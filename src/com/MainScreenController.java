@@ -3,13 +3,9 @@ package com;
 import com.util.DatabaseLayer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainScreenController {
 
@@ -58,7 +54,7 @@ public class MainScreenController {
         AccountViewController control = new AccountViewController("Hesap"+String.valueOf(accountNum));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AccountView.fxml"));
         loader.setController(control);
-        if(accountNum<=6) {
+        if(accountNum<=5) {
             accountVBox.getChildren().add(loader.load());
         }
         accountNum++;
