@@ -1,8 +1,5 @@
 package com;
 import com.util.DatabaseLayer;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -78,7 +75,7 @@ public class RegisterScreenController {
 
         TCTF.textProperty().addListener((observableValue, s, t1) -> {
             if (StaticMethod.lengthController(TCTF,t1,11,11)){
-                if(StaticMethod.isInteger(t1)){
+                if(StaticMethod.isDouble(t1)){
                     StaticMethod.addCSS(TCTF,"com/view/css/mainsc.css","notError");
                     disableButton[4]= true;
                 }else{

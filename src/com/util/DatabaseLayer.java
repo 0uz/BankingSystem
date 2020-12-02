@@ -2,6 +2,8 @@ package com.util;
 
 
 
+import javafx.scene.control.Alert;
+
 import java.sql.*;
 
 
@@ -14,9 +16,12 @@ public class DatabaseLayer {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(url,username,password);
-            System.out.println("Connection Succesfull");
         } catch (ClassNotFoundException | SQLException e) {
-            throw new IllegalStateException("Cannot find the driver in the classpath!", e);
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Connection Error");
+            alert.setContentText("Database connection error!\nPlease check your connection.");
+            alert.showAndWait();
+            System.exit(1);
         }
     }
 

@@ -48,7 +48,7 @@ public class LoginScreenController {
 
     public void loginUserHandle() throws IOException {
            if(StaticMethod.lengthController(TCTF,TCTF.getText(),11,11) &&
-                   StaticMethod.isInteger(TCTF.getText()) &&
+                   StaticMethod.isDouble(TCTF.getText()) &&
                    StaticMethod.lengthController(passwordPF,passwordPF.getText(),50,3)){
 
                if(layer.loginUserControl(Double.parseDouble(TCTF.getText()),passwordPF.getText())){

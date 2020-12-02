@@ -20,13 +20,16 @@ public class AccountViewController {
 
     public void accountButton(){
         accountButton.setOnAction(actionEvent -> {
-            if (accountButton.getHeight()==200){
-                accountButton.setMinHeight(102);
+            if (accountButton.getHeight()==30){
+                accountButton.setMinHeight(100);
             }else{
-                accountButton.setMinHeight(200);
+                accountButton.setMinHeight(30);
             }
-            accountButton.toFront();
-            System.out.println("sex");
+            System.out.println(a);
         });
+    }
+
+    public String getA() {
+        return a;
     }
 }
