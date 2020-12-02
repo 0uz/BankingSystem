@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Control;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
@@ -23,7 +24,9 @@ public class Main extends Application {
     public void loader (String url) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(url));
         Stage stage = new Stage();
-        stage.setScene(new Scene(root));
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.show();
 

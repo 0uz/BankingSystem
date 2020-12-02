@@ -2,10 +2,15 @@ package com;
 
 import com.util.DatabaseLayer;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Alert;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
 import java.io.IOException;
 
 public class MainScreenController {
@@ -52,12 +57,18 @@ public class MainScreenController {
 
     int accountNum = 1;
     public void addAccountHandle() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("view/NewAccount.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root);
+        scene.setFill(Color.TRANSPARENT);
+        stage.setScene(scene);
+        stage.initStyle(StageStyle.TRANSPARENT);
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(accountPage.getScene().getWindow());
+        stage.show();
+
+        /*
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-
-
-
-
-
         AccountViewController control = new AccountViewController("Hesap"+String.valueOf(accountNum));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AccountView.fxml"));
         loader.setController(control);
@@ -66,7 +77,7 @@ public class MainScreenController {
             accountVBox.getChildren().add(loader.load());
         }
         accountNum++;
-
+        */
 
     }
 }
