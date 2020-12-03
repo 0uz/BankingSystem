@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Optional;
+import java.util.Random;
 
 public class RegisterScreenController {
 
@@ -123,14 +124,17 @@ public class RegisterScreenController {
 
     public void registerButtonHandle(){
         java.sql.Date gettedDate = java.sql.Date.valueOf(BDateDP.getValue());
+        Random rand =  new Random();
         boolean succes = layer.insertUser(FNameTF.getText(),
                 LNameTF.getText(),
                 Double.parseDouble(TCTF.getText()),
                 mailTF.getText(),
                 passwordPF.getText(),
                 gettedDate,
-                addressTF.getText());
-        System.out.println(TCTF.getText());
+                addressTF.getText(),
+                StaticMethod.IBANCalculator(),
+                (double)rand.nextInt(1000000));
+
 
         Alert alert ;
         if (succes){
@@ -142,8 +146,8 @@ public class RegisterScreenController {
             Optional<ButtonType> result = alert.showAndWait();
             if (result.get() == ButtonType.OK) {
                 try {
-                    Main main =  new Main();
-                    main.loader("view/LoginScreen.fxml");
+                    Main loader = new Main();
+                    loader.myLoader("view/LoginScreen.fxml");
                     ((Stage) registerButton.getScene().getWindow()).close();
                 } catch (IOException e) {
                     e.printStackTrace();

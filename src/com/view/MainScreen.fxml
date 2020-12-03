@@ -44,6 +44,7 @@
                      </graphic>
                   </Button>
                </children></VBox>
+            <Label fx:id="welcomeLabel" alignment="CENTER" layoutX="9.0" layoutY="179.0" prefHeight="17.0" prefWidth="193.0" text="Label" AnchorPane.bottomAnchor="354.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="179.0" />
          </children>
       </AnchorPane>
       <HBox alignment="CENTER" layoutX="724.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -63,18 +64,30 @@
             </Button>
          </children>
       </HBox>
-      <AnchorPane fx:id="accountPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <AnchorPane fx:id="accountPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
             <Button fx:id="addAccountButton" layoutX="413.0" layoutY="450.0" mnemonicParsing="false" onAction="#addAccountHandle" prefHeight="40.0" prefWidth="149.0" text="Account Ekle" />
             <VBox fx:id="accountVBox" alignment="CENTER" layoutX="117.0" layoutY="269.0" maxHeight="520.0" spacing="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                <children>
                   <Button fx:id="accountButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="590.0" style="-fx-background-color: #419A1C; -fx-background-radius: 20 20 0 0;">
                      <graphic>
-                        <VBox alignment="CENTER">
+                        <HBox spacing="10.0">
                            <children>
-                              <Label fx:id="accountID" text="PARA = 10k IBAN = 231132132123123312" />
+                              <ImageView fx:id="currencyIV" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+                              <VBox alignment="CENTER" prefWidth="250.0">
+                                 <children>
+                                    <Label fx:id="moneyLabel" text="Money :" />
+                                    <Label fx:id="IBANLabel" text="IBAN" />
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="60.0" />
+                                 </HBox.margin>
+                              </VBox>
                            </children>
-                        </VBox>
+                           <padding>
+                              <Insets left="20.0" right="20.0" />
+                           </padding>
+                        </HBox>
                      </graphic>
                   </Button>
                   <Label alignment="CENTER" prefHeight="17.0" prefWidth="573.0" style="-fx-background-color: #1761A0; -fx-background-radius: 25;" text="Doviz Hesaplari" textAlignment="CENTER" textFill="WHITE" />
@@ -98,7 +111,7 @@
             <Label layoutX="234.0" layoutY="252.0" text="BURASI TRANSACTION" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="settingsPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <AnchorPane fx:id="settingsPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="573.0" style="-fx-background-color: #1761A0; -fx-background-radius: 25;" text="Settings" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
             <VBox layoutX="22.0" layoutY="40.0" prefHeight="211.0" prefWidth="265.0" style="-fx-border-color: #419A1C; -fx-border-width: 5; -fx-border-radius: 20 20 0 20;" AnchorPane.leftAnchor="20.0">

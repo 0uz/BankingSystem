@@ -41,8 +41,8 @@ public class LoginScreenController {
     }
 
     public void singUpButtonHandle() throws IOException {
-        Main main = new Main();
-        main.loader("view/RegisterScreen.fxml");
+        Main loader = new Main();
+        loader.myLoader("view/RegisterScreen.fxml");
         ((Stage)exitButton.getScene().getWindow()).close();
     }
 
@@ -52,9 +52,10 @@ public class LoginScreenController {
                    StaticMethod.lengthController(passwordPF,passwordPF.getText(),50,3)){
 
                if(layer.loginUserControl(Double.parseDouble(TCTF.getText()),passwordPF.getText())){
-                   Main main =  new Main();
+                   Main loader = new Main();
+                   MainScreenController controller = loader.myLoader("view/MainScreen.fxml").getController();
+                   controller.setCurrentUserTC(TCTF.getText());
                    ((Stage)exitButton.getScene().getWindow()).close();
-                   main.loader("view/MainScreen.fxml");
                }else{
                    loginWrongL.setVisible(true);
                }

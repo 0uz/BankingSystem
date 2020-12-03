@@ -16,12 +16,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        loader("view/MainScreen.fxml");
+        myLoader("view/LoginScreen.fxml");
 
     }
 
-    public void loader (String url) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource(url));
+    public FXMLLoader myLoader(String url) throws IOException {
+        FXMLLoader loader =new FXMLLoader();
+        loader.setLocation(getClass().getResource(url));
+        Parent root = loader.load();
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
@@ -37,9 +39,11 @@ public class Main extends Application {
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
+        return loader;
     }
 
     public static void main(String[] args) {
         launch(args);
     }
 }
+

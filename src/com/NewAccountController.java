@@ -12,8 +12,8 @@ import java.text.NumberFormat;
 
 public class NewAccountController {
     public VBox goldAccountVBox;
-    public ComboBox selectCBox;
-    public ComboBox currencyCBox;
+    public ComboBox<String> selectCBox;
+    public ComboBox<String> currencyCBox;
     public TextField moneyTF;
     public Label dailyEarningLabel;
     public Label yearlyEarningLabel;
@@ -64,18 +64,25 @@ public class NewAccountController {
         moneyTF.textProperty().addListener((observableValue, s, t1) -> {
             if (s.length() == 0 || t1.length() == 0){
                 StaticMethod.addCSS(moneyTF,"com/view/css/mainsc.css","error");
+                yearlyEarningLabel.setText("Yearly Earning: ");
+                dailyEarningLabel.setText("Daily Earning:");
             }else{
                 if (StaticMethod.isDouble(t1)){
                     if (StaticMethod.lengthController(moneyTF,t1,10,0)){
                         makeInterestCalculation(t1);
                     }
+                }else{
+                    yearlyEarningLabel.setText("Yearly Earning: ");
+                    dailyEarningLabel.setText("Daily Earning: ");
                 }
             }
 
         } );
 
         currencyCBox.valueProperty().addListener((observableValue, o, t1) -> {
-            makeInterestCalculation(moneyTF.getText());
+            if (StaticMethod.lengthController(moneyTF,moneyTF.getText(),10,0) && moneyTF.getText().length()!=0){
+                makeInterestCalculation(moneyTF.getText());
+            }
         });
 
 
