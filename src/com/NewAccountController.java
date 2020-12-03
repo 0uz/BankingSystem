@@ -54,16 +54,31 @@ public class NewAccountController {
         });
     }
 
+    void makeInterestCalculation(String money){
+        NumberFormat format = new DecimalFormat("#0.00");
+        yearlyEarningLabel.setText("Yearly Earning: "+(format.format((Double.parseDouble(money)*15)/100))+ " " +currencyCBox.getSelectionModel().getSelectedItem());
+        dailyEarningLabel.setText("Daily Earning: " +(format.format((Double.parseDouble(money)*15)/36500))+" " +currencyCBox.getSelectionModel().getSelectedItem());
+    }
+
     void addListener(){
         moneyTF.textProperty().addListener((observableValue, s, t1) -> {
-            if (StaticMethod.isDouble(t1)){
-                if (StaticMethod.lengthController(moneyTF,t1,10,0)){
-                    NumberFormat format = new DecimalFormat("#0.00");
-                    yearlyEarningLabel.setText("Yearly Earning: "+(format.format((Double.parseDouble(t1)*15)/100))+ " " +currencyCBox.getSelectionModel().getSelectedItem());
-                    dailyEarningLabel.setText("Daily Earning: " +(format.format((Double.parseDouble(t1)*15)/36500))+" " +currencyCBox.getSelectionModel().getSelectedItem());
+            if (s.length() == 0 || t1.length() == 0){
+                StaticMethod.addCSS(moneyTF,"com/view/css/mainsc.css","error");
+            }else{
+                if (StaticMethod.isDouble(t1)){
+                    if (StaticMethod.lengthController(moneyTF,t1,10,0)){
+                        makeInterestCalculation(t1);
+                    }
                 }
             }
+
         } );
+
+        currencyCBox.valueProperty().addListener((observableValue, o, t1) -> {
+            makeInterestCalculation(moneyTF.getText());
+        });
+
+
     }
     public void cancelButton(){
         ((Stage) cancelButton.getScene().getWindow()).close();
@@ -71,6 +86,11 @@ public class NewAccountController {
     }
 
     public void submitButton(){
+        if(selectCBox.getSelectionModel().getSelectedItem().equals("Draw Account")){
+            if (moneyTF.getText().length()!=0){
+
+            }
+        }
 
     }
 
