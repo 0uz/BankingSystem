@@ -8,9 +8,9 @@ import java.sql.*;
 
 
 public class DatabaseLayer {
-    private static final String url = "jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2379001";
-    private static final String username = "sql2379001";
-    private static final String password = "vU8%eR4*";
+    private static final String url = "jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2380411";
+    private static final String username = "sql2380411";
+    private static final String password = "aB9%mX1*";
     Connection connection;
     public DatabaseLayer() {
         try {
