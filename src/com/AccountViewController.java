@@ -5,26 +5,26 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 public class AccountViewController {
-    public Label accountID;
+    public Label IBANLabel;
+    public Label MoneyLabel;
     public Button accountButton;
-    String a;
+    String money;
+    String IBAN;
 
-    public AccountViewController(String accountID) {
-        a=accountID;
+    public AccountViewController(String IBAN,String money) {
+        this.IBAN=IBAN;
+        this.money = money;
     }
 
     public void  initialize(){
-        accountID.setText(a);
+        IBANLabel.setText("IBAN: " + IBAN);
+        MoneyLabel.setText("Money: "+ money);
         accountButton();
     }
 
     public void accountButton(){
         accountButton.setOnAction(actionEvent -> {
-            System.out.println(a);
+            System.out.println(IBAN);
         });
-    }
-
-    public String getA() {
-        return a;
     }
 }

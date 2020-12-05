@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
 
@@ -123,14 +124,14 @@ public class RegisterScreenController {
     }
 
     public void registerButtonHandle(){
-        java.sql.Date gettedDate = java.sql.Date.valueOf(BDateDP.getValue());
+        java.sql.Date gotDate = java.sql.Date.valueOf(BDateDP.getValue());
         Random rand =  new Random();
         boolean succes = layer.insertUser(FNameTF.getText(),
                 LNameTF.getText(),
                 Double.parseDouble(TCTF.getText()),
                 mailTF.getText(),
                 passwordPF.getText(),
-                gettedDate,
+                gotDate,
                 addressTF.getText(),
                 StaticMethod.IBANCalculator(),
                 (double)rand.nextInt(1000000));

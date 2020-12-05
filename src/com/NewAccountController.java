@@ -1,5 +1,6 @@
 package com;
 
+import com.util.DatabaseLayer;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -24,7 +25,13 @@ public class NewAccountController {
     public Label boughtGoldLabel;
     public VBox AccountVBox;
     public Label interestLabel;
+    public String currentUserTC;
 
+    public void setCurrentUserTC(String currentUser) {
+        this.currentUserTC = currentUser;
+    }
+
+    DatabaseLayer layer = new DatabaseLayer();
     public void initialize(){
         selectCBox.getItems().addAll("Draw Account","Deposit Account","Gold Account");
         currencyCBox.getItems().addAll("TL","Dollar","Euro");
@@ -94,9 +101,13 @@ public class NewAccountController {
 
     public void submitButton(){
         if(selectCBox.getSelectionModel().getSelectedItem().equals("Draw Account")){
-            if (moneyTF.getText().length()!=0){
-
+            if(moneyTF.getText().length()!=0){
+                layer.addNewAccount(Double.parseDouble(currentUserTC),Double.parseDouble(moneyTF.getText()),currencyCBox.getSelectionModel().getSelectedItem(),false);
             }
+        }else if(selectCBox.getSelectionModel().getSelectedItem().equals("Deposit Account")){
+                layer.addNewAccount(Double.parseDouble(currentUserTC),Double.parseDouble(moneyTF.getText()),currencyCBox.getSelectionModel().getSelectedItem(),true);
+        }else{
+            layer.addNewAccount(Double.parseDouble(currentUserTC),Double.parseDouble(moneyTF.getText()),currencyCBox.getSelectionModel().getSelectedItem(),false);
         }
 
     }

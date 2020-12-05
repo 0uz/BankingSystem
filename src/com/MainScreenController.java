@@ -14,6 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import java.io.IOException;
+import java.util.List;
 
 public class MainScreenController {
 
@@ -38,6 +39,7 @@ public class MainScreenController {
         if(currentUserTC!=null){
             fillMainAccountInfo(); //%100 kullandi
         }
+        listAccounts();
     }
 
 
@@ -106,9 +108,21 @@ public class MainScreenController {
 
     }
 
+
     void listAccounts(){
-        String[][] data = layer.getAccountData(currentUserTC);
-        while ()
+        List<String[]> data = layer.getAccountData(currentUserTC);
+        for (int i = 0 ; i <data.size()-1;i++){
+            AccountViewController control = new AccountViewController(data.get(i)[0],data.get(i)[1]);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AccountView.fxml"));
+            loader.setController(control);
+            try {
+                accountVBox.getChildren().add(loader.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        //TODO last account add with fxml
+
     }
 }
 

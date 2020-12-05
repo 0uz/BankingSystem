@@ -2,10 +2,12 @@ package com.util;
 
 
 
+import com.StaticMethod;
 import javafx.scene.control.Alert;
 import org.apache.commons.beanutils.converters.SqlDateConverter;
 
 import java.sql.*;
+import java.util.List;
 
 
 public class DatabaseLayer {
@@ -13,6 +15,7 @@ public class DatabaseLayer {
     private static final String username = "sql2380411";
     private static final String password = "aB9%mX1*";
     Connection connection;
+    java.sql.Timestamp currentDate = new java.sql.Timestamp(new java.util.Date().getTime());
     public DatabaseLayer() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -44,8 +47,12 @@ public class DatabaseLayer {
                 "    amount bigint default 0,\n" +
                 "    currency varchar(30),\n" +
                 "    mainAccF bool default false,\n" +
+                "    openDate date,\n" +
+                "    interest int default 15,\n" +
+                "    depositAccF bool default false,\n" +
+                "    goldGram decimal(15,5) default 0,\n" +
                 "    foreign key (TC) REFERENCES users(TC)\n" +
-                ");\n";
+                ");";
 
         String transactionTable = "CREATE TABLE IF NOT EXISTS sql2380411.transactions(\n" +
                 "    senderIBAN VARCHAR(23) NOT NULL,\n" +
@@ -85,10 +92,10 @@ public class DatabaseLayer {
 
     }
 
-    public boolean insertUser(String FName, String LName, Double TC, String eMail, String password, Date BDate, String address,String IBAN,Double moneyAmount){
+    public boolean insertUser(String FName, String LName, Double TC, String eMail, String password, Date BDate, String address, String IBAN, Double moneyAmount){
         try {
             PreparedStatement statement = connection.prepareStatement("insert into users (F_Name, L_Name, TC, address, mail, password, B_Date) VALUES (?,?,?,?,?,?,?)");
-            PreparedStatement statement2 = connection.prepareStatement("insert into accounts (TC,IBAN,amount,mainAccF) value (?,?,?,?)");
+            PreparedStatement statement2 = connection.prepareStatement("insert into accounts (TC,IBAN,amount,openDate,mainAccF) value (?,?,?,?,?)");
             statement.setString(1,FName);
             statement.setString(2,LName);
             statement.setDouble(3,TC);
@@ -99,7 +106,8 @@ public class DatabaseLayer {
             statement2.setDouble(1,TC);
             statement2.setString(2,IBAN);
             statement2.setDouble(3,moneyAmount);
-            statement2.setBoolean(4,true);
+            statement2.setTimestamp(4,currentDate);
+            statement2.setBoolean(5,true);
             statement.execute();
             statement2.execute();
             return true;
@@ -157,17 +165,17 @@ public class DatabaseLayer {
         }
     }
 
-    public String[][] getAccountData(String TC){
+    public List<String[]> getAccountData(String TC){
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT IBAN,amount,currency from accounts where TC = ? AND mainAccF = false");
             statement.setString(1,TC);
             ResultSet rs = statement.executeQuery();
-            String[][] data;
-            int counter=0;
+            List<String[]> data = null;
             while (rs.next()){
-                data[counter++][0]=rs.getString("IBAN");
-                data[counter++][1]=String.valueOf(rs.getInt("amount"));
-                data[counter++][2]=rs.getString("currency");
+                data.add(new String[]{rs.getString("IBAN"),
+                        String.valueOf(rs.getInt("amount")),
+                        rs.getString("currency")
+                });
             }
             return data;
         }catch (SQLException e){
@@ -177,6 +185,27 @@ public class DatabaseLayer {
 
 
     }
+
+    public boolean addNewAccount(Double TC,Double amount,String currency,boolean deposit){
+        try {
+            PreparedStatement statement1 = connection.prepareStatement("insert into accounts (TC,IBAN,amount,currency,depositAccF,openDate) value (?,?,?,?,?,?)");
+            PreparedStatement statement2 = connection.prepareStatement("UPDATE accounts set amount = amount - ? where IBAN");
+            statement1.setDouble(1,TC);
+            statement1.setString(2, StaticMethod.IBANCalculator());
+            statement1.setDouble(3,amount);
+            statement1.setString(4,currency);
+            statement1.setBoolean(5,deposit);
+            statement1.setTimestamp(6,currentDate);
+            statement2.setDouble(1,amount);
+            statement1.execute();
+            statement2.execute();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+
 
     public void closeConnection(){
         try {
