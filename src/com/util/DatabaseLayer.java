@@ -71,7 +71,6 @@ public class DatabaseLayer {
                         statement.execute(accountTable);
                         statement.execute(transactionTable);
                         statement.execute(creditTable);
-                        connection.close();
         }catch (SQLException e){
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -102,7 +101,6 @@ public class DatabaseLayer {
             statement2.setBoolean(4,true);
             statement.execute();
             statement2.execute();
-            connection.close();
             return true;
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -120,7 +118,7 @@ public class DatabaseLayer {
             statement.setDouble(2,TC);
             ResultSet rs = statement.executeQuery();
             rs.next();
-            rs.getString(1);
+            System.out.println(rs.getString(2));
             return true;
         } catch (SQLException | RuntimeException throwables) {
             return false;
@@ -157,6 +155,16 @@ public class DatabaseLayer {
             return null;
         }
     }
+
+    public void closeConnection(){
+        try {
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+
 
 
 }

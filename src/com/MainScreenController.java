@@ -71,6 +71,7 @@ public class MainScreenController {
 
     public void exitButtonAction(){
         System.exit(1);
+        layer.closeConnection();
     }
 
     public void minimizeButtonAction(){

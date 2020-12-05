@@ -170,6 +170,7 @@ public class RegisterScreenController {
 
     public void exitButton(){
         System.exit(1);
+        layer.closeConnection();
     }
 
     public void minimizeButton(){
