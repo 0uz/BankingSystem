@@ -40,10 +40,11 @@ public class DatabaseLayer {
         String accountTable = "CREATE TABLE IF NOT EXISTS sql2380411.accounts(\n" +
                 "    TC bigint(11) NOT NULL,\n" +
                 "    IBAN VARCHAR(26) PRIMARY KEY,\n" +
+                "    amount bigint default 0,\n" +
                 "    currency varchar(30),\n" +
                 "    mainAccF bool default false,\n" +
-                "    foreign key (TC) REFERENCES sql2380411.users(TC)\n" +
-                ")";
+                "    foreign key (TC) REFERENCES users(TC)\n" +
+                ");\n";
 
         String transactionTable = "CREATE TABLE IF NOT EXISTS sql2380411.transactions(\n" +
                 "    senderIBAN VARCHAR(23) NOT NULL,\n" +
