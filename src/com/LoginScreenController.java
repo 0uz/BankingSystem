@@ -25,10 +25,12 @@ public class LoginScreenController {
         Image imageFile = new Image(file.toURI().toString());
         image.setImage(imageFile);
 
+
     }
 
     public void initialize(){
         imageLoader(logo,"images/logo.png");
+        layer.createTables();
     }
 
     public void exitButton(){
