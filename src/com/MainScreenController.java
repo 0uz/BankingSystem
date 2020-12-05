@@ -40,6 +40,7 @@ public class MainScreenController {
         }
     }
 
+
     public void setCurrentUserTC(String currentUserTC) {
         this.currentUserTC = currentUserTC;
         initialize();
@@ -103,6 +104,11 @@ public class MainScreenController {
         accountNum++;
         */
 
+    }
+
+    void listAccounts(){
+        String[][] data = layer.getAccountData(currentUserTC);
+        while ()
     }
 }
 
