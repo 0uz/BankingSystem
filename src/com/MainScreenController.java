@@ -39,7 +39,7 @@ public class MainScreenController {
         if(currentUserTC!=null){
             fillMainAccountInfo(); //%100 kullandi
         }
-        listAccounts();
+       // listAccounts();
     }
 
 
@@ -52,6 +52,7 @@ public class MainScreenController {
         accountPage.setVisible(account);
         transactionPage.setVisible(trans);
         settingsPage.setVisible(settings);
+        System.out.println(StaticMethod.API("TRY","USD"));
     }
     void fillMainAccountInfo(){
         String[] infos = layer.getUserInfo(currentUserTC);

@@ -1,7 +1,21 @@
 package com;
 
+import com.mysql.cj.xdevapi.JsonArray;
 import com.util.DatabaseLayer;
 import javafx.scene.control.Control;
+import javafx.scene.web.WebHistory;
+import netscape.javascript.JSObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.http.HttpResponse;
 import java.util.Random;
 
 public class StaticMethod {
@@ -55,4 +69,30 @@ public class StaticMethod {
         }
         return IBAN;
     }
+
+    public static String API(String base,String symbol){
+        try {
+            StringBuilder result = new StringBuilder();
+            URL url = new URL("https://api.exchangeratesapi.io/latest?base="+base+"&symbols="+symbol);
+            URLConnection connection = url.openConnection();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null){
+                result.append(line);
+            }
+            reader.close();
+            JSONObject object = new JSONObject(result.toString());
+            return object.getJSONObject("rates").get(symbol).toString();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+
+    }
+
+
 }
