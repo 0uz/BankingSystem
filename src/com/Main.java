@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
 import java.io.IOException;
 
 public class Main extends Application {
@@ -17,7 +16,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         myLoader("view/LoginScreen.fxml");
-
     }
 
     public FXMLLoader myLoader(String url) throws IOException {

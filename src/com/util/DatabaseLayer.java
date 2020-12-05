@@ -26,38 +26,43 @@ public class DatabaseLayer {
     }
 
     public void createTables() {
-        String userTable = "CREATE TABLE IF NOT EXISTS users(" +
-            "F_Name VARCHAR(20)," +
-            "L_Name VARCHAR(20)," +
-            "TC BIGINT(11) PRIMARY KEY," +
-            "address VARCHAR(100)," +
-            "mail VARCHAR(320)," +
-            "password VARCHAR(50)," +
-            "B_Date DATE," +
-            "admin_F BOOL default false);";
+        String userTable = "CREATE TABLE IF NOT EXISTS sql2380411.users(\n" +
+                "    F_Name VARCHAR(20),\n" +
+                "    L_Name VARCHAR(20),\n" +
+                "    TC BIGINT(11) PRIMARY KEY,\n" +
+                "    address VARCHAR(100),\n" +
+                "    mail VARCHAR(320),\n" +
+                "    password VARCHAR(50),\n" +
+                "    B_Date DATE,\n" +
+                "    admin_F BOOL default false\n" +
+                ");";
 
-        String accountTable = "CREATE TABLE IF NOT EXISTS accounts(" +
-                "TC bigint(11) NOT NULL," +
-                "IBAN VARCHAR(26) PRIMARY KEY ," +
-                "currency varchar(30) DEFAULT 'TL'," +
-                "mainAccF bool default false " +
-                "foreign key ('TC') REFERENCES users('TC'));";
+        String accountTable = "CREATE TABLE IF NOT EXISTS sql2380411.accounts(\n" +
+                "    TC bigint(11) NOT NULL,\n" +
+                "    IBAN VARCHAR(26) PRIMARY KEY,\n" +
+                "    currency varchar(30),\n" +
+                "    mainAccF bool default false,\n" +
+                "    foreign key (TC) REFERENCES sql2380411.users(TC)\n" +
+                ")";
 
-        String transactionTable = "CREATE TABLE IF NOT EXISTS transactions(" +
-                "senderIBAN VARCHAR(23) NOT NULL," +
-                "receiverIBAN VARCHAR(23)," +
-                "amount INTEGER," +
-                "T_date date," +
-                "isRead bool default false, " +
-                "FOREIGN KEY ('senderIBAN') REFERENCES accounts('IBAN'));";
+        String transactionTable = "CREATE TABLE IF NOT EXISTS sql2380411.transactions(\n" +
+                "    senderIBAN VARCHAR(23) NOT NULL,\n" +
+                "    receiverIBAN VARCHAR(23),\n" +
+                "    amount INTEGER,\n" +
+                "    T_date date,\n" +
+                "    isRead bool default false,\n" +
+                "    foreign key (senderIBAN) REFERENCES sql2380411.accounts(IBAN)\n" +
+                ")";
 
-        String creditTable = "CREATE TABLE IF NOT EXISTS credits(" +
-                "TC bigint(11) not null," +
-                "amount int," +
-                "creditMonths tinyint," +
-                "getCreditDate date," +
-                "confirmation bool default false, " +
-                "FOREIGN KEY ('TC') REFERENCES users('TC'));";
+        String creditTable = "CREATE TABLE IF NOT EXISTS sql2380411.credits(\n" +
+                "    TC bigint(11) not null,\n" +
+                "    amount int,\n" +
+                "     creditMonths tinyint,\n" +
+                "     interest decimal(6,4),\n" +
+                "     getCreditDate date,\n" +
+                "     confirmation bool default false,\n" +
+                "     foreign key (TC) REFERENCES sql2380411.users(TC)\n" +
+                ")";
 
         try {
                 Statement statement = connection.createStatement();
