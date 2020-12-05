@@ -21,21 +21,21 @@ public class NewAccountController {
     public Button submitButton;
     public Button cancelButton;
     public TextField goldMoneyTF;
-    public Label gramGoldLabel;
     public Label boughtGoldLabel;
     public VBox AccountVBox;
     public Label interestLabel;
-    public String currentUserTC;
+    public static String currentUserTC;
 
     public void setCurrentUserTC(String currentUser) {
-        this.currentUserTC = currentUser;
+        currentUserTC = currentUser;
+        System.out.println(currentUserTC);
     }
 
     DatabaseLayer layer = new DatabaseLayer();
     public void initialize(){
         selectCBox.getItems().addAll("Draw Account","Deposit Account","Gold Account");
         currencyCBox.getItems().addAll("TL","Dollar","Euro");
-        currencyCBox.getSelectionModel().select(1);
+        currencyCBox.getSelectionModel().select(0);
         addComboBoxListener();
         addListener();
     }
@@ -65,6 +65,7 @@ public class NewAccountController {
         NumberFormat format = new DecimalFormat("#0.00");
         yearlyEarningLabel.setText("Yearly Earning: "+(format.format((Double.parseDouble(money)*15)/100))+ " " +currencyCBox.getSelectionModel().getSelectedItem());
         dailyEarningLabel.setText("Daily Earning: " +(format.format((Double.parseDouble(money)*15)/36500))+" " +currencyCBox.getSelectionModel().getSelectedItem());
+        boughtGoldLabel.setText("Bought Gold: "+ format.format(Double.parseDouble(money)/460) + " gram");
     }
 
     void addListener(){
@@ -86,6 +87,21 @@ public class NewAccountController {
 
         } );
 
+        goldMoneyTF.textProperty().addListener((observableValue, s, t1) -> {
+            if (s.length() == 0 || t1.length() == 0){
+                StaticMethod.addCSS(goldMoneyTF,"com/view/css/mainsc.css","error");
+                boughtGoldLabel.setText("Bought Gold: ");
+            }else{
+                if (StaticMethod.isDouble(t1)){
+                    if (StaticMethod.lengthController(goldMoneyTF,t1,10,0)){
+                        makeInterestCalculation(t1);
+                    }
+                }else{
+                    boughtGoldLabel.setText("Bought Gold: ");
+                }
+            }
+        });
+
         currencyCBox.valueProperty().addListener((observableValue, o, t1) -> {
             if (StaticMethod.lengthController(moneyTF,moneyTF.getText(),10,0) && moneyTF.getText().length()!=0){
                 makeInterestCalculation(moneyTF.getText());
@@ -105,11 +121,17 @@ public class NewAccountController {
                 layer.addNewAccount(Double.parseDouble(currentUserTC),Double.parseDouble(moneyTF.getText()),currencyCBox.getSelectionModel().getSelectedItem(),false);
             }
         }else if(selectCBox.getSelectionModel().getSelectedItem().equals("Deposit Account")){
+            if (moneyTF.getText().length()!=0){
                 layer.addNewAccount(Double.parseDouble(currentUserTC),Double.parseDouble(moneyTF.getText()),currencyCBox.getSelectionModel().getSelectedItem(),true);
+            }
         }else{
-            layer.addNewAccount(Double.parseDouble(currentUserTC),Double.parseDouble(moneyTF.getText()),currencyCBox.getSelectionModel().getSelectedItem(),false);
+            if (goldMoneyTF.getText().length()!=0){
+                System.out.println(currentUserTC);
+                System.out.println(goldMoneyTF.getText());
+                layer.addNewGoldAccount(Double.parseDouble(currentUserTC),Double.parseDouble(goldMoneyTF.getText()));
+            }
         }
-
+        ((Stage) cancelButton.getScene().getWindow()).close();
     }
 
 

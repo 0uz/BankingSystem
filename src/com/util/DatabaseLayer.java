@@ -6,6 +6,7 @@ import com.StaticMethod;
 import javafx.scene.control.Alert;
 import org.apache.commons.beanutils.converters.SqlDateConverter;
 
+import java.math.BigDecimal;
 import java.sql.*;
 import java.util.List;
 
@@ -189,7 +190,7 @@ public class DatabaseLayer {
     public boolean addNewAccount(Double TC,Double amount,String currency,boolean deposit){
         try {
             PreparedStatement statement1 = connection.prepareStatement("insert into accounts (TC,IBAN,amount,currency,depositAccF,openDate) value (?,?,?,?,?,?)");
-            PreparedStatement statement2 = connection.prepareStatement("UPDATE accounts set amount = amount - ? where IBAN");
+            PreparedStatement statement2 = connection.prepareStatement("UPDATE accounts set amount = amount - ? where TC = ? AND mainAccF = true ");
             statement1.setDouble(1,TC);
             statement1.setString(2, StaticMethod.IBANCalculator());
             statement1.setDouble(3,amount);
@@ -197,6 +198,28 @@ public class DatabaseLayer {
             statement1.setBoolean(5,deposit);
             statement1.setTimestamp(6,currentDate);
             statement2.setDouble(1,amount);
+            statement2.setDouble(2,TC);
+            statement1.execute();
+            statement2.execute();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean addNewGoldAccount(Double TC, double money){
+        try {
+            PreparedStatement statement1 = connection.prepareStatement("insert into accounts (TC,IBAN,currency,goldGram,openDate) value (?,?,?,?,?)");
+            PreparedStatement statement2 = connection.prepareStatement("UPDATE accounts set amount = amount - ? where TC = ? AND mainAccF = true ");
+            BigDecimal gram = new BigDecimal(money/460);
+            statement1.setDouble(1,TC);
+            statement1.setString(2, StaticMethod.IBANCalculator());
+            statement1.setString(3,"Gold");
+            statement1.setBigDecimal(4, gram);
+            statement1.setTimestamp(5,currentDate);
+            statement2.setDouble(1,money);
+            statement2.setDouble(2,TC);
             statement1.execute();
             statement2.execute();
             return true;

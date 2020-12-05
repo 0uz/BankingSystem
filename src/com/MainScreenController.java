@@ -52,7 +52,7 @@ public class MainScreenController {
         accountPage.setVisible(account);
         transactionPage.setVisible(trans);
         settingsPage.setVisible(settings);
-        System.out.println(StaticMethod.API("TRY","USD"));
+        System.out.println(StaticMethod.API("EUR","TRY"));
     }
     void fillMainAccountInfo(){
         String[] infos = layer.getUserInfo(currentUserTC);
@@ -85,7 +85,10 @@ public class MainScreenController {
 
 
     public void addAccountHandle() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("view/NewAccount.fxml"));
+        FXMLLoader loader =  new FXMLLoader(getClass().getResource("view/NewAccount.fxml"));
+        Parent root = loader.load();
+        NewAccountController controller = new NewAccountController();
+        controller.setCurrentUserTC(currentUserTC);
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);

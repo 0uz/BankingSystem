@@ -22,13 +22,13 @@
             <Label fx:id="yearlyEarningLabel" text="Yıllık Kazanç" />
          </children>
       </VBox>
-      <Button fx:id="submitButton" layoutX="10.0" layoutY="261.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #419A1C;" text="Submit" textFill="WHITE" AnchorPane.leftAnchor="20.0" />
+      <Button fx:id="submitButton" layoutX="10.0" layoutY="261.0" mnemonicParsing="false" onAction="#submitButton" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #419A1C;" text="Submit" textFill="WHITE" AnchorPane.leftAnchor="20.0" />
       <Button fx:id="cancelButton" layoutX="107.0" layoutY="261.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #1761A0;" text="Cancel" textFill="WHITE" />
-      <VBox fx:id="goldAccountVBox" layoutX="33.0" layoutY="63.0" prefHeight="200.0" prefWidth="175.0" spacing="5.0" visible="false" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="50.0">
+      <VBox fx:id="goldAccountVBox" layoutX="33.0" layoutY="63.0" prefHeight="200.0" prefWidth="175.0" spacing="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="50.0">
          <children>
             <Label text="Money" />
             <TextField fx:id="goldMoneyTF" prefHeight="25.0" prefWidth="150.0" />
-            <Label fx:id="gramGoldLabel" text="Gram 350TL" />
+            <Label text="Gram 460 TL" />
             <Label fx:id="boughtGoldLabel" text="Alınan Gram" />
          </children>
       </VBox>
