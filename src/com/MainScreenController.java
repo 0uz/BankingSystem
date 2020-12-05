@@ -40,7 +40,6 @@ public class MainScreenController {
         }
     }
 
-
     public void setCurrentUserTC(String currentUserTC) {
         this.currentUserTC = currentUserTC;
         initialize();

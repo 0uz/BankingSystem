@@ -25,65 +25,6 @@ public class DatabaseLayer {
         }
     }
 
-    public void createTables() {
-        String userTable = "CREATE TABLE IF NOT EXISTS sql2380411.users(\n" +
-                "    F_Name VARCHAR(20),\n" +
-                "    L_Name VARCHAR(20),\n" +
-                "    TC BIGINT(11) PRIMARY KEY,\n" +
-                "    address VARCHAR(100),\n" +
-                "    mail VARCHAR(320),\n" +
-                "    password VARCHAR(50),\n" +
-                "    B_Date DATE,\n" +
-                "    admin_F BOOL default false\n" +
-                ");";
-
-        String accountTable = "CREATE TABLE IF NOT EXISTS sql2380411.accounts(\n" +
-                "    TC bigint(11) NOT NULL,\n" +
-                "    IBAN VARCHAR(26) PRIMARY KEY,\n" +
-                "    amount bigint default 0,\n" +
-                "    currency varchar(30),\n" +
-                "    mainAccF bool default false,\n" +
-                "    foreign key (TC) REFERENCES users(TC)\n" +
-                ");\n";
-
-        String transactionTable = "CREATE TABLE IF NOT EXISTS sql2380411.transactions(\n" +
-                "    senderIBAN VARCHAR(23) NOT NULL,\n" +
-                "    receiverIBAN VARCHAR(23),\n" +
-                "    amount INTEGER,\n" +
-                "    T_date date,\n" +
-                "    isRead bool default false,\n" +
-                "    foreign key (senderIBAN) REFERENCES sql2380411.accounts(IBAN)\n" +
-                ")";
-
-        String creditTable = "CREATE TABLE IF NOT EXISTS sql2380411.credits(\n" +
-                "    TC bigint(11) not null,\n" +
-                "    amount int,\n" +
-                "     creditMonths tinyint,\n" +
-                "     interest decimal(6,4),\n" +
-                "     getCreditDate date,\n" +
-                "     confirmation bool default false,\n" +
-                "     foreign key (TC) REFERENCES sql2380411.users(TC)\n" +
-                ")";
-
-        try {
-                Statement statement = connection.createStatement();
-                        statement.execute(userTable);
-                        statement.execute(accountTable);
-                        statement.execute(transactionTable);
-                        statement.execute(creditTable);
-        }catch (SQLException e){
-            e.printStackTrace();
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Connection Error");
-            alert.setContentText("Database connection error!\nPlease check your connection.");
-            alert.showAndWait();
-            System.exit(1);
-        }
-
-
-
-    }
-
     public boolean insertUser(String FName, String LName, Double TC, String eMail, String password, Date BDate, String address,String IBAN,Double moneyAmount){
         try {
             PreparedStatement statement = connection.prepareStatement("insert into users (F_Name, L_Name, TC, address, mail, password, B_Date) VALUES (?,?,?,?,?,?,?)");
@@ -155,16 +96,6 @@ public class DatabaseLayer {
             return null;
         }
     }
-
-    public void closeConnection(){
-        try {
-            connection.close();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-    }
-
-
 
 
 }
