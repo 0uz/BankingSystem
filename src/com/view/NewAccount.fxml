@@ -11,7 +11,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="314.0" prefWidth="215.0" style="-fx-border-color: #1761A0; -fx-border-width: 3; -fx-background-radius: 20; -fx-border-radius: 20;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.NewAccountController">
    <children>
       <ComboBox fx:id="selectCBox" layoutX="7.0" layoutY="14.0" prefHeight="25.0" prefWidth="173.0" promptText="Please select" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="20.0" />
-      <VBox fx:id="AccountVBox" layoutX="10.0" layoutY="35.0" prefHeight="200.0" prefWidth="175.0" spacing="5.0" visible="false" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="50.0">
+      <VBox fx:id="AccountVBox" layoutX="10.0" layoutY="35.0" prefHeight="200.0" prefWidth="175.0" spacing="5.0" visible="false" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0">
          <children>
             <Label text="Currency" />
             <ComboBox fx:id="currencyCBox" prefHeight="25.0" prefWidth="180.0" promptText="Please select" />
@@ -24,7 +24,7 @@
       </VBox>
       <Button fx:id="submitButton" layoutX="10.0" layoutY="261.0" mnemonicParsing="false" onAction="#submitButton" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #419A1C;" text="Submit" textFill="WHITE" AnchorPane.leftAnchor="20.0" />
       <Button fx:id="cancelButton" layoutX="107.0" layoutY="261.0" mnemonicParsing="false" onAction="#cancelButton" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #1761A0;" text="Cancel" textFill="WHITE" />
-      <VBox fx:id="goldAccountVBox" layoutX="33.0" layoutY="63.0" prefHeight="200.0" prefWidth="175.0" spacing="5.0" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="50.0">
+      <VBox fx:id="goldAccountVBox" layoutX="20.0" layoutY="69.0" prefHeight="176.0" prefWidth="175.0" spacing="5.0" visible="false" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0">
          <children>
             <Label text="Money" />
             <TextField fx:id="goldMoneyTF" prefHeight="25.0" prefWidth="150.0" />
@@ -32,6 +32,7 @@
             <Label fx:id="boughtGoldLabel" text="Alınan Gram" />
          </children>
       </VBox>
+      <Label fx:id="yourMoney" layoutX="23.0" layoutY="45.0" text="Your money:" AnchorPane.topAnchor="50.0" />
    </children>
    <opaqueInsets>
       <Insets />

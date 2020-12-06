@@ -1,11 +1,6 @@
 package com.util;
-
-
-
 import com.StaticMethod;
 import javafx.scene.control.Alert;
-import org.apache.commons.beanutils.converters.SqlDateConverter;
-
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.List;
@@ -45,13 +40,13 @@ public class DatabaseLayer {
         String accountTable = "CREATE TABLE IF NOT EXISTS sql2380411.accounts(\n" +
                 "    TC bigint(11) NOT NULL,\n" +
                 "    IBAN VARCHAR(26) PRIMARY KEY,\n" +
-                "    amount bigint default 0,\n" +
+                "    amount decimal(28,3)default 0,\n" +
                 "    currency varchar(30),\n" +
                 "    mainAccF bool default false,\n" +
                 "    openDate date,\n" +
                 "    interest int default 15,\n" +
                 "    depositAccF bool default false,\n" +
-                "    goldGram decimal(15,5) default 0,\n" +
+                "    goldGram decimal(15,3) default 0,\n" +
                 "    foreign key (TC) REFERENCES users(TC)\n" +
                 ");";
 
@@ -120,7 +115,18 @@ public class DatabaseLayer {
 
     }
 
-
+    public Double getMainMoney(String TC){
+        try {
+            PreparedStatement statement =  connection.prepareStatement("select amount from accounts where TC = ? and mainAccF = true");
+            statement.setString(1,TC);
+            ResultSet rs = statement.executeQuery();
+            rs.next();
+            return rs.getDouble("amount");
+        } catch (SQLException | RuntimeException throwables) {
+            throwables.printStackTrace();
+            return 0.0;
+        }
+    }
     public boolean loginUserControl(Double TC , String password){
         try {
             PreparedStatement statement =  connection.prepareStatement("select password,TC from users where password = ? AND TC = ?");
@@ -151,12 +157,16 @@ public class DatabaseLayer {
 
     public String[] getUserInfo(String TC){
         try {
-            PreparedStatement statement = connection.prepareStatement("select F_Name,L_Name,IBAN,amount from users join accounts on users.TC = ?");
-            statement.setString(1,TC);
-            ResultSet rs = statement.executeQuery();
+            PreparedStatement statement1 = connection.prepareStatement("select IBAN,amount from accounts where TC = ? and mainAccF = true");
+            PreparedStatement statement2 = connection.prepareStatement("select F_Name, L_Name from users where TC = ?;");
+            statement1.setString(1,TC);
+            statement2.setString(1,TC);
+            ResultSet rs = statement1.executeQuery();
+            ResultSet rs2 = statement2.executeQuery();
             rs.next();
-            return new String[]{rs.getString("F_Name"),
-            rs.getString("L_Name"),
+            rs2.next();
+            return new String[]{rs2.getString("F_Name"),
+            rs2.getString("L_Name"),
             rs.getString("IBAN"),
             String.valueOf(rs.getInt("amount"))};
 

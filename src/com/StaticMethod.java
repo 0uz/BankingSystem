@@ -90,9 +90,16 @@ public class StaticMethod {
             e.printStackTrace();
             return null;
         }
-
-
     }
 
+    public static double makeExcCalc(String currency , Double money){
+        if (currency.equals("TL")){
+            return money;
+        }else if(currency.equals("Dollar")){
+            return money/Double.parseDouble(API("USD","TRY"));
+        }else{
+            return money/Double.parseDouble(API("EUR","TRY"));
+        }
+    }
 
 }

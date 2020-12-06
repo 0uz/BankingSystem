@@ -87,8 +87,6 @@ public class MainScreenController {
     public void addAccountHandle() throws IOException {
         FXMLLoader loader =  new FXMLLoader(getClass().getResource("view/NewAccount.fxml"));
         Parent root = loader.load();
-        NewAccountController controller = new NewAccountController();
-        controller.setCurrentUserTC(currentUserTC);
         Stage stage = new Stage();
         Scene scene = new Scene(root);
         scene.setFill(Color.TRANSPARENT);
@@ -96,6 +94,10 @@ public class MainScreenController {
         stage.initStyle(StageStyle.TRANSPARENT);
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(accountPage.getScene().getWindow());
+
+        NewAccountController controller = loader.getController();
+        controller.setCurrentUserData(currentUserTC);
+
         stage.show();
 
         /*

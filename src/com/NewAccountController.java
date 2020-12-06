@@ -1,6 +1,7 @@
 package com;
 
 import com.util.DatabaseLayer;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -11,7 +12,7 @@ import javafx.stage.Stage;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
-public class NewAccountController {
+public class NewAccountController{
     public VBox goldAccountVBox;
     public ComboBox<String> selectCBox;
     public ComboBox<String> currencyCBox;
@@ -25,20 +26,27 @@ public class NewAccountController {
     public VBox AccountVBox;
     public Label interestLabel;
     public static String currentUserTC;
+    static Double currentUserMoney;
+    public Label yourMoney;
+    DatabaseLayer layer = new DatabaseLayer();
 
-    public void setCurrentUserTC(String currentUser) {
+
+    public void setCurrentUserData(String currentUser) {
         currentUserTC = currentUser;
-        System.out.println(currentUserTC);
+        currentUserMoney = layer.getMainMoney(currentUser);
+        yourMoney.setText("Your Money: "+ currentUserMoney);
     }
 
-    DatabaseLayer layer = new DatabaseLayer();
+
     public void initialize(){
         selectCBox.getItems().addAll("Draw Account","Deposit Account","Gold Account");
         currencyCBox.getItems().addAll("TL","Dollar","Euro");
         currencyCBox.getSelectionModel().select(0);
         addComboBoxListener();
         addListener();
+
     }
+
 
     void addComboBoxListener(){
         selectCBox.valueProperty().addListener((observableValue, o, t1) -> {
@@ -59,6 +67,7 @@ public class NewAccountController {
                 AccountVBox.setVisible(false);
             }
         });
+
     }
 
     void makeInterestCalculation(String money){
@@ -70,42 +79,50 @@ public class NewAccountController {
 
     void addListener(){
         moneyTF.textProperty().addListener((observableValue, s, t1) -> {
-            if (s.length() == 0 || t1.length() == 0){
+            if (t1.length() == 0){
                 StaticMethod.addCSS(moneyTF,"com/view/css/mainsc.css","error");
                 yearlyEarningLabel.setText("Yearly Earning: ");
                 dailyEarningLabel.setText("Daily Earning:");
+                yourMoney.setText("Your Money:"+currentUserMoney);
             }else{
                 if (StaticMethod.isDouble(t1)){
                     if (StaticMethod.lengthController(moneyTF,t1,10,0)){
                         makeInterestCalculation(t1);
+                        yourMoney.setText("Your Money:" + (currentUserMoney-Integer.parseInt(t1)));
+                        System.out.println(StaticMethod.makeExcCalc(currencyCBox.getSelectionModel().getSelectedItem(),Double.parseDouble(moneyTF.getText())));
                     }
                 }else{
                     yearlyEarningLabel.setText("Yearly Earning: ");
                     dailyEarningLabel.setText("Daily Earning: ");
+                    yourMoney.setText("Your Money:"+currentUserMoney);
                 }
             }
 
         } );
 
         goldMoneyTF.textProperty().addListener((observableValue, s, t1) -> {
-            if (s.length() == 0 || t1.length() == 0){
+            if (t1.length() == 0){
                 StaticMethod.addCSS(goldMoneyTF,"com/view/css/mainsc.css","error");
                 boughtGoldLabel.setText("Bought Gold: ");
+                yourMoney.setText("Your Money:"+currentUserMoney);
             }else{
                 if (StaticMethod.isDouble(t1)){
                     if (StaticMethod.lengthController(goldMoneyTF,t1,10,0)){
                         makeInterestCalculation(t1);
+                        yourMoney.setText("Your Money:" + (currentUserMoney-Double.parseDouble(t1)));
                     }
                 }else{
                     boughtGoldLabel.setText("Bought Gold: ");
+                    yourMoney.setText("Your Money:"+currentUserMoney);
                 }
             }
         });
 
         currencyCBox.valueProperty().addListener((observableValue, o, t1) -> {
-            if (StaticMethod.lengthController(moneyTF,moneyTF.getText(),10,0) && moneyTF.getText().length()!=0){
+            if (StaticMethod.lengthController(moneyTF,moneyTF.getText(),10,0) && moneyTF.getText().length()!=0 && StaticMethod.isDouble(moneyTF.getText())){
                 makeInterestCalculation(moneyTF.getText());
             }
+
         });
 
 
@@ -116,22 +133,30 @@ public class NewAccountController {
     }
 
     public void submitButton(){
+
         if(selectCBox.getSelectionModel().getSelectedItem().equals("Draw Account")){
-            if(moneyTF.getText().length()!=0){
+            if(moneyTF.getText().length()!=0 && Double.parseDouble(moneyTF.getText()) <= currentUserMoney){
                 layer.addNewAccount(Double.parseDouble(currentUserTC),Double.parseDouble(moneyTF.getText()),currencyCBox.getSelectionModel().getSelectedItem(),false);
+                ((Stage) cancelButton.getScene().getWindow()).close();
+            }else{
+                StaticMethod.addCSS(moneyTF,"com/view/css/mainsc.css","error");
             }
         }else if(selectCBox.getSelectionModel().getSelectedItem().equals("Deposit Account")){
-            if (moneyTF.getText().length()!=0){
+            if (moneyTF.getText().length()!=0 && Double.parseDouble(moneyTF.getText()) <= currentUserMoney){
                 layer.addNewAccount(Double.parseDouble(currentUserTC),Double.parseDouble(moneyTF.getText()),currencyCBox.getSelectionModel().getSelectedItem(),true);
+                ((Stage) cancelButton.getScene().getWindow()).close();
+            }else{
+                StaticMethod.addCSS(moneyTF,"com/view/css/mainsc.css","error");
             }
-        }else{
-            if (goldMoneyTF.getText().length()!=0){
-                System.out.println(currentUserTC);
-                System.out.println(goldMoneyTF.getText());
+        }else if(selectCBox.getSelectionModel().getSelectedItem().equals("Gold Account")){
+            if (goldMoneyTF.getText().length()!=0 && Double.parseDouble(moneyTF.getText()) <= currentUserMoney){
                 layer.addNewGoldAccount(Double.parseDouble(currentUserTC),Double.parseDouble(goldMoneyTF.getText()));
+                ((Stage) cancelButton.getScene().getWindow()).close();
+            }else{
+                StaticMethod.addCSS(goldMoneyTF,"com/view/css/mainsc.css","error");
             }
         }
-        ((Stage) cancelButton.getScene().getWindow()).close();
+
     }
 
 

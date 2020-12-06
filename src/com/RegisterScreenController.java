@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Optional;
 import java.util.Random;
 
@@ -24,7 +23,6 @@ public class RegisterScreenController {
     public TextField addressTF;
     public ImageView logo;
     public Button registerButton;
-
     private boolean disableButton[] ={false,false,false,false,false,false,false};
     DatabaseLayer layer = new DatabaseLayer();
 
@@ -54,10 +52,10 @@ public class RegisterScreenController {
         }
     }
 
-    void lengthListeners(){
+   void lengthListeners(){
         FNameTF.textProperty().addListener((observableValue, s,t1) ->{
-            disableButton[0] = StaticMethod.lengthController(FNameTF,t1,20,3);
-            makeDisableButton();
+           disableButton[0] = StaticMethod.lengthController(FNameTF,t1,20,3);
+           makeDisableButton();
         } );
 
         LNameTF.textProperty().addListener((observableValue, s,t1) ->{
@@ -65,7 +63,7 @@ public class RegisterScreenController {
             makeDisableButton();
         } );
 
-        passwordPF.textProperty().addListener((observableValue, s, t1) -> {
+            passwordPF.textProperty().addListener((observableValue, s, t1) -> {
             disableButton[2] = StaticMethod.lengthController(passwordPF,t1,30,5);
             makeDisableButton();
         });
