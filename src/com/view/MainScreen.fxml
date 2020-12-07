@@ -212,7 +212,10 @@
       </AnchorPane>
       <AnchorPane fx:id="settingsPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
-            <Label alignment="CENTER" prefHeight="17.0" prefWidth="573.0" style="-fx-background-color: #1761A0; -fx-background-radius: 25;" text="Settings" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
+            <Label alignment="CENTER" prefHeight="17.0" prefWidth="573.0" style="-fx-background-color: #1761A0; -fx-background-radius: 25;" text="Settings" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
+               <font>
+                  <Font name="Comic Sans MS" size="12.0" />
+               </font></Label>
             <VBox layoutX="22.0" layoutY="40.0" prefHeight="211.0" prefWidth="265.0" style="-fx-border-color: #419A1C; -fx-border-width: 5; -fx-border-radius: 20 20 0 20;" AnchorPane.leftAnchor="20.0">
                <children>
                   <Label text="Change Password">
@@ -220,7 +223,7 @@
                         <Insets bottom="5.0" left="5.0" top="5.0" />
                      </VBox.margin>
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Comic Sans MS" size="14.0" />
                      </font>
                   </Label>
                   <Label text="Current Password">
@@ -228,7 +231,7 @@
                         <Insets bottom="5.0" left="10.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField>
+                  <TextField fx:id="currentPasswordTF">
                      <VBox.margin>
                         <Insets bottom="5.0" left="10.0" right="10.0" />
                      </VBox.margin>
@@ -238,15 +241,18 @@
                         <Insets bottom="5.0" left="10.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField>
+                  <TextField fx:id="newPasswordTF">
                      <VBox.margin>
                         <Insets bottom="5.0" left="10.0" right="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="77.0" text="Change">
+                  <Button mnemonicParsing="false" onAction="#changePasswordHandle" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #1761A0;" text="Change" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="165.0" top="10.0" />
                      </VBox.margin>
+                     <font>
+                        <Font name="Comic Sans MS" size="12.0" />
+                     </font>
                   </Button>
                </children>
             </VBox>
@@ -257,7 +263,7 @@
                         <Insets bottom="5.0" left="5.0" top="5.0" />
                      </VBox.margin>
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Comic Sans MS" size="14.0" />
                      </font>
                   </Label>
                   <Label text="Current Mail">
@@ -280,10 +286,13 @@
                         <Insets bottom="5.0" left="10.0" right="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="77.0" text="Change">
+                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #419A1C;" text="Change" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="165.0" top="10.0" />
                      </VBox.margin>
+                     <font>
+                        <Font name="Comic Sans MS" size="12.0" />
+                     </font>
                   </Button>
                </children>
             </VBox>
@@ -294,7 +303,7 @@
                         <Insets bottom="5.0" left="5.0" top="5.0" />
                      </VBox.margin>
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Comic Sans MS" size="14.0" />
                      </font>
                   </Label>
                   <Label text="Current Phone Number">
@@ -317,10 +326,13 @@
                         <Insets bottom="5.0" left="10.0" right="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="77.0" text="Change">
+                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #419A1C;" text="Change" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="165.0" top="10.0" />
                      </VBox.margin>
+                     <font>
+                        <Font name="Comic Sans MS" size="12.0" />
+                     </font>
                   </Button>
                </children>
             </VBox>
@@ -331,7 +343,7 @@
                         <Insets bottom="5.0" left="5.0" top="5.0" />
                      </VBox.margin>
                      <font>
-                        <Font size="14.0" />
+                        <Font name="Comic Sans MS" size="14.0" />
                      </font>
                   </Label>
                   <Label text="Current Address">
@@ -354,10 +366,13 @@
                         <Insets left="10.0" right="10.0" />
                      </VBox.margin>
                   </TextArea>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="77.0" text="Change">
+                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #1761A0;" text="Change" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="165.0" top="10.0" />
                      </VBox.margin>
+                     <font>
+                        <Font name="Comic Sans MS" size="12.0" />
+                     </font>
                   </Button>
                </children>
             </VBox>

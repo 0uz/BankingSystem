@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -32,6 +33,8 @@ public class MainScreenController {
     public ImageView trans_img;
     public ImageView credit_img;
     public ImageView settings_img;
+    public TextField currentPasswordTF;
+    public TextField newPasswordTF;
     DatabaseLayer layer = new DatabaseLayer();
 
     public String currentUserTC;
@@ -136,7 +139,17 @@ public class MainScreenController {
             }
         }
         //TODO last account add with fxml
+    }
 
+    public void changePasswordHandle(){
+        if(layer.loginUserControl(Double.parseDouble(currentUserTC),currentPasswordTF.getText()) &&
+            StaticMethod.lengthController(newPasswordTF,newPasswordTF.getText(),30,5)){
+            layer.updatePassword(Double.parseDouble(currentUserTC),newPasswordTF.getText());
+            StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","notError");
+        }
+        else{
+            StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","error");
+        }
     }
 }
 

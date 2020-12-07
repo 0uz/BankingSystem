@@ -142,6 +142,20 @@ public class DatabaseLayer {
 
     }
 
+    public boolean updatePassword(Double TC, String password){
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE users set password = ? where TC = ?");
+            statement.setString(1,password);
+            statement.setDouble(2,TC);
+            statement.execute();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+
+    }
+
     public boolean IBANConflictControl(String IBAN){
         try {
             PreparedStatement statement =  connection.prepareStatement("select IBAN from accounts where IBAN = ?");
@@ -213,6 +227,8 @@ public class DatabaseLayer {
             return false;
         }
     }
+
+
 
     public boolean addNewGoldAccount(Double TC, double money){
         try {
