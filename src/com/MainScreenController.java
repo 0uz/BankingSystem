@@ -28,6 +28,10 @@ public class MainScreenController {
     public Button accountButton;
     public Button addAccountButton;
     public Label welcomeLabel;
+    public ImageView acc_img;
+    public ImageView trans_img;
+    public ImageView credit_img;
+    public ImageView settings_img;
     DatabaseLayer layer = new DatabaseLayer();
 
     public String currentUserTC;
@@ -36,6 +40,10 @@ public class MainScreenController {
         accountPage.setVisible(false);
         transactionPage.setVisible(false);
         settingsPage.setVisible(false);
+        StaticMethod.imageLoader(acc_img,"images/account.png");
+        StaticMethod.imageLoader(trans_img,"images/transaction.png");
+        StaticMethod.imageLoader(credit_img,"images/credit.png");
+        StaticMethod.imageLoader(settings_img,"images/settings.png");
         if(currentUserTC!=null){
             fillMainAccountInfo(); //%100 kullandi
         }

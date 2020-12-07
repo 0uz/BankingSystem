@@ -27,7 +27,7 @@ public class RegisterScreenController {
     DatabaseLayer layer = new DatabaseLayer();
 
     public void initialize(){
-        LoginScreenController.imageLoader(logo,"images/logo.png");
+        StaticMethod.imageLoader(logo,"images/logo.png");
         lengthListeners();
         emailTFListener();
         BDateController();

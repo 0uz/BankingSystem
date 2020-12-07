@@ -20,16 +20,9 @@ public class LoginScreenController {
     public Label loginWrongL;
     DatabaseLayer layer = new DatabaseLayer();
 
-    static void imageLoader(ImageView image,String path){
-        File file = new File(path);
-        Image imageFile = new Image(file.toURI().toString());
-        image.setImage(imageFile);
-
-
-    }
 
     public void initialize(){
-        imageLoader(logo,"images/logo.png");
+        StaticMethod.imageLoader(logo,"images/logo.png");
         layer.createTables();
     }
 
