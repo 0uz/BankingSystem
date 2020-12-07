@@ -157,16 +157,12 @@ public class DatabaseLayer {
 
     public String[] getUserInfo(String TC){
         try {
-            PreparedStatement statement1 = connection.prepareStatement("select IBAN,amount from accounts where TC = ? and mainAccF = true");
-            PreparedStatement statement2 = connection.prepareStatement("select F_Name, L_Name from users where TC = ?;");
+            PreparedStatement statement1 = connection.prepareStatement("select F_Name,L_Name,IBAN,amount from accounts,users where users.TC=accounts.TC and mainAccF = true and users.TC = ?");
             statement1.setString(1,TC);
-            statement2.setString(1,TC);
             ResultSet rs = statement1.executeQuery();
-            ResultSet rs2 = statement2.executeQuery();
             rs.next();
-            rs2.next();
-            return new String[]{rs2.getString("F_Name"),
-            rs2.getString("L_Name"),
+            return new String[]{rs.getString("F_Name"),
+            rs.getString("L_Name"),
             rs.getString("IBAN"),
             String.valueOf(rs.getInt("amount"))};
 
