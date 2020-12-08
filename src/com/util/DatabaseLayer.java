@@ -3,6 +3,7 @@ import com.StaticMethod;
 import javafx.scene.control.Alert;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -142,6 +143,45 @@ public class DatabaseLayer {
 
     }
 
+    public boolean updatePassword(Double TC, String password){
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE users set password = ? where TC = ?");
+            statement.setString(1,password);
+            statement.setDouble(2,TC);
+            statement.execute();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateAddress(Double TC, String address){
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE users set address = ? where TC = ?");
+            statement.setString(1,address);
+            statement.setDouble(2,TC);
+            statement.execute();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean updateMail(Double TC, String mail){
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE users set mail = ? where TC = ?");
+            statement.setString(1,mail);
+            statement.setDouble(2,TC);
+            statement.execute();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean IBANConflictControl(String IBAN){
         try {
             PreparedStatement statement =  connection.prepareStatement("select IBAN from accounts where IBAN = ?");
@@ -157,14 +197,16 @@ public class DatabaseLayer {
 
     public String[] getUserInfo(String TC){
         try {
-            PreparedStatement statement1 = connection.prepareStatement("select F_Name,L_Name,IBAN,amount from accounts,users where users.TC=accounts.TC and mainAccF = true and users.TC = ?");
+            PreparedStatement statement1 = connection.prepareStatement("select F_Name,L_Name,IBAN,amount,mail,address from accounts,users where users.TC=accounts.TC and mainAccF = true and users.TC = ?");
             statement1.setString(1,TC);
             ResultSet rs = statement1.executeQuery();
             rs.next();
             return new String[]{rs.getString("F_Name"),
             rs.getString("L_Name"),
             rs.getString("IBAN"),
-            String.valueOf(rs.getInt("amount"))};
+            String.valueOf(rs.getInt("amount")),
+            rs.getString("mail"),
+            rs.getString("address")};
 
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -172,12 +214,13 @@ public class DatabaseLayer {
         }
     }
 
+
     public List<String[]> getAccountData(String TC){
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT IBAN,amount,currency from accounts where TC = ? AND mainAccF = false");
             statement.setString(1,TC);
             ResultSet rs = statement.executeQuery();
-            List<String[]> data = null;
+            List<String[]> data = new ArrayList<>();
             while (rs.next()){
                 data.add(new String[]{rs.getString("IBAN"),
                         String.valueOf(rs.getInt("amount")),
@@ -213,6 +256,8 @@ public class DatabaseLayer {
             return false;
         }
     }
+
+
 
     public boolean addNewGoldAccount(Double TC, double money){
         try {

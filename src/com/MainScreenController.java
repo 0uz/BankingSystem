@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -14,8 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.commons.validator.routines.EmailValidator;
 
-import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.List;
 
@@ -35,6 +36,13 @@ public class MainScreenController {
     public ImageView trans_img;
     public ImageView credit_img;
     public ImageView settings_img;
+    public TextField currentPasswordTF;
+    public TextField newPasswordTF;
+    public Label currentMailLabel;
+    public Label currentPnoLabel;
+    public Label currentAddressLabel;
+    public TextArea newAddressTF;
+    public TextField newMailTF;
     public TextField recevIBAN;
     public TextField recevNameSurname;
     public Button sendButton;
@@ -61,6 +69,7 @@ public class MainScreenController {
     public void setCurrentUserTC(String currentUserTC) {
         this.currentUserTC = currentUserTC;
         initialize();
+        listAccounts();
     }
 
     public void passScreenHandle(boolean account, boolean trans, boolean settings){
@@ -74,7 +83,13 @@ public class MainScreenController {
         welcomeLabel.setText("Welcome "+infos[0]+" "+infos[1]);
         moneyLabel.setText("IBAN: "+ infos[2]);
         IBANLabel.setText("Money : " + infos[3] + " TL");
+        StaticMethod.imageLoader(currencyIV,"images/turkish-lira.png");
+        currentMailLabel.setText(infos[4]);
+        currentAddressLabel.setText(infos[5]);
     }
+
+
+
     public void accountsButtonAction(){
         passScreenHandle(true,false,false);
     }
@@ -151,20 +166,62 @@ public class MainScreenController {
     }
 
 
-    void listAccounts(){
+    void listAccounts()  {
         List<String[]> data = layer.getAccountData(currentUserTC);
-        for (int i = 0 ; i <data.size()-1;i++){
-            AccountViewController control = new AccountViewController(data.get(i)[0],data.get(i)[1]);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AccountVi ew.fxml"));
+        System.out.println(currentUserTC);
+        for (int i = 0 ; i <data.size();i++){
+            AccountViewController control;
+            if (i==data.size()-1){
+                control = new AccountViewController(data.get(i)[0],data.get(i)[1],false,data.get(i)[2]);
+            }else{
+                control = new AccountViewController(data.get(i)[0],data.get(i)[1],true,data.get(i)[2]);
+            }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AccountView.fxml"));
             loader.setController(control);
             try {
                 accountVBox.getChildren().add(loader.load());
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        //TODO last account add with fxml
 
+        }
     }
+
+    public void changePasswordHandle(){
+        if(layer.loginUserControl(Double.parseDouble(currentUserTC),currentPasswordTF.getText())){
+            if(StaticMethod.lengthController(newPasswordTF,newPasswordTF.getText(),30,5)){
+                layer.updatePassword(Double.parseDouble(currentUserTC),newPasswordTF.getText());
+                StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","notError");
+            }
+            else{
+                StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","error");
+            }
+            StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","notError");
+        }
+        else{
+            StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","error");
+        }
+    }
+
+    public void changeAddressHandle() {
+        if (StaticMethod.lengthController(newAddressTF,newAddressTF.getText(),70,5)) {
+            layer.updateAddress(Double.parseDouble(currentUserTC), newAddressTF.getText());
+            StaticMethod.addCSS(newAddressTF, "com/view/css/mainsc.css", "notError");
+        }
+        else {
+            StaticMethod.addCSS(newAddressTF, "com/view/css/mainsc.css", "error");
+        }
+    }
+
+    public void changeMailHandle(){
+        if(EmailValidator.getInstance().isValid(newMailTF.getText())){
+            layer.updateMail(Double.parseDouble(currentUserTC),newMailTF.getText());
+            StaticMethod.addCSS(newMailTF,"com/view/css/mainsc.css", "notError");
+        }
+        else {
+            StaticMethod.addCSS(newMailTF,"com/view/css/mainsc.css", "error");
+        }
+    }
+
 }
 
