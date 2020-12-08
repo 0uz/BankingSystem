@@ -65,6 +65,7 @@ public class MainScreenController {
     public void setCurrentUserTC(String currentUserTC) {
         this.currentUserTC = currentUserTC;
         initialize();
+        listAccounts();
     }
 
     public void passScreenHandle(boolean account, boolean trans, boolean settings){
@@ -78,6 +79,7 @@ public class MainScreenController {
         welcomeLabel.setText("Welcome "+infos[0]+" "+infos[1]);
         moneyLabel.setText("IBAN: "+ infos[2]);
         IBANLabel.setText("Money : " + infos[3] + " TL");
+        StaticMethod.imageLoader(currencyIV,"images/turkish-lira.png");
         currentMailLabel.setText(infos[4]);
         currentAddressLabel.setText(infos[5]);
     }
@@ -139,10 +141,16 @@ public class MainScreenController {
     }
 
 
-    void listAccounts(){
+    void listAccounts()  {
         List<String[]> data = layer.getAccountData(currentUserTC);
-        for (int i = 0 ; i <data.size()-1;i++){
-            AccountViewController control = new AccountViewController(data.get(i)[0],data.get(i)[1]);
+        System.out.println(currentUserTC);
+        for (int i = 0 ; i <data.size();i++){
+            AccountViewController control;
+            if (i==data.size()-1){
+                control = new AccountViewController(data.get(i)[0],data.get(i)[1],false,data.get(i)[2]);
+            }else{
+                control = new AccountViewController(data.get(i)[0],data.get(i)[1],true,data.get(i)[2]);
+            }
             FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AccountView.fxml"));
             loader.setController(control);
             try {
@@ -150,8 +158,8 @@ public class MainScreenController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
-        //TODO last account add with fxml
     }
 
     public void changePasswordHandle(){

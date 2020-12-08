@@ -110,7 +110,7 @@
                      <graphic>
                         <HBox spacing="10.0">
                            <children>
-                              <ImageView fx:id="currencyIV" fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="currencyIV" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
                               <VBox alignment="CENTER" prefWidth="250.0">
                                  <children>
                                     <Label fx:id="moneyLabel" text="Money :" />
@@ -210,7 +210,7 @@
             <Label layoutX="234.0" layoutY="252.0" text="BURASI CREDIT" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="settingsPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <AnchorPane fx:id="settingsPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="573.0" style="-fx-background-color: #1761A0; -fx-background-radius: 25;" text="Settings" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0">
                <font>

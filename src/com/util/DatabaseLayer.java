@@ -3,6 +3,7 @@ import com.StaticMethod;
 import javafx.scene.control.Alert;
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -219,7 +220,7 @@ public class DatabaseLayer {
             PreparedStatement statement = connection.prepareStatement("SELECT IBAN,amount,currency from accounts where TC = ? AND mainAccF = false");
             statement.setString(1,TC);
             ResultSet rs = statement.executeQuery();
-            List<String[]> data = null;
+            List<String[]> data = new ArrayList<>();
             while (rs.next()){
                 data.add(new String[]{rs.getString("IBAN"),
                         String.valueOf(rs.getInt("amount")),

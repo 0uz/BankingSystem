@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<Button fx:id="accountButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="590.0" style="-fx-background-color: #419A1C; -fx-background-radius: 20;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Button fx:id="accountButton" minHeight="45.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <graphic>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>
-            <ImageView fitHeight="45.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="currencyImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></ImageView>
             <VBox>
                <children>
-                  <Label fx:id="IBANLabel" text="Label" />
-                  <Label fx:id="MoneyLabel" text="Label" />
+                  <Label fx:id="IBANLabel" text="Label">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Label>
+                  <Label fx:id="MoneyLabel" text="Label">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor></Label>
                </children>
             </VBox>
          </children>
@@ -24,4 +34,7 @@
          </padding>
       </HBox>
    </graphic>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
 </Button>
