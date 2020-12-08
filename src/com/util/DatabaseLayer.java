@@ -235,6 +235,23 @@ public class DatabaseLayer {
         }
     }
 
+    public void transaction( String sendIBAN,String recevIBAN,double amount){
+        try{
+            PreparedStatement statement1=connection.prepareStatement("insert into transactions (senderIBAN,receiverIBAN,amount,T_date) value (?,?,?,?)" );
+            statement1.setString(1,sendIBAN);
+            statement1.setString(2,recevIBAN);
+            statement1.setDouble(3,amount);
+            statement1.setTimestamp(4,currentDate);
+
+            return ;
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+            return ;
+        }
+
+    }
+
+
 
     public void closeConnection(){
         try {

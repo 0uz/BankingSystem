@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -13,6 +14,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.List;
 
@@ -32,6 +35,10 @@ public class MainScreenController {
     public ImageView trans_img;
     public ImageView credit_img;
     public ImageView settings_img;
+    public TextField recevIBAN;
+    public TextField recevNameSurname;
+    public Button sendButton;
+    public TextField recevAmount;
     DatabaseLayer layer = new DatabaseLayer();
 
     public String currentUserTC;
@@ -122,12 +129,33 @@ public class MainScreenController {
 
     }
 
+    public void SendButton() {
+
+        DatabaseLayer IBANcheck=new DatabaseLayer();
+        recevNameSurname.getText();
+        recevIBAN.getText();
+        recevAmount.getText();
+        //listener
+        boolean check=IBANcheck.IBANConflictControl( recevIBAN.getText());
+
+
+        if(check=!true){
+
+
+        }
+
+
+
+
+
+    }
+
 
     void listAccounts(){
         List<String[]> data = layer.getAccountData(currentUserTC);
         for (int i = 0 ; i <data.size()-1;i++){
             AccountViewController control = new AccountViewController(data.get(i)[0],data.get(i)[1]);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AccountView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AccountVi ew.fxml"));
             loader.setController(control);
             try {
                 accountVBox.getChildren().add(loader.load());

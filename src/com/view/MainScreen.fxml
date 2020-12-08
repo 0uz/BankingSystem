@@ -143,7 +143,7 @@
             <Button layoutX="413.0" layoutY="408.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="getir" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="transactionPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <AnchorPane fx:id="transactionPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="590.0" style="-fx-background-color: #419A1C; -fx-background-radius: 10 10 10 10;" text="Transfer" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
             <HBox layoutX="195.0" layoutY="25.0" prefHeight="495.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
@@ -155,7 +155,7 @@
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
                         </Label>
-                        <TextField prefHeight="25.0" prefWidth="263.0">
+                        <TextField fx:id="recevNameSurname" prefHeight="25.0" prefWidth="263.0">
                            <VBox.margin>
                               <Insets left="20.0" right="40.0" />
                            </VBox.margin>
@@ -165,7 +165,7 @@
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
                         </Label>
-                        <TextField>
+                        <TextField fx:id="recevIBAN">
                            <VBox.margin>
                               <Insets left="20.0" right="40.0" />
                            </VBox.margin>
@@ -175,26 +175,26 @@
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
                         </Label>
-                        <TextField>
+                        <TextField fx:id="recevAmount">
                            <VBox.margin>
                               <Insets left="20.0" right="40.0" />
                            </VBox.margin>
                         </TextField>
-                        <Button mnemonicParsing="false" text="Send">
+                        <Button fx:id="sendButton" mnemonicParsing="false" text="Send">
                            <VBox.margin>
                               <Insets left="20.0" top="20.0" />
                            </VBox.margin>
                         </Button>
                      </children>
                   </VBox>
-                  <VBox prefHeight="495.0" prefWidth="299.0" style="-fx-border-color: #419A1C transparent transparent transparent;">
+                  <VBox prefHeight="495.0" prefWidth="299.0" style="-fx-border-color: transparent #419A1C transparent transparent;">
                      <children>
                         <Label alignment="CENTER" prefHeight="30.0" prefWidth="299.0" text="Select Account">
                            <VBox.margin>
                               <Insets bottom="5.0" top="20.0" />
                            </VBox.margin>
                         </Label>
-                        <ListView prefHeight="475.0" prefWidth="299.0">
+                        <ListView prefHeight="475.0" prefWidth="299.0" style="-fx-background-radius: 10;">
                            <VBox.margin>
                               <Insets bottom="20.0" left="20.0" right="20.0" />
                            </VBox.margin>
@@ -210,7 +210,7 @@
             <Label layoutX="234.0" layoutY="252.0" text="BURASI CREDIT" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="settingsPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <AnchorPane fx:id="settingsPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
             <Label alignment="CENTER" prefHeight="17.0" prefWidth="573.0" style="-fx-background-color: #1761A0; -fx-background-radius: 25;" text="Settings" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="5.0" />
             <VBox layoutX="22.0" layoutY="40.0" prefHeight="211.0" prefWidth="265.0" style="-fx-border-color: #419A1C; -fx-border-width: 5; -fx-border-radius: 20 20 0 20;" AnchorPane.leftAnchor="20.0">
