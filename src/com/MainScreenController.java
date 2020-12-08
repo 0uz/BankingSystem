@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -14,6 +15,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import org.apache.commons.validator.routines.EmailValidator;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -35,6 +38,11 @@ public class MainScreenController {
     public ImageView settings_img;
     public TextField currentPasswordTF;
     public TextField newPasswordTF;
+    public Label currentMailLabel;
+    public Label currentPnoLabel;
+    public Label currentAddressLabel;
+    public TextArea newAddressTF;
+    public TextField newMailTF;
     DatabaseLayer layer = new DatabaseLayer();
 
     public String currentUserTC;
@@ -70,7 +78,12 @@ public class MainScreenController {
         welcomeLabel.setText("Welcome "+infos[0]+" "+infos[1]);
         moneyLabel.setText("IBAN: "+ infos[2]);
         IBANLabel.setText("Money : " + infos[3] + " TL");
+        currentMailLabel.setText(infos[4]);
+        currentAddressLabel.setText(infos[5]);
     }
+
+
+
     public void accountsButtonAction(){
         passScreenHandle(true,false,false);
     }
@@ -142,14 +155,40 @@ public class MainScreenController {
     }
 
     public void changePasswordHandle(){
-        if(layer.loginUserControl(Double.parseDouble(currentUserTC),currentPasswordTF.getText()) &&
-            StaticMethod.lengthController(newPasswordTF,newPasswordTF.getText(),30,5)){
-            layer.updatePassword(Double.parseDouble(currentUserTC),newPasswordTF.getText());
+        if(layer.loginUserControl(Double.parseDouble(currentUserTC),currentPasswordTF.getText())){
+            if(StaticMethod.lengthController(newPasswordTF,newPasswordTF.getText(),30,5)){
+                layer.updatePassword(Double.parseDouble(currentUserTC),newPasswordTF.getText());
+                StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","notError");
+            }
+            else{
+                StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","error");
+            }
             StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","notError");
         }
         else{
             StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","error");
         }
     }
+
+    public void changeAddressHandle() {
+        if (StaticMethod.lengthController(newAddressTF,newAddressTF.getText(),70,5)) {
+            layer.updateAddress(Double.parseDouble(currentUserTC), newAddressTF.getText());
+            StaticMethod.addCSS(newAddressTF, "com/view/css/mainsc.css", "notError");
+        }
+        else {
+            StaticMethod.addCSS(newAddressTF, "com/view/css/mainsc.css", "error");
+        }
+    }
+
+    public void changeMailHandle(){
+        if(EmailValidator.getInstance().isValid(newMailTF.getText())){
+            layer.updateMail(Double.parseDouble(currentUserTC),newMailTF.getText());
+            StaticMethod.addCSS(newMailTF,"com/view/css/mainsc.css", "notError");
+        }
+        else {
+            StaticMethod.addCSS(newMailTF,"com/view/css/mainsc.css", "error");
+        }
+    }
+
 }
 

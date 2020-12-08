@@ -271,7 +271,7 @@
                         <Insets bottom="5.0" left="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label text="Mail">
+                  <Label fx:id="currentMailLabel" text="Mail">
                      <VBox.margin>
                         <Insets left="10.0" />
                      </VBox.margin>
@@ -281,12 +281,12 @@
                         <Insets bottom="5.0" left="10.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <TextField>
+                  <TextField fx:id="newMailTF">
                      <VBox.margin>
                         <Insets bottom="5.0" left="10.0" right="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #419A1C;" text="Change" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#changeMailHandle" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #419A1C;" text="Change" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="165.0" top="10.0" />
                      </VBox.margin>
@@ -311,7 +311,7 @@
                         <Insets bottom="5.0" left="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label text="Phone Number">
+                  <Label fx:id="currentPnoLabel" text="Phone Number">
                      <VBox.margin>
                         <Insets left="10.0" />
                      </VBox.margin>
@@ -351,22 +351,22 @@
                         <Insets bottom="5.0" left="10.0" />
                      </VBox.margin>
                   </Label>
-                  <Label text="Address">
-                     <padding>
+                  <Label fx:id="currentAddressLabel" text="Address">
+                     <VBox.margin>
                         <Insets bottom="5.0" left="10.0" />
-                     </padding>
+                     </VBox.margin>
                   </Label>
                   <Label text="New Address">
                      <VBox.margin>
                         <Insets bottom="5.0" left="10.0" />
                      </VBox.margin>
                   </Label>
-                  <TextArea prefHeight="0.0" prefWidth="254.0" wrapText="true">
+                  <TextArea fx:id="newAddressTF" prefHeight="0.0" prefWidth="254.0" wrapText="true">
                      <VBox.margin>
                         <Insets left="10.0" right="10.0" />
                      </VBox.margin>
                   </TextArea>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #1761A0;" text="Change" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#changeAddressHandle" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #1761A0;" text="Change" textFill="WHITE">
                      <VBox.margin>
                         <Insets left="165.0" top="10.0" />
                      </VBox.margin>
