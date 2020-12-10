@@ -76,11 +76,6 @@ public class MainScreenController {
         StaticMethod.imageLoader(settings_img,"images/settings.png");
         currencyVBox.getChildren().addAll(new Label("USD/TRY: "+StaticMethod.API("USD","TRY")),new Label("EUR/TRY: "+StaticMethod.API("EUR","TRY")));
         addListener();
-        if(currentUserTC!=null){
-            fillMainAccountInfo(); //%100 kullandi
-        }
-
-
     }
 
 
