@@ -58,9 +58,7 @@ public class MainScreenController {
     public Button currencySearchButton;
     public PieChart myMoneyPC;
     public VBox transAccount;
-    public TextField accIBAN;
-    public TextField accCurrency;
-    public TextField accAmount;
+
 
     DatabaseLayer layer = new DatabaseLayer();
     public String currentUserTC;
@@ -219,12 +217,11 @@ public class MainScreenController {
 
     void listTransAccounts()  {
         List<String[]> accountsData = layer.getAccountData(currentUserTC);
-        for (int i = 0 ; i <accountsData.size();i++){
-            accIBAN.setText(accountsData.get(i)[0]);
-            accCurrency.setText(accountsData.get(i)[1]);
-            accAmount.setText(accountsData.get(i)[2]);
 
+        for (int i = 0 ; i <accountsData.size();i++){
+            TransactionAccountController controller=new TransactionAccountController(accountsData.get(i)[0],accountsData.get(i)[1],accountsData.get(i)[2]);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("view/TransactionAccount.fxml"));
+            loader.setController(controller);
             try {
                 transAccount.getChildren().add(loader.load());
             } catch (IOException e) {
