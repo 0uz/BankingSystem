@@ -317,6 +317,27 @@ public class DatabaseLayer {
 
     }
 
+    public List<String[]> getAccountDataForTrans(String TC){
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT IBAN,amount,currency from accounts where TC = ?");
+            statement.setString(1,TC);
+            ResultSet rs = statement.executeQuery();
+            List<String[]> accountsData = new ArrayList<>();
+            while (rs.next()){
+                accountsData.add(new String[]{rs.getString("IBAN"),
+                        rs.getString("currency"),
+                        String.valueOf(rs.getInt("amount")),
+                });
+            }
+            return accountsData;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+
+
+    }
+
 
     public void closeConnection(){
         try {

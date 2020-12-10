@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+
+<HBox prefHeight="47.0" prefWidth="298.0" styleClass="nonSelection" stylesheets="@css/mainsc.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField fx:id="accIBAN" prefHeight="25.0" prefWidth="169.0">
+         <HBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </HBox.margin>
+      </TextField>
+      <TextField fx:id="accCurrency" prefHeight="25.0" prefWidth="32.0">
+         <HBox.margin>
+            <Insets bottom="10.0" left="5.0" top="10.0" />
+         </HBox.margin>
+      </TextField>
+      <TextField fx:id="accAmount" prefHeight="25.0" prefWidth="55.0">
+         <HBox.margin>
+            <Insets bottom="10.0" left="5.0" top="10.0" />
+         </HBox.margin>
+      </TextField>
+   </children>
+   <cursor>
+      <Cursor fx:constant="HAND" />
+   </cursor>
+</HBox>

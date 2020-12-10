@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -56,6 +57,11 @@ public class MainScreenController {
     public TextField toTF;
     public Button currencySearchButton;
     public PieChart myMoneyPC;
+    public VBox transAccount;
+    public TextField accIBAN;
+    public TextField accCurrency;
+    public TextField accAmount;
+
     DatabaseLayer layer = new DatabaseLayer();
     public String currentUserTC;
     boolean[] searchControl = {false,false};
@@ -70,6 +76,11 @@ public class MainScreenController {
         StaticMethod.imageLoader(settings_img,"images/settings.png");
         currencyVBox.getChildren().addAll(new Label("USD/TRY: "+StaticMethod.API("USD","TRY")),new Label("EUR/TRY: "+StaticMethod.API("EUR","TRY")));
         addListener();
+        if(currentUserTC!=null){
+            fillMainAccountInfo(); //%100 kullandi
+        }
+
+
     }
 
 
@@ -79,6 +90,7 @@ public class MainScreenController {
         listAccounts();
         fillMainAccountInfo();
         myMoneyPC.getData().addAll(layer.fillPieChart(currentUserTC));
+        listTransAccounts();
     }
 
     public void passScreenHandle(boolean account, boolean trans, boolean settings){
@@ -195,7 +207,7 @@ public class MainScreenController {
 
 
     void listAccounts()  {
-        List<String[]> data = layer.getAccountData(currentUserTC);
+        List<String[]> data = layer.getAccountDataForTrans(currentUserTC);
         System.out.println(currentUserTC);
         for (int i = 0 ; i <data.size();i++){
             AccountViewController control = new AccountViewController(data.get(i)[0],data.get(i)[1],data.get(i)[2]);
@@ -208,6 +220,30 @@ public class MainScreenController {
             }
 
         }
+    }
+
+    void listTransAccounts()  {
+        List<String[]> accountsData = layer.getAccountData(currentUserTC);
+        for (int i = 0 ; i <accountsData.size();i++){
+            accIBAN.setText(accountsData.get(i)[0]);
+            accCurrency.setText(accountsData.get(i)[1]);
+            accAmount.setText(accountsData.get(i)[2]);
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/TransactionAccount.fxml"));
+            try {
+                transAccount.getChildren().add(loader.load());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+//accListView.getItems().add();
+
+    }
+
+    void setAccountsData(){
+
     }
 
     public void changePasswordHandle(){
@@ -245,6 +281,8 @@ public class MainScreenController {
             StaticMethod.addCSS(newMailTF,"com/view/css/mainsc.css", "error");
         }
     }
+
+
 
 }
 

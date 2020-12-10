@@ -41,3 +41,25 @@
     -fx-background-radius: 20;
     -fx-background-color:#419A1C;
 }
+
+.lastAcc{
+    -fx-background-radius: 0 0 20 20;
+    -fx-background-color:#419A1C;
+}
+
+.selection{
+    -fx-background-color: #F5F6F6;
+    -fx-border-color: #419A1C;
+    -fx-border-width: 0 0 0 5;
+}
+
+.nonSelection{
+    -fx-border-color:  #F5F6F6;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-insets: 0 10 0 10;
+}
+
+.nonSelection :hover{
+    -fx-border-color:  #419A1C;
+
+}
