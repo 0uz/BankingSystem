@@ -1,5 +1,8 @@
 package com.util;
 import com.StaticMethod;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
 import java.math.BigDecimal;
 import java.sql.*;
@@ -27,7 +30,7 @@ public class DatabaseLayer {
     }
 
     public void createTables() {
-        String userTable = "CREATE TABLE IF NOT EXISTS sql2380411.users(\n" +
+        String userTable = "CREATE TABLE IF NOT EXISTS users(\n" +
                 "    F_Name VARCHAR(20),\n" +
                 "    L_Name VARCHAR(20),\n" +
                 "    TC BIGINT(11) PRIMARY KEY,\n" +
@@ -38,7 +41,7 @@ public class DatabaseLayer {
                 "    admin_F BOOL default false\n" +
                 ");";
 
-        String accountTable = "CREATE TABLE IF NOT EXISTS sql2380411.accounts(\n" +
+        String accountTable = "CREATE TABLE IF NOT EXISTS accounts(\n" +
                 "    TC bigint(11) NOT NULL,\n" +
                 "    IBAN VARCHAR(26) PRIMARY KEY,\n" +
                 "    amount decimal(28,3)default 0,\n" +
@@ -51,23 +54,23 @@ public class DatabaseLayer {
                 "    foreign key (TC) REFERENCES users(TC)\n" +
                 ");";
 
-        String transactionTable = "CREATE TABLE IF NOT EXISTS sql2380411.transactions(\n" +
+        String transactionTable = "CREATE TABLE IF NOT EXISTS transactions(\n" +
                 "    senderIBAN VARCHAR(23) NOT NULL,\n" +
                 "    receiverIBAN VARCHAR(23),\n" +
                 "    amount INTEGER,\n" +
                 "    T_date date,\n" +
                 "    isRead bool default false,\n" +
-                "    foreign key (senderIBAN) REFERENCES sql2380411.accounts(IBAN)\n" +
+                "    foreign key (senderIBAN) REFERENCES accounts(IBAN)\n" +
                 ")";
 
-        String creditTable = "CREATE TABLE IF NOT EXISTS sql2380411.credits(\n" +
+        String creditTable = "CREATE TABLE IF NOT EXISTS credits(\n" +
                 "    TC bigint(11) not null,\n" +
                 "    amount int,\n" +
                 "     creditMonths tinyint,\n" +
                 "     interest decimal(6,4),\n" +
                 "     getCreditDate date,\n" +
                 "     confirmation bool default false,\n" +
-                "     foreign key (TC) REFERENCES sql2380411.users(TC)\n" +
+                "     foreign key (TC) REFERENCES users(TC)\n" +
                 ")";
 
         try {
@@ -261,7 +264,7 @@ public class DatabaseLayer {
 
     public boolean addNewGoldAccount(Double TC, double money){
         try {
-            PreparedStatement statement1 = connection.prepareStatement("insert into accounts (TC,IBAN,currency,goldGram,openDate) value (?,?,?,?,?)");
+            PreparedStatement statement1 = connection.prepareStatement("insert into accounts (TC,IBAN,currency,goldGram,openDate,amount) value (?,?,?,?,?,?)");
             PreparedStatement statement2 = connection.prepareStatement("UPDATE accounts set amount = amount - ? where TC = ? AND mainAccF = true ");
             BigDecimal gram = new BigDecimal(money/460);
             statement1.setDouble(1,TC);
@@ -269,6 +272,7 @@ public class DatabaseLayer {
             statement1.setString(3,"Gold");
             statement1.setBigDecimal(4, gram);
             statement1.setTimestamp(5,currentDate);
+            statement1.setDouble(6,money);
             statement2.setDouble(1,money);
             statement2.setDouble(2,TC);
             statement1.execute();
@@ -296,6 +300,22 @@ public class DatabaseLayer {
 
     }
 
+    public ObservableList<PieChart.Data> fillPieChart (String TC){
+        try {
+            ObservableList<PieChart.Data> data = FXCollections.observableArrayList();
+            PreparedStatement statement = connection.prepareStatement("select currency,SUM(amount) from accounts where TC = ? group by currency");
+            statement.setString(1,TC);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                data.add(new PieChart.Data(rs.getString("currency"),rs.getDouble("SUM(amount)")));
+                }
+            return data;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+
+    }
 
 
     public void closeConnection(){

@@ -13,32 +13,23 @@ public class AccountViewController {
     String money;
     String IBAN;
     String currency;
-    boolean middle;
 
-    public AccountViewController(String IBAN,String money,boolean middle,String currency) {
+    public AccountViewController(String IBAN,String money,String currency) {
         this.money = money;
         this.IBAN = IBAN;
-        this.middle = middle;
         this.currency=currency;
     }
 
     void setCSS(){
-        if (middle){
-            StaticMethod.addCSS(accountButton,"com/view/css/mainsc.css","middleAcc");
-        }else{
-            StaticMethod.addCSS(accountButton,"com/view/css/mainsc.css","lastAcc");
-        }
+        StaticMethod.addCSS(accountButton,"com/view/css/mainsc.css","accView");
     }
 
     void setCurrencyImage() {
-        if(currency.equals("TL")){
-            StaticMethod.imageLoader(currencyImage,"images/turkish-lira.png");
-        }else if(currency.equals("Dollar")){
-            StaticMethod.imageLoader(currencyImage,"images/dollar.png");
-        }else if(currency.equals("Euro")){
-            StaticMethod.imageLoader(currencyImage,"images/euro.png");
-        }else{
-            StaticMethod.imageLoader(currencyImage,"images/gold.png");
+        switch (currency) {
+            case "TL" -> StaticMethod.imageLoader(currencyImage, "images/turkish-lira.png");
+            case "Dollar" -> StaticMethod.imageLoader(currencyImage, "images/dollar.png");
+            case "Euro" -> StaticMethod.imageLoader(currencyImage, "images/euro.png");
+            default -> StaticMethod.imageLoader(currencyImage, "images/gold.png");
         }
     }
 

@@ -149,7 +149,7 @@ public class NewAccountController{
                 StaticMethod.addCSS(moneyTF,"com/view/css/mainsc.css","error");
             }
         }else if(selectCBox.getSelectionModel().getSelectedItem().equals("Gold Account")){
-            if (goldMoneyTF.getText().length()!=0 && Double.parseDouble(moneyTF.getText()) <= currentUserMoney){
+            if (goldMoneyTF.getText().length()!=0 && Double.parseDouble(goldMoneyTF.getText()) <= currentUserMoney){
                 layer.addNewGoldAccount(Double.parseDouble(currentUserTC),Double.parseDouble(goldMoneyTF.getText()));
                 ((Stage) cancelButton.getScene().getWindow()).close();
             }else{

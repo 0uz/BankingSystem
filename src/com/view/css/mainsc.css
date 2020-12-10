@@ -37,12 +37,7 @@
     -fx-border-color: #419A1C;
 }
 
-.middleAcc{
+.accView{
     -fx-background-radius: 20;
-    -fx-background-color:#419A1C;
-}
-
-.lastAcc{
-    -fx-background-radius: 0 0 20 20;
     -fx-background-color:#419A1C;
 }

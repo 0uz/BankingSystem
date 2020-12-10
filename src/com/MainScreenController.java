@@ -1,14 +1,18 @@
 package com;
 
 import com.util.DatabaseLayer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -47,9 +51,14 @@ public class MainScreenController {
     public TextField recevNameSurname;
     public Button sendButton;
     public TextField recevAmount;
+    public VBox currencyVBox;
+    public TextField baseTF;
+    public TextField toTF;
+    public Button currencySearchButton;
+    public PieChart myMoneyPC;
     DatabaseLayer layer = new DatabaseLayer();
-
     public String currentUserTC;
+    boolean[] searchControl = {false,false};
 
     public void initialize() {
         accountPage.setVisible(false);
@@ -59,25 +68,25 @@ public class MainScreenController {
         StaticMethod.imageLoader(trans_img,"images/transaction.png");
         StaticMethod.imageLoader(credit_img,"images/credit.png");
         StaticMethod.imageLoader(settings_img,"images/settings.png");
-        if(currentUserTC!=null){
-            fillMainAccountInfo(); //%100 kullandi
-        }
-       // listAccounts();
+        currencyVBox.getChildren().addAll(new Label("USD/TRY: "+StaticMethod.API("USD","TRY")),new Label("EUR/TRY: "+StaticMethod.API("EUR","TRY")));
+        addListener();
     }
+
 
 
     public void setCurrentUserTC(String currentUserTC) {
         this.currentUserTC = currentUserTC;
-        initialize();
         listAccounts();
+        fillMainAccountInfo();
+        myMoneyPC.getData().addAll(layer.fillPieChart(currentUserTC));
     }
 
     public void passScreenHandle(boolean account, boolean trans, boolean settings){
         accountPage.setVisible(account);
         transactionPage.setVisible(trans);
         settingsPage.setVisible(settings);
-        System.out.println(StaticMethod.API("EUR","TRY"));
     }
+
     void fillMainAccountInfo(){
         String[] infos = layer.getUserInfo(currentUserTC);
         welcomeLabel.setText("Welcome "+infos[0]+" "+infos[1]);
@@ -86,12 +95,15 @@ public class MainScreenController {
         StaticMethod.imageLoader(currencyIV,"images/turkish-lira.png");
         currentMailLabel.setText(infos[4]);
         currentAddressLabel.setText(infos[5]);
+
+
     }
 
 
 
     public void accountsButtonAction(){
         passScreenHandle(true,false,false);
+
     }
 
     public void transactionButtonAction(){
@@ -112,36 +124,55 @@ public class MainScreenController {
         stage.setIconified(true);
     }
 
+    void addListener(){
+        baseTF.textProperty().addListener((observableValue, s, t1) -> {
+           searchControl[0]= StaticMethod.lengthController(baseTF,t1,3,3);
+           searchExcButDisable();
+        });
+
+        toTF.textProperty().addListener((observableValue, s, t1) -> {
+            searchControl[1]= StaticMethod.lengthController(toTF,t1,3,3);
+            searchExcButDisable();
+        });
+    }
+
 
 
     public void addAccountHandle() throws IOException {
-        FXMLLoader loader =  new FXMLLoader(getClass().getResource("view/NewAccount.fxml"));
-        Parent root = loader.load();
-        Stage stage = new Stage();
-        Scene scene = new Scene(root);
-        scene.setFill(Color.TRANSPARENT);
-        stage.setScene(scene);
-        stage.initStyle(StageStyle.TRANSPARENT);
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(accountPage.getScene().getWindow());
-
-        NewAccountController controller = loader.getController();
-        controller.setCurrentUserData(currentUserTC);
-
-        stage.show();
-
-        /*
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        AccountViewController control = new AccountViewController("Hesap"+String.valueOf(accountNum));
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AccountView.fxml"));
-        loader.setController(control);
-
-        if(accountNum<=5) {
-            accountVBox.getChildren().add(loader.load());
+        if (accountVBox.getChildren().size()<7) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("view/NewAccount.fxml"));
+            Parent root = loader.load();
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+            scene.setFill(Color.TRANSPARENT);
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.TRANSPARENT);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.initOwner(accountPage.getScene().getWindow());
+            NewAccountController controller = loader.getController();
+            controller.setCurrentUserData(currentUserTC);
+            stage.show();
         }
-        accountNum++;
-        */
+    }
+    public void searchExcButDisable(){
+        for (boolean i : searchControl){
+            if (!i){
+                currencySearchButton.setDisable(true);
+                return;
+            }else{
+                currencySearchButton.setDisable(false);
+            }
+        }
+    }
 
+    public void searchExcButton(){
+        String search = StaticMethod.API(baseTF.getText().toUpperCase(),toTF.getText().toUpperCase());
+        if (search !=null){
+            currencyVBox.getChildren().add(new Label(baseTF.getText().toUpperCase()+"/"+toTF.getText().toUpperCase()+": "+search));
+        }else{
+            baseTF.setText("Wrong unit");
+            toTF.setText("Wrong unit");
+        }
     }
 
     public void SendButton() {
@@ -160,9 +191,6 @@ public class MainScreenController {
         }
 
 
-
-
-
     }
 
 
@@ -170,12 +198,7 @@ public class MainScreenController {
         List<String[]> data = layer.getAccountData(currentUserTC);
         System.out.println(currentUserTC);
         for (int i = 0 ; i <data.size();i++){
-            AccountViewController control;
-            if (i==data.size()-1){
-                control = new AccountViewController(data.get(i)[0],data.get(i)[1],false,data.get(i)[2]);
-            }else{
-                control = new AccountViewController(data.get(i)[0],data.get(i)[1],true,data.get(i)[2]);
-            }
+            AccountViewController control = new AccountViewController(data.get(i)[0],data.get(i)[1],data.get(i)[2]);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AccountView.fxml"));
             loader.setController(control);
             try {

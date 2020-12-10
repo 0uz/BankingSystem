@@ -78,9 +78,9 @@
                      </font>
                   </Button>
                </children></VBox>
-            <Label fx:id="welcomeLabel" alignment="CENTER" layoutX="9.0" layoutY="170.0" prefHeight="26.0" prefWidth="200.0" text="Label" AnchorPane.bottomAnchor="354.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="170.0">
+            <Label fx:id="welcomeLabel" alignment="CENTER" layoutX="9.0" layoutY="170.0" prefHeight="26.0" prefWidth="200.0" text="Label" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="354.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="170.0">
                <font>
-                  <Font name="Comic Sans MS" size="14.0" />
+                  <Font size="13.0" />
                </font></Label>
          </children>
       </AnchorPane>
@@ -101,12 +101,12 @@
             </Button>
          </children>
       </HBox>
-      <AnchorPane fx:id="accountPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <AnchorPane fx:id="accountPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
-            <Button fx:id="addAccountButton" layoutX="413.0" layoutY="450.0" mnemonicParsing="false" onAction="#addAccountHandle" prefHeight="40.0" prefWidth="149.0" text="Account Ekle" />
+            <Button fx:id="addAccountButton" layoutX="413.0" layoutY="450.0" mnemonicParsing="false" onAction="#addAccountHandle" prefHeight="40.0" prefWidth="149.0" text="Add Account" />
             <VBox fx:id="accountVBox" alignment="CENTER" layoutX="117.0" layoutY="269.0" maxHeight="520.0" spacing="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                <children>
-                  <Button fx:id="accountButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="590.0" style="-fx-background-color: #419A1C; -fx-background-radius: 20 20 0 0;">
+                  <Button fx:id="accountButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="590.0" style="-fx-background-color: #419A1C; -fx-background-radius: 20;">
                      <graphic>
                         <HBox spacing="10.0">
                            <children>
@@ -130,20 +130,14 @@
                   <Label alignment="CENTER" prefHeight="17.0" prefWidth="573.0" style="-fx-background-color: #1761A0; -fx-background-radius: 25;" text="Doviz Hesaplari" textAlignment="CENTER" textFill="WHITE" />
                </children>
             </VBox>
-            <PieChart layoutX="14.0" layoutY="324.0" prefHeight="179.0" prefWidth="229.0" title="param" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
-            <VBox layoutX="262.0" layoutY="336.0" prefHeight="170.0" prefWidth="137.0" spacing="3.0">
-               <children>
-                  <Label text="Dolar/TL = 10" />
-                  <Label layoutX="10.0" layoutY="10.0" text="Euro/TL = 10" />
-                  <Label layoutX="10.0" layoutY="10.0" text="Katar Riyali/TL = 10" />
-               </children>
-            </VBox>
-            <TextField layoutX="413.0" layoutY="336.0" />
-            <TextField layoutX="413.0" layoutY="369.0" />
-            <Button layoutX="413.0" layoutY="408.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="149.0" text="getir" />
+            <PieChart fx:id="myMoneyPC" labelLineLength="5.0" labelsVisible="false" layoutX="14.0" layoutY="324.0" prefHeight="195.0" prefWidth="250.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+            <VBox fx:id="currencyVBox" layoutX="262.0" layoutY="336.0" prefHeight="170.0" prefWidth="137.0" spacing="3.0" />
+            <TextField fx:id="baseTF" layoutX="413.0" layoutY="336.0" promptText="Base: USD etc." />
+            <TextField fx:id="toTF" layoutX="413.0" layoutY="369.0" promptText="To : TRY etc." />
+            <Button fx:id="currencySearchButton" disable="true" layoutX="413.0" layoutY="408.0" mnemonicParsing="false" onAction="#searchExcButton" prefHeight="25.0" prefWidth="149.0" text="Search" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="transactionPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <AnchorPane fx:id="transactionPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="590.0" style="-fx-background-color: #419A1C; -fx-background-radius: 10 10 10 10;" text="Transfer" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
             <HBox layoutX="195.0" layoutY="25.0" prefHeight="495.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
@@ -223,7 +217,7 @@
                         <Insets bottom="5.0" left="5.0" top="5.0" />
                      </VBox.margin>
                      <font>
-                        <Font name="Comic Sans MS" size="14.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
                   <Label text="Current Password">
@@ -263,7 +257,7 @@
                         <Insets bottom="5.0" left="5.0" top="5.0" />
                      </VBox.margin>
                      <font>
-                        <Font name="Comic Sans MS" size="14.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
                   <Label text="Current Mail">
@@ -303,7 +297,7 @@
                         <Insets bottom="5.0" left="5.0" top="5.0" />
                      </VBox.margin>
                      <font>
-                        <Font name="Comic Sans MS" size="14.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
                   <Label text="Current Phone Number">
@@ -343,7 +337,7 @@
                         <Insets bottom="5.0" left="5.0" top="5.0" />
                      </VBox.margin>
                      <font>
-                        <Font name="Comic Sans MS" size="14.0" />
+                        <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
                   <Label text="Current Address">

@@ -19,6 +19,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.http.HttpResponse;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.Random;
 
 public class StaticMethod {
@@ -85,12 +87,11 @@ public class StaticMethod {
             }
             reader.close();
             JSONObject object = new JSONObject(result.toString());
-            return object.getJSONObject("rates").get(symbol).toString();
+            NumberFormat format = new DecimalFormat("#0.0000");
+            return format.format(Double.parseDouble(object.getJSONObject("rates").get(symbol).toString()));
         } catch (MalformedURLException e) {
-            e.printStackTrace();
             return null;
         } catch (IOException e) {
-            e.printStackTrace();
             return null;
         }
     }
