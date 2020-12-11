@@ -25,12 +25,22 @@ public class AccountViewController {
     }
 
     void setCurrencyImage() {
-        switch (currency) {
-            case "TL" -> StaticMethod.imageLoader(currencyImage, "images/turkish-lira.png");
-            case "Dollar" -> StaticMethod.imageLoader(currencyImage, "images/dollar.png");
-            case "Euro" -> StaticMethod.imageLoader(currencyImage, "images/euro.png");
-            default -> StaticMethod.imageLoader(currencyImage, "images/gold.png");
+        if (currency.equals("TL")){
+            StaticMethod.imageLoader(currencyImage, "images/turkish-lira.png");
         }
+        if (currency.equals("Dollar")){
+            StaticMethod.imageLoader(currencyImage, "images/dollar.png");
+        }
+        if (currency.equals("Euro")){
+            StaticMethod.imageLoader(currencyImage, "images/euro.png");
+        }
+        if (currency.equals("Euro")){
+            StaticMethod.imageLoader(currencyImage, "images/euro.png");
+        }
+        if (currency.equals("Gold")){
+            StaticMethod.imageLoader(currencyImage, "images/gold.png");
+        }
+
     }
 
     public void  initialize(){

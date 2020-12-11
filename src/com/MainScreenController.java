@@ -83,7 +83,7 @@ public class MainScreenController {
         listAccounts();
         fillMainAccountInfo();
         myMoneyPC.getData().addAll(layer.fillPieChart(currentUserTC));
-        listTransAccounts();
+       // listTransAccounts();
     }
 
     public void passScreenHandle(boolean account, boolean trans, boolean settings){
@@ -200,7 +200,7 @@ public class MainScreenController {
 
 
     void listAccounts()  {
-        List<String[]> data = layer.getAccountDataForTrans(currentUserTC);
+        List<String[]> data = layer.getAccountData(currentUserTC);
         System.out.println(currentUserTC);
         for (int i = 0 ; i <data.size();i++){
             AccountViewController control = new AccountViewController(data.get(i)[0],data.get(i)[1],data.get(i)[2]);
@@ -230,7 +230,7 @@ public class MainScreenController {
 
         }
 
-//accListView.getItems().add();
+        //accListView.getItems().add();
 
     }
 
