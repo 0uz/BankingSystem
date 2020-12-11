@@ -58,6 +58,9 @@ public class MainScreenController {
     public Button currencySearchButton;
     public PieChart myMoneyPC;
     public VBox transAccount;
+    public Label passwordInf;
+    public Label mailInf;
+    public Label addressInf;
 
 
     DatabaseLayer layer = new DatabaseLayer();
@@ -243,14 +246,20 @@ public class MainScreenController {
             if(StaticMethod.lengthController(newPasswordTF,newPasswordTF.getText(),30,5)){
                 layer.updatePassword(Double.parseDouble(currentUserTC),newPasswordTF.getText());
                 StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","notError");
+                StaticMethod.addCSS(newPasswordTF,"com/view/css/mainsc.css","notError");
+                currentPasswordTF.clear();
+                newPasswordTF.clear();
+                passwordInf.setText("Successful!");
             }
             else{
-                StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","error");
+                StaticMethod.addCSS(newPasswordTF,"com/view/css/mainsc.css","error");
+                passwordInf.setText("yeni şifre çok kısa veya çok uzun");
             }
             StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","notError");
         }
         else{
             StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","error");
+            passwordInf.setText("Current password is wrong!");
         }
     }
 
@@ -258,6 +267,7 @@ public class MainScreenController {
         if (StaticMethod.lengthController(newAddressTF,newAddressTF.getText(),70,5)) {
             layer.updateAddress(Double.parseDouble(currentUserTC), newAddressTF.getText());
             StaticMethod.addCSS(newAddressTF, "com/view/css/mainsc.css", "notError");
+            newAddressTF.clear();
         }
         else {
             StaticMethod.addCSS(newAddressTF, "com/view/css/mainsc.css", "error");
@@ -268,6 +278,7 @@ public class MainScreenController {
         if(EmailValidator.getInstance().isValid(newMailTF.getText())){
             layer.updateMail(Double.parseDouble(currentUserTC),newMailTF.getText());
             StaticMethod.addCSS(newMailTF,"com/view/css/mainsc.css", "notError");
+            newMailTF.clear();
         }
         else {
             StaticMethod.addCSS(newMailTF,"com/view/css/mainsc.css", "error");
