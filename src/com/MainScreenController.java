@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -44,7 +45,6 @@ public class MainScreenController {
     public TextField currentPasswordTF;
     public TextField newPasswordTF;
     public Label currentMailLabel;
-    public Label currentPnoLabel;
     public Label currentAddressLabel;
     public TextArea newAddressTF;
     public TextField newMailTF;
@@ -61,6 +61,7 @@ public class MainScreenController {
     public Label passwordInf;
     public Label mailInf;
     public Label addressInf;
+    public ImageView logo;
 
 
     DatabaseLayer layer = new DatabaseLayer();
@@ -71,10 +72,14 @@ public class MainScreenController {
         accountPage.setVisible(false);
         transactionPage.setVisible(false);
         settingsPage.setVisible(false);
+        passwordInf.setText("");
+        mailInf.setText("");
+        addressInf.setText("");
         StaticMethod.imageLoader(acc_img,"images/account.png");
         StaticMethod.imageLoader(trans_img,"images/transaction.png");
         StaticMethod.imageLoader(credit_img,"images/credit.png");
         StaticMethod.imageLoader(settings_img,"images/settings.png");
+        StaticMethod.imageLoader(logo,"images/logo.png");
         currencyVBox.getChildren().addAll(new Label("USD/TRY: "+StaticMethod.API("USD","TRY")),new Label("EUR/TRY: "+StaticMethod.API("EUR","TRY")));
         addListener();
     }
@@ -250,16 +255,19 @@ public class MainScreenController {
                 currentPasswordTF.clear();
                 newPasswordTF.clear();
                 passwordInf.setText("Successful!");
+                passwordInf.setTextFill(Color.web("#419A1C"));
             }
             else{
                 StaticMethod.addCSS(newPasswordTF,"com/view/css/mainsc.css","error");
-                passwordInf.setText("yeni şifre çok kısa veya çok uzun");
+                passwordInf.setText("New password is too long or too short!");
+                passwordInf.setTextFill(Color.web("#FF0000"));
             }
             StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","notError");
         }
         else{
             StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","error");
             passwordInf.setText("Current password is wrong!");
+            passwordInf.setTextFill(Color.web("#FF0000"));
         }
     }
 
@@ -268,9 +276,13 @@ public class MainScreenController {
             layer.updateAddress(Double.parseDouble(currentUserTC), newAddressTF.getText());
             StaticMethod.addCSS(newAddressTF, "com/view/css/mainsc.css", "notError");
             newAddressTF.clear();
+            addressInf.setText("Successful!");
+            addressInf.setTextFill(Color.web("#419A1C"));
         }
         else {
             StaticMethod.addCSS(newAddressTF, "com/view/css/mainsc.css", "error");
+            addressInf.setText("New address is too long or too short!");
+            addressInf.setTextFill(Color.web("#FF0000"));
         }
     }
 
@@ -279,9 +291,14 @@ public class MainScreenController {
             layer.updateMail(Double.parseDouble(currentUserTC),newMailTF.getText());
             StaticMethod.addCSS(newMailTF,"com/view/css/mainsc.css", "notError");
             newMailTF.clear();
+            mailInf.setText("Successful!");
+            mailInf.setTextFill(Color.web("#419A1C"));
         }
         else {
             StaticMethod.addCSS(newMailTF,"com/view/css/mainsc.css", "error");
+            mailInf.setText("Enter a valid mail!!");
+            mailInf.setTextFill(Color.web("#FF0000"));
+
         }
     }
 

@@ -250,7 +250,7 @@
                   </Button>
                   <Label fx:id="passwordInf" text="Label">
                      <VBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="10.0" top="2.0" />
                      </VBox.margin>
                   </Label>
                </children>
@@ -298,49 +298,18 @@
                         <Insets />
                      </opaqueInsets>
                      <VBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="10.0" top="2.0" />
                      </VBox.margin>
                   </Label>
                </children>
             </VBox>
-            <VBox layoutX="22.0" layoutY="267.0" prefHeight="211.0" prefWidth="265.0" style="-fx-border-color: #1761A0; -fx-border-width: 5; -fx-border-radius: 20 0 20 20;" AnchorPane.leftAnchor="20.0">
+            <VBox alignment="CENTER" layoutX="22.0" layoutY="267.0" prefHeight="211.0" prefWidth="265.0" style="-fx-border-color: #1761A0; -fx-border-width: 5; -fx-border-radius: 20 0 20 20;" AnchorPane.leftAnchor="20.0">
                <children>
-                  <Label prefHeight="0.0" prefWidth="146.0" text="Change Phone Number">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="5.0" top="5.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="System Bold" size="13.0" />
-                     </font>
-                  </Label>
-                  <Label text="Current Phone Number">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label fx:id="currentPnoLabel" text="Phone Number">
-                     <VBox.margin>
-                        <Insets left="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <Label text="New Phone Number">
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="10.0" top="10.0" />
-                     </VBox.margin>
-                  </Label>
-                  <TextField>
-                     <VBox.margin>
-                        <Insets bottom="5.0" left="10.0" right="10.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Button mnemonicParsing="false" prefHeight="26.0" prefWidth="77.0" style="-fx-background-color: #419A1C;" text="Change" textFill="WHITE">
-                     <VBox.margin>
-                        <Insets left="165.0" top="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font name="Comic Sans MS" size="12.0" />
-                     </font>
-                  </Button>
+                  <ImageView fx:id="logo" fitHeight="200.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../images/logo.png" />
+                     </image>
+                  </ImageView>
                </children>
             </VBox>
             <VBox layoutX="302.0" layoutY="267.0" prefHeight="211.0" prefWidth="265.0" style="-fx-border-color: #419A1C; -fx-border-width: 5; -fx-border-radius: 0 20 20 20;" AnchorPane.rightAnchor="20.0">
@@ -383,7 +352,7 @@
                   </Button>
                   <Label fx:id="addressInf" text="Label">
                      <VBox.margin>
-                        <Insets left="10.0" />
+                        <Insets left="10.0" top="2.0" />
                      </VBox.margin>
                   </Label>
                </children>
