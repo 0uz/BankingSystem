@@ -1,29 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<HBox prefHeight="47.0" prefWidth="298.0" styleClass="selection" stylesheets="@css/mainsc.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" >
-   <cursor>
-      <Cursor fx:constant="DEFAULT" />
-   </cursor>
-   <children>
-      <Label fx:id="accIBAN" prefHeight="17.0" prefWidth="143.0" text="Label">
-         <HBox.margin>
-            <Insets bottom="10.0" top="10.0" />
-         </HBox.margin>
-      </Label>
-      <Label fx:id="accCur" text="Label">
-         <HBox.margin>
-            <Insets bottom="10.0" left="10.0" top="10.0" />
-         </HBox.margin>
-      </Label>
-      <Label fx:id="accAmount" prefHeight="17.0" prefWidth="99.0" text="Label">
-         <HBox.margin>
-            <Insets bottom="10.0" left="10.0" top="10.0" />
-         </HBox.margin>
-      </Label>
-   </children>
-</HBox>
+<Button fx:id="accButton" mnemonicParsing="false" prefHeight="60.0" prefWidth="270.0" style="-fx-background-color: #1761A0; -fx-background-radius: 20 20 20 0;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <graphic>
+      <VBox prefHeight="64.0" prefWidth="100.0">
+         <children>
+            <Label fx:id="accIBAN" prefHeight="17.0" prefWidth="254.0" text="IBAN" textFill="WHITE">
+               <VBox.margin>
+                  <Insets bottom="5.0" left="15.0" top="5.0" />
+               </VBox.margin>
+            </Label>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="accAmount" text="10000" textFill="#fffdfd">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="15.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+                  <Label fx:id="accCurrency" text="Dolar" textFill="WHITE">
+                     <HBox.margin>
+                        <Insets bottom="5.0" left="15.0" top="5.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </graphic>
+</Button>

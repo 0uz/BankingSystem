@@ -1,25 +1,29 @@
 package com;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 
 
 public class TransactionAccountController {
     public Label accIBAN;
-    public Label accCurrency;
     public Label accAmount;
-    String accIBANN,accCurencyy,accAmountt;
+    public Label accCurrency;
+    public Button accButton;
+    String accIBANN,accAmountt,accCurencyy;
 
 
 
     public void initialize(){
         accIBAN.setText(accIBANN);
-        accCurrency.setText(accCurencyy);
         accAmount.setText(accAmountt);
+        accCurrency.setText(accCurencyy);
     }
 
-    public TransactionAccountController(String accIBANN, String accCurencyy, String accAmountt) {
+    public TransactionAccountController(String accIBANN, String accAmountt, String accCurencyy) {
         this.accIBANN = accIBANN;
-        this.accCurencyy = accCurencyy;
         this.accAmountt = accAmountt;
+        this.accCurencyy = accCurencyy;
     }
+
+
 }

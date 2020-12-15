@@ -11,9 +11,9 @@ import java.util.List;
 
 
 public class DatabaseLayer {
-    private static final String url = "jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2380411";
-    private static final String username = "sql2380411";
-    private static final String password = "aB9%mX1*";
+    private static final String url = "jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2382229";
+    private static final String username = "sql2382229";
+    private static final String password = "bX6!qS5!";
     Connection connection;
     java.sql.Timestamp currentDate = new java.sql.Timestamp(new java.util.Date().getTime());
     public DatabaseLayer() {
@@ -299,6 +299,43 @@ public class DatabaseLayer {
         }
 
     }
+
+
+    public boolean IBANandNSConflictControl(String IBAN){
+        try {
+            PreparedStatement statement =  connection.prepareStatement("select IBAN from accounts where IBAN = ?");
+            statement.setString(1,IBAN);
+            ResultSet rs = statement.executeQuery();
+            rs.next();
+            rs.getString(1);
+            return true;
+        } catch (SQLException | RuntimeException throwables) {
+            return false;
+        }
+    }
+
+    public boolean transacitonAmountControl(String IBAN,double transAmount){
+        try{
+            PreparedStatement statement=connection.prepareStatement("select amount from accounts where IBAN = ?" );
+            ResultSet rs=statement.executeQuery();
+            rs.next();
+           double amount=  rs.getDouble(1);
+            if(transAmount<=amount){
+
+                return  true;
+            }else {
+                return false;
+            }
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+            return false ;
+        }
+
+    }
+
+
+
+
 
     public ObservableList<PieChart.Data> fillPieChart (String TC){
         try {

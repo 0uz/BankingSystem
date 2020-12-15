@@ -62,6 +62,7 @@ public class MainScreenController {
     public Label mailInf;
     public Label addressInf;
     public ImageView logo;
+    public Label yourIBAN;
 
 
     DatabaseLayer layer = new DatabaseLayer();
@@ -91,7 +92,7 @@ public class MainScreenController {
         listAccounts();
         fillMainAccountInfo();
         myMoneyPC.getData().addAll(layer.fillPieChart(currentUserTC));
-       // listTransAccounts();
+        listTransAccounts();
     }
 
     public void passScreenHandle(boolean account, boolean trans, boolean settings){
@@ -188,20 +189,18 @@ public class MainScreenController {
         }
     }
 
-    public void SendButton() {
-
-        DatabaseLayer IBANcheck=new DatabaseLayer();
+    public void sendTransactionButton() {
+        //TransactionAccountController senderIBAN=new TransactionAccountController() ;
+        DatabaseLayer db=new DatabaseLayer();
         recevNameSurname.getText();
         recevIBAN.getText();
         recevAmount.getText();
-        //listener
-        boolean check=IBANcheck.IBANConflictControl( recevIBAN.getText());
+        yourIBAN.getText();
+        if(db.IBANandNSConflictControl(recevIBAN.getText()))
+        db.transaction(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
 
 
-        if(check=!true){
 
-
-        }
 
 
     }
@@ -224,7 +223,7 @@ public class MainScreenController {
     }
 
     void listTransAccounts()  {
-        List<String[]> accountsData = layer.getAccountData(currentUserTC);
+        List<String[]> accountsData = layer.getAccountDataForTrans(currentUserTC);
 
         for (int i = 0 ; i <accountsData.size();i++){
             TransactionAccountController controller=new TransactionAccountController(accountsData.get(i)[0],accountsData.get(i)[1],accountsData.get(i)[2]);
@@ -238,13 +237,10 @@ public class MainScreenController {
 
         }
 
-        //accListView.getItems().add();
 
     }
 
-    void setAccountsData(){
 
-    }
 
     public void changePasswordHandle(){
         if(layer.loginUserControl(Double.parseDouble(currentUserTC),currentPasswordTF.getText())){
