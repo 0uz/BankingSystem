@@ -86,7 +86,7 @@ public class NewAccountController{
                 yourMoney.setText("Your Money:"+currentUserMoney);
             }else{
                 if (StaticMethod.isDouble(t1)){
-                    if (StaticMethod.lengthController(moneyTF,t1,10,0)){
+                    if (StaticMethod.lengthController(moneyTF,t1,10,0,"error","notError")){
                         makeInterestCalculation(t1);
                         yourMoney.setText("Your Money:" + (currentUserMoney-Integer.parseInt(t1)));
                         System.out.println(StaticMethod.makeExcCalc(currencyCBox.getSelectionModel().getSelectedItem(),Double.parseDouble(moneyTF.getText())));
@@ -107,7 +107,7 @@ public class NewAccountController{
                 yourMoney.setText("Your Money:"+currentUserMoney);
             }else{
                 if (StaticMethod.isDouble(t1)){
-                    if (StaticMethod.lengthController(goldMoneyTF,t1,10,0)){
+                    if (StaticMethod.lengthController(goldMoneyTF,t1,10,0,"error","notError")){
                         makeInterestCalculation(t1);
                         yourMoney.setText("Your Money:" + (currentUserMoney-Double.parseDouble(t1)));
                     }
@@ -119,7 +119,7 @@ public class NewAccountController{
         });
 
         currencyCBox.valueProperty().addListener((observableValue, o, t1) -> {
-            if (StaticMethod.lengthController(moneyTF,moneyTF.getText(),10,0) && moneyTF.getText().length()!=0 && StaticMethod.isDouble(moneyTF.getText())){
+            if (StaticMethod.lengthController(moneyTF,moneyTF.getText(),10,0,"error","notError") && moneyTF.getText().length()!=0 && StaticMethod.isDouble(moneyTF.getText())){
                 makeInterestCalculation(moneyTF.getText());
             }
 

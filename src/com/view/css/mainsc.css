@@ -13,14 +13,17 @@
 .buttons{
     -fx-background-color: #1761A0;
     -fx-text-fill: white;
+    -fx-padding: 0 0 2 0;
 }
 
 .buttons:hover{
     -fx-background-color: #0F406A;
+    -fx-background-radius: 0 30 30 0;
 }
 
 .buttons:pressed{
     -fx-background-color: #1761A0;
+    -fx-padding: 0 0 0 0;
 }
 
 .pane{
@@ -37,14 +40,20 @@
     -fx-border-color: #419A1C;
 }
 
-.accView{
-    -fx-background-radius: 20;
-    -fx-background-color:#419A1C;
+.error2{
+    -fx-border-color: red;
+    fx-border-width: 0 0 1 0;
+
 }
 
-.lastAcc{
-    -fx-background-radius: 0 0 20 20;
-    -fx-background-color:#419A1C;
+.notError2{
+    -fx-border-color: #419A1C;
+    -fx-border-width: 0 0 1 0;
+}
+
+.accView{
+    -fx-background-radius: 20;
+    -fx-background-color: #419A1C;
 }
 
 .selection{
@@ -52,6 +61,8 @@
     -fx-border-color: #419A1C;
     -fx-border-width: 0 0 0 5;
 }
+
+
 
 .nonSelection{
     -fx-border-color:  #F5F6F6;
@@ -62,4 +73,42 @@
 .nonSelection :hover{
     -fx-border-color:  #419A1C;
 
+}
+
+.text-field {
+    -fx-background-color: #419A1C , #F4F4F4 , #F4F4F4;
+    -fx-background-insets: 0 0 -1 0, 0 0 0 0, 0 0 1 0;
+}
+
+.text-field:focused {
+    -fx-background-color: #419A1C , #F4F4F4 , #F4F4F4;
+    -fx-background-insets: 0 0 -1 0, 0 0 0 0, 0 0 1 0;
+}
+
+.text-fieldError{
+    -fx-background-color: red , #F4F4F4 , #F4F4F4;
+    -fx-background-insets: 0 0 -1 0, 0 0 0 0, 0 0 1 0;
+}
+
+.text-fieldError:focused {
+    -fx-background-color: red , #F4F4F4 , #F4F4F4;
+    -fx-background-insets: 0 0 -1 0, 0 0 0 0, 0 0 1 0;
+}
+
+.button2{
+    -fx-background-color: #1761A0;
+    -fx-padding: 0 0 3 0;
+    -fx-text-fill: white;
+    -fx-background-radius: 10;
+}
+
+.button2:hover{
+    -fx-background-color: #0F406A;
+    -fx-background-radius: 10;
+}
+
+.button2:pressed{
+    -fx-background-color: #1761A0;
+    -fx-padding: 0 0 0 0;
+    -fx-background-radius: 10;
 }

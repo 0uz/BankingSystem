@@ -43,9 +43,9 @@ public class LoginScreenController {
     }
 
     public void loginUserHandle() throws IOException {
-           if(StaticMethod.lengthController(TCTF,TCTF.getText(),11,11) &&
+           if(StaticMethod.lengthController(TCTF,TCTF.getText(),11,11,"text-fieldError","text-field") &&
                    StaticMethod.isDouble(TCTF.getText()) &&
-                   StaticMethod.lengthController(passwordPF,passwordPF.getText(),50,3)){
+                   StaticMethod.lengthController(passwordPF,passwordPF.getText(),50,3,"text-fieldError","text-field")){
 
                if(layer.loginUserControl(Double.parseDouble(TCTF.getText()),passwordPF.getText())){
                    Main loader = new Main();
@@ -56,8 +56,8 @@ public class LoginScreenController {
                    loginWrongL.setVisible(true);
                }
            }else{
-               StaticMethod.addCSS(TCTF,"com/view/css/mainsc.css","error");
-               StaticMethod.addCSS(passwordPF,"com/view/css/mainsc.css","error");
+               StaticMethod.addCSS(TCTF,"com/view/css/mainsc.css","text-fieldError");
+               StaticMethod.addCSS(passwordPF,"com/view/css/mainsc.css","text-fieldError");
            }
 
     }

@@ -54,27 +54,27 @@ public class RegisterScreenController {
 
    void lengthListeners(){
         FNameTF.textProperty().addListener((observableValue, s,t1) ->{
-           disableButton[0] = StaticMethod.lengthController(FNameTF,t1,20,3);
+           disableButton[0] = StaticMethod.lengthController(FNameTF,t1,20,3,"error","notError");
            makeDisableButton();
         } );
 
         LNameTF.textProperty().addListener((observableValue, s,t1) ->{
-            disableButton[1] = StaticMethod.lengthController(LNameTF,t1,20,3);
+            disableButton[1] = StaticMethod.lengthController(LNameTF,t1,20,3,"error","notError");
             makeDisableButton();
         } );
 
             passwordPF.textProperty().addListener((observableValue, s, t1) -> {
-            disableButton[2] = StaticMethod.lengthController(passwordPF,t1,30,5);
+            disableButton[2] = StaticMethod.lengthController(passwordPF,t1,30,5,"error","notError");
             makeDisableButton();
         });
 
         addressTF.textProperty().addListener((observableValue, s, t1) ->{
-            disableButton[3] = StaticMethod.lengthController(addressTF,t1,50,5);
+            disableButton[3] = StaticMethod.lengthController(addressTF,t1,50,5,"error","notError");
             makeDisableButton();
         } );
 
         TCTF.textProperty().addListener((observableValue, s, t1) -> {
-            if (StaticMethod.lengthController(TCTF,t1,11,11)){
+            if (StaticMethod.lengthController(TCTF,t1,11,11,"error","notError")){
                 if(StaticMethod.isDouble(t1)){
                     StaticMethod.addCSS(TCTF,"com/view/css/mainsc.css","notError");
                     disableButton[4]= true;

@@ -44,8 +44,8 @@ public class DatabaseLayer {
         String accountTable = "CREATE TABLE IF NOT EXISTS accounts(\n" +
                 "    TC bigint(11) NOT NULL,\n" +
                 "    IBAN VARCHAR(26) PRIMARY KEY,\n" +
-                "    amount decimal(28,3)default 0,\n" +
-                "    currency varchar(30),\n" +
+                "    amount decimal(28,3) default 0,\n" +
+                "    currency varchar(30) default 'TL',\n" +
                 "    mainAccF bool default false,\n" +
                 "    openDate date,\n" +
                 "    interest int default 15,\n" +

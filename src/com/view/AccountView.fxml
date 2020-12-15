@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<Button fx:id="accountButton" minHeight="45.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="590.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Button fx:id="accountButton" minHeight="45.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="590.0" styleClass="accView" stylesheets="@css/mainsc.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <graphic>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
          <children>

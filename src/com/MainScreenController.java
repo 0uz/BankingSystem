@@ -1,6 +1,8 @@
 package com;
 
 import com.util.DatabaseLayer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
@@ -21,8 +23,12 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Duration;
 import org.apache.commons.validator.routines.EmailValidator;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.util.List;
 
@@ -85,8 +91,6 @@ public class MainScreenController {
         addListener();
     }
 
-
-
     public void setCurrentUserTC(String currentUserTC) {
         this.currentUserTC = currentUserTC;
         listAccounts();
@@ -104,13 +108,34 @@ public class MainScreenController {
     void fillMainAccountInfo(){
         String[] infos = layer.getUserInfo(currentUserTC);
         welcomeLabel.setText("Welcome "+infos[0]+" "+infos[1]);
-        moneyLabel.setText("IBAN: "+ infos[2]);
-        IBANLabel.setText("Money : " + infos[3] + " TL");
+        IBANLabel.setText("IBAN: "+ infos[2]);
+        moneyLabel.setText("Money : " + infos[3] + " TL");
         StaticMethod.imageLoader(currencyIV,"images/turkish-lira.png");
         currentMailLabel.setText(infos[4]);
         currentAddressLabel.setText(infos[5]);
 
+        accountButton.setOnAction(actionEvent -> {
+            StringSelection selection =  new StringSelection(infos[2]);
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(selection,null);
+            IBANLabel.setText("IBAN Copied to Clipboard !");
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e ->{
+                IBANLabel.setText("IBAN: " + infos[2]);
+            }));
+            timeline.play();
+        });
 
+        accountButton.setOnMouseEntered(mouseEvent -> {
+            accountButton.setStyle("-fx-background-color: #1761A0; -fx-border-radius: 20");
+            IBANLabel.setTextFill(Color.WHITE);
+            moneyLabel.setTextFill(Color.WHITE);
+        });
+
+        accountButton.setOnMouseExited(mouseEvent -> {
+            accountButton.setStyle("-fx-background-color: #419A1C; -fx-border-radius: 20");
+            IBANLabel.setTextFill(Color.BLACK);
+            moneyLabel.setTextFill(Color.BLACK);
+        });
     }
 
 
@@ -140,12 +165,12 @@ public class MainScreenController {
 
     void addListener(){
         baseTF.textProperty().addListener((observableValue, s, t1) -> {
-           searchControl[0]= StaticMethod.lengthController(baseTF,t1,3,3);
+           searchControl[0]= StaticMethod.lengthController(baseTF,t1,3,3,"text-fieldError","text-field");
            searchExcButDisable();
         });
 
         toTF.textProperty().addListener((observableValue, s, t1) -> {
-            searchControl[1]= StaticMethod.lengthController(toTF,t1,3,3);
+            searchControl[1]= StaticMethod.lengthController(toTF,t1,3,3,"text-fieldError","text-field");
             searchExcButDisable();
         });
     }
@@ -244,7 +269,7 @@ public class MainScreenController {
 
     public void changePasswordHandle(){
         if(layer.loginUserControl(Double.parseDouble(currentUserTC),currentPasswordTF.getText())){
-            if(StaticMethod.lengthController(newPasswordTF,newPasswordTF.getText(),30,5)){
+            if(StaticMethod.lengthController(newPasswordTF,newPasswordTF.getText(),30,5,"error","notError")){
                 layer.updatePassword(Double.parseDouble(currentUserTC),newPasswordTF.getText());
                 StaticMethod.addCSS(currentPasswordTF,"com/view/css/mainsc.css","notError");
                 StaticMethod.addCSS(newPasswordTF,"com/view/css/mainsc.css","notError");
@@ -268,7 +293,7 @@ public class MainScreenController {
     }
 
     public void changeAddressHandle() {
-        if (StaticMethod.lengthController(newAddressTF,newAddressTF.getText(),70,5)) {
+        if (StaticMethod.lengthController(newAddressTF,newAddressTF.getText(),70,5,"error","notError")) {
             layer.updateAddress(Double.parseDouble(currentUserTC), newAddressTF.getText());
             StaticMethod.addCSS(newAddressTF, "com/view/css/mainsc.css", "notError");
             newAddressTF.clear();

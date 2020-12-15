@@ -36,16 +36,15 @@ public class StaticMethod {
         node.getStyleClass().addAll("text-field", "text-input");
     }
 
-    static boolean lengthController(Control node , String t1,int max,int min){
+    static boolean lengthController(Control node , String t1,int max,int min,String error,String notError){
         if (t1.length()<=max && t1.length()>=min){
-            addCSS(node,"com/view/css/mainsc.css","notError");
-
+            addCSS(node,"com/view/css/mainsc.css",notError);
             return true;
         }else if (t1.length() == 0){
             removeCSS(node);
             return false;
         }else{
-            addCSS(node,"com/view/css/mainsc.css","error");
+            addCSS(node,"com/view/css/mainsc.css",error);
             return false;
         }
     }

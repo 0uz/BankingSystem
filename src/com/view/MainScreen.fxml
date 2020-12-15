@@ -79,7 +79,7 @@
                </children></VBox>
             <Label fx:id="welcomeLabel" alignment="CENTER" layoutX="9.0" layoutY="170.0" prefHeight="26.0" prefWidth="200.0" text="Label" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="354.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="170.0">
                <font>
-                  <Font size="13.0" />
+                  <Font name="System Bold" size="13.0" />
                </font></Label>
          </children>
       </AnchorPane>
@@ -100,23 +100,23 @@
             </Button>
          </children>
       </HBox>
-      <AnchorPane fx:id="accountPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <AnchorPane fx:id="accountPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
-            <Button fx:id="addAccountButton" layoutX="413.0" layoutY="450.0" mnemonicParsing="false" onAction="#addAccountHandle" prefHeight="40.0" prefWidth="149.0" text="Add Account" />
+            <Button fx:id="addAccountButton" layoutX="413.0" layoutY="450.0" mnemonicParsing="false" onAction="#addAccountHandle" prefHeight="40.0" prefWidth="149.0" styleClass="button2" stylesheets="@css/mainsc.css" text="Add New Account" />
             <VBox fx:id="accountVBox" alignment="CENTER" layoutX="117.0" layoutY="269.0" maxHeight="520.0" spacing="5.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0">
                <children>
-                  <Button fx:id="accountButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="590.0" style="-fx-background-color: #419A1C; -fx-background-radius: 20;">
+                  <Button fx:id="accountButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="590.0" styleClass="accView" stylesheets="@css/mainsc.css">
                      <graphic>
                         <HBox spacing="10.0">
                            <children>
                               <ImageView fx:id="currencyIV" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" />
-                              <VBox alignment="CENTER" prefWidth="250.0">
+                              <VBox alignment="CENTER_LEFT" prefWidth="250.0">
                                  <children>
-                                    <Label fx:id="moneyLabel" text="Money :" />
                                     <Label fx:id="IBANLabel" text="IBAN" />
+                                    <Label fx:id="moneyLabel" text="Money :" />
                                  </children>
                                  <HBox.margin>
-                                    <Insets left="60.0" />
+                                    <Insets />
                                  </HBox.margin>
                               </VBox>
                            </children>
@@ -126,17 +126,17 @@
                         </HBox>
                      </graphic>
                   </Button>
-                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="573.0" style="-fx-background-color: #1761A0; -fx-background-radius: 25;" text="Doviz Hesaplari" textAlignment="CENTER" textFill="WHITE" />
+                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="573.0" style="-fx-background-color: #1761A0; -fx-background-radius: 25;" text="Currency Accounts" textAlignment="CENTER" textFill="WHITE" />
                </children>
             </VBox>
             <PieChart fx:id="myMoneyPC" labelLineLength="5.0" labelsVisible="false" layoutX="14.0" layoutY="324.0" prefHeight="195.0" prefWidth="250.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
             <VBox fx:id="currencyVBox" layoutX="262.0" layoutY="336.0" prefHeight="170.0" prefWidth="137.0" spacing="3.0" />
-            <TextField fx:id="baseTF" layoutX="413.0" layoutY="336.0" promptText="Base: USD etc." />
-            <TextField fx:id="toTF" layoutX="413.0" layoutY="369.0" promptText="To : TRY etc." />
-            <Button fx:id="currencySearchButton" disable="true" layoutX="413.0" layoutY="408.0" mnemonicParsing="false" onAction="#searchExcButton" prefHeight="25.0" prefWidth="149.0" text="Search" />
+            <TextField fx:id="baseTF" layoutX="413.0" layoutY="336.0" promptText="Base: USD etc." styleClass="text-field" stylesheets="@css/mainsc.css" />
+            <TextField fx:id="toTF" layoutX="413.0" layoutY="369.0" promptText="To : TRY etc." styleClass="text-field" stylesheets="@css/mainsc.css" />
+            <Button fx:id="currencySearchButton" layoutX="413.0" layoutY="408.0" mnemonicParsing="false" onAction="#searchExcButton" prefHeight="25.0" prefWidth="149.0" styleClass="button2" stylesheets="@css/mainsc.css" text="Search" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="transactionPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <AnchorPane fx:id="transactionPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="590.0" style="-fx-background-color: #419A1C; -fx-background-radius: 10 10 10 10;" text="Transfer" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="0.0" />
             <HBox layoutX="195.0" layoutY="25.0" prefHeight="495.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
