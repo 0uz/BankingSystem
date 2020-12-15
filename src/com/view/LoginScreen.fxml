@@ -67,7 +67,7 @@
             </PasswordField>
             <Pane prefHeight="40.0" prefWidth="403.0">
                <children>
-                  <Button alignment="CENTER" layoutY="8.0" mnemonicParsing="false" onAction="#loginUserHandle" prefHeight="25.0" prefWidth="64.0" text="Log In" />
+                  <Button alignment="CENTER" layoutY="8.0" mnemonicParsing="false" onAction="#loginUserHandle" prefHeight="25.0" prefWidth="64.0" styleClass="button2" stylesheets="@css/mainsc.css" text="Log In" />
                   <Label fx:id="loginWrongL" layoutX="64.0" layoutY="12.0" text="TC or Password was wrong" textFill="RED" visible="false">
                      <padding>
                         <Insets left="5.0" />

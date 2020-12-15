@@ -69,6 +69,8 @@ public class MainScreenController {
     public Label addressInf;
     public ImageView logo;
     public Label yourIBAN;
+    public ImageView newAccountIV;
+    public ImageView searchIV;
 
 
     DatabaseLayer layer = new DatabaseLayer();
@@ -87,6 +89,7 @@ public class MainScreenController {
         StaticMethod.imageLoader(credit_img,"images/credit.png");
         StaticMethod.imageLoader(settings_img,"images/settings.png");
         StaticMethod.imageLoader(logo,"images/logo.png");
+        StaticMethod.imageLoader(newAccountIV,"images/newAccount.png");
         currencyVBox.getChildren().addAll(new Label("USD/TRY: "+StaticMethod.API("USD","TRY")),new Label("EUR/TRY: "+StaticMethod.API("EUR","TRY")));
         addListener();
     }

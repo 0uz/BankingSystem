@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.web.WebHistory;
 import netscape.javascript.JSObject;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
@@ -88,9 +89,7 @@ public class StaticMethod {
             JSONObject object = new JSONObject(result.toString());
             NumberFormat format = new DecimalFormat("#0.0000");
             return format.format(Double.parseDouble(object.getJSONObject("rates").get(symbol).toString()));
-        } catch (MalformedURLException e) {
-            return null;
-        } catch (IOException e) {
+        } catch (JSONException | IOException e) {
             return null;
         }
     }
