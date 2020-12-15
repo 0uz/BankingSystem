@@ -1,25 +1,18 @@
 package com;
 
-import com.mysql.cj.xdevapi.JsonArray;
+
 import com.util.DatabaseLayer;
 import javafx.scene.control.Control;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.web.WebHistory;
-import netscape.javascript.JSObject;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.http.HttpResponse;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Random;
@@ -93,14 +86,21 @@ public class StaticMethod {
             return null;
         }
     }
+    static double dollar = 0;
+    static double euro = 0;
+
+    public static void setCurrencies(){
+        dollar = Double.parseDouble(API("USD","TRY"));
+        euro = Double.parseDouble(API("EUR","TRY"));
+    }
 
     public static double makeExcCalc(String currency , Double money){
         if (currency.equals("TL")){
             return money;
         }else if(currency.equals("Dollar")){
-            return money/Double.parseDouble(API("USD","TRY"));
+            return money/dollar;
         }else{
-            return money/Double.parseDouble(API("EUR","TRY"));
+            return money/euro;
         }
     }
 

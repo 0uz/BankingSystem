@@ -129,7 +129,19 @@
                         </HBox>
                      </graphic>
                   </Button>
-                  <Label alignment="CENTER" prefHeight="17.0" prefWidth="573.0" style="-fx-background-color: #1761A0; -fx-background-radius: 25;" text="Currency Accounts" textAlignment="CENTER" textFill="WHITE" />
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="28.0" prefWidth="573.0" style="-fx-background-color: #1761A0; -fx-background-radius: 25 0 0 25;" text="Currency Accounts" textAlignment="CENTER" textFill="WHITE" HBox.hgrow="NEVER" />
+                        <Button fx:id="refreshButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#refreshButtonHandle" prefWidth="70.0" styleClass="button3" stylesheets="@css/mainsc.css">
+                           <graphic>
+                              <ImageView fx:id="refreshIV" fitHeight="21.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true" rotate="160.3" />
+                           </graphic>
+                           <HBox.margin>
+                              <Insets bottom="1.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <PieChart fx:id="myMoneyPC" labelLineLength="5.0" labelsVisible="false" layoutX="14.0" layoutY="324.0" prefHeight="195.0" prefWidth="250.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />

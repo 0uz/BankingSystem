@@ -70,7 +70,8 @@ public class MainScreenController {
     public ImageView logo;
     public Label yourIBAN;
     public ImageView newAccountIV;
-    public ImageView searchIV;
+    public Button refreshButton;
+    public ImageView refreshIV;
 
 
     DatabaseLayer layer = new DatabaseLayer();
@@ -90,6 +91,7 @@ public class MainScreenController {
         StaticMethod.imageLoader(settings_img,"images/settings.png");
         StaticMethod.imageLoader(logo,"images/logo.png");
         StaticMethod.imageLoader(newAccountIV,"images/newAccount.png");
+        StaticMethod.imageLoader(refreshIV,"images/refresh.png");
         currencyVBox.getChildren().addAll(new Label("USD/TRY: "+StaticMethod.API("USD","TRY")),new Label("EUR/TRY: "+StaticMethod.API("EUR","TRY")));
         addListener();
     }
@@ -249,7 +251,16 @@ public class MainScreenController {
 
         }
     }
-
+    public void refreshButtonHandle(){
+        System.out.println(accountVBox.getChildren().size());
+        int count = accountVBox.getChildren().size();
+        for (int i = 2 ; i < count  ; i++){
+            accountVBox.getChildren().remove(2);
+        }
+        listAccounts();
+        myMoneyPC.getData().clear();
+        myMoneyPC.getData().addAll(layer.fillPieChart(currentUserTC));
+    }
     void listTransAccounts()  {
         List<String[]> accountsData = layer.getAccountDataForTrans(currentUserTC);
 

@@ -78,6 +78,7 @@ public class NewAccountController{
     }
 
     void addListener(){
+        StaticMethod.setCurrencies();
         moneyTF.textProperty().addListener((observableValue, s, t1) -> {
             if (t1.length() == 0){
                 StaticMethod.addCSS(moneyTF,"com/view/css/mainsc.css","error");
@@ -89,7 +90,6 @@ public class NewAccountController{
                     if (StaticMethod.lengthController(moneyTF,t1,10,0,"error","notError")){
                         makeInterestCalculation(t1);
                         yourMoney.setText("Your Money:" + (currentUserMoney-Integer.parseInt(t1)));
-                        System.out.println(StaticMethod.makeExcCalc(currencyCBox.getSelectionModel().getSelectedItem(),Double.parseDouble(moneyTF.getText())));
                     }
                 }else{
                     yearlyEarningLabel.setText("Yearly Earning: ");
@@ -138,6 +138,7 @@ public class NewAccountController{
             if(moneyTF.getText().length()!=0 && Double.parseDouble(moneyTF.getText()) <= currentUserMoney){
                 layer.addNewAccount(Double.parseDouble(currentUserTC),Double.parseDouble(moneyTF.getText()),currencyCBox.getSelectionModel().getSelectedItem(),false);
                 ((Stage) cancelButton.getScene().getWindow()).close();
+
             }else{
                 StaticMethod.addCSS(moneyTF,"com/view/css/mainsc.css","error");
             }

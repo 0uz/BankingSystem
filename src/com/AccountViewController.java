@@ -60,7 +60,7 @@ public class AccountViewController {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(selection,null);
             IBANLabel.setText("IBAN Copied to Clipboard !");
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e ->{
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e ->{
                 IBANLabel.setText("IBAN: " + IBAN);
             }));
             timeline.play();
