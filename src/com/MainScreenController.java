@@ -79,6 +79,12 @@ public class MainScreenController {
         passwordInf.setText("");
         mailInf.setText("");
         addressInf.setText("");
+        currencyVBox.getChildren().addAll(new Label("USD/TRY: "+StaticMethod.API("USD","TRY")),new Label("EUR/TRY: "+StaticMethod.API("EUR","TRY")));
+        addListener();
+        loadImages();
+    }
+
+    void loadImages(){
         StaticMethod.imageLoader(acc_img,"images/account.png");
         StaticMethod.imageLoader(trans_img,"images/transaction.png");
         StaticMethod.imageLoader(credit_img,"images/credit.png");
@@ -86,8 +92,6 @@ public class MainScreenController {
         StaticMethod.imageLoader(logo,"images/logo.png");
         StaticMethod.imageLoader(newAccountIV,"images/newAccount.png");
         StaticMethod.imageLoader(refreshIV,"images/refresh.png");
-        currencyVBox.getChildren().addAll(new Label("USD/TRY: "+StaticMethod.API("USD","TRY")),new Label("EUR/TRY: "+StaticMethod.API("EUR","TRY")));
-        addListener();
     }
 
     public void setCurrentUserTC(String currentUserTC) {
