@@ -3,29 +3,23 @@ package com;
 import com.util.DatabaseLayer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.apache.commons.validator.routines.EmailValidator;
-
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -124,9 +118,7 @@ public class MainScreenController {
             Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
             clipboard.setContents(selection,null);
             IBANLabel.setText("IBAN Copied to Clipboard !");
-            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e ->{
-                IBANLabel.setText("IBAN: " + infos[2]);
-            }));
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), e -> IBANLabel.setText("IBAN: " + infos[2])));
             timeline.play();
         });
 
@@ -264,8 +256,8 @@ public class MainScreenController {
     void listTransAccounts()  {
         List<String[]> accountsData = layer.getAccountDataForTrans(currentUserTC);
 
-        for (int i = 0 ; i <accountsData.size();i++){
-            TransactionAccountController controller=new TransactionAccountController(accountsData.get(i)[0],accountsData.get(i)[1],accountsData.get(i)[2]);
+        for (String[] accountsDatum : accountsData) {
+            TransactionAccountController controller = new TransactionAccountController(accountsDatum[0], accountsDatum[1], accountsDatum[2]);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("view/TransactionAccount.fxml"));
             loader.setController(controller);
             try {
