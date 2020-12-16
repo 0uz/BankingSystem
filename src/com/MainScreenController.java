@@ -82,6 +82,7 @@ public class MainScreenController {
         currencyVBox.getChildren().addAll(new Label("USD/TRY: "+StaticMethod.API("USD","TRY")),new Label("EUR/TRY: "+StaticMethod.API("EUR","TRY")));
         addListener();
         loadImages();
+        //test
     }
 
     void loadImages(){
