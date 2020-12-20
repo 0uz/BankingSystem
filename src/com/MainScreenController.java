@@ -66,6 +66,9 @@ public class MainScreenController {
     public ImageView newAccountIV;
     public Button refreshButton;
     public ImageView refreshIV;
+    public Label IBANInf;
+    public Label AmountInf;
+    public Label sendInf;
 
 
     DatabaseLayer layer = new DatabaseLayer();
@@ -79,6 +82,7 @@ public class MainScreenController {
         passwordInf.setText("");
         mailInf.setText("");
         addressInf.setText("");
+
         currencyVBox.getChildren().addAll(new Label("USD/TRY: "+StaticMethod.API("USD","TRY")),new Label("EUR/TRY: "+StaticMethod.API("EUR","TRY")));
         addListener();
         loadImages();
@@ -102,6 +106,7 @@ public class MainScreenController {
         fillMainAccountInfo();
         myMoneyPC.getData().addAll(layer.fillPieChart(currentUserTC));
         listTransAccounts();
+
     }
 
     public void passScreenHandle(boolean account, boolean trans, boolean settings){
@@ -217,21 +222,45 @@ public class MainScreenController {
         }
     }
 
-    public void sendTransactionButton() {
-        //TransactionAccountController senderIBAN=new TransactionAccountController() ;
-        DatabaseLayer db=new DatabaseLayer();
-        recevNameSurname.getText();
-        recevIBAN.getText();
-        recevAmount.getText();
-        yourIBAN.getText();
-        if(db.IBANandNSConflictControl(recevIBAN.getText()))
-        db.transaction(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
+    public void sendTransactionButtonHandle() {
 
 
 
+        if(layer.IBANConflictControl(recevIBAN.getText()) && layer.transactionAmountControl(recevIBAN.getText(),Double.parseDouble(recevAmount.getText())) && layer.currencyAccountControl(yourIBAN.getText(),recevIBAN.getText())){
+
+            layer.transaction(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
+            layer.transactionAmount(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
+
+            sendInf.setVisible(true);
+            sendInf.setText("Successful!");
+            sendInf.setTextFill(Color.web("#419A1C"));
+        }
+         if(layer.IBANConflictControl(recevIBAN.getText())==false){
+
+            IBANInf.setVisible(true);
+            IBANInf.setText("This IBAN not found.");
+            IBANInf.setTextFill(Color.web("#FF0000"));
+
+        }
+         else if (layer.currencyAccountControl(yourIBAN.getText(),recevIBAN.getText())==false){
+             IBANInf.setVisible(true);
+             IBANInf.setText("The currency of Receiver IBAN and your IBAN is not match.");
+             IBANInf.setTextFill(Color.web("#FF0000"));
+         }
+         if(layer.transactionAmountControl(yourIBAN.getText(),Double.parseDouble(recevAmount.getText()))==false){
+            AmountInf.setVisible(true);
+            AmountInf.setText("This amount is too much.");
+            AmountInf.setTextFill(Color.web("#FF0000"));
+
+        }
+         recevNameSurname.setText("");
+         recevIBAN.setText("");
+         recevAmount.setText("");
 
 
     }
+
+
 
 
     void listAccounts()  {
@@ -263,7 +292,7 @@ public class MainScreenController {
         List<String[]> accountsData = layer.getAccountDataForTrans(currentUserTC);
 
         for (String[] accountsDatum : accountsData) {
-            TransactionAccountController controller = new TransactionAccountController(accountsDatum[0], accountsDatum[1], accountsDatum[2]);
+            TransactionAccountController controller = new TransactionAccountController(accountsDatum[0], accountsDatum[1], accountsDatum[2],yourIBAN);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("view/TransactionAccount.fxml"));
             loader.setController(controller);
             try {
@@ -273,6 +302,14 @@ public class MainScreenController {
             }
 
         }
+
+        sendButton.setOnMouseEntered(mouseEvent -> {
+            sendButton.setStyle("-fx-background-color: #419A1C; -fx-background-radius:  10");
+        });
+
+        sendButton.setOnMouseExited(mouseEvent -> {
+            sendButton.setStyle("-fx-background-color: #1761A0; -fx-background-radius: 10");
+        });
 
 
     }

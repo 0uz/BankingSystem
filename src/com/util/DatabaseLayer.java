@@ -55,8 +55,8 @@ public class DatabaseLayer {
                 ");";
 
         String transactionTable = "CREATE TABLE IF NOT EXISTS transactions(\n" +
-                "    senderIBAN VARCHAR(23) NOT NULL,\n" +
-                "    receiverIBAN VARCHAR(23),\n" +
+                "    senderIBAN VARCHAR(26) NOT NULL,\n" +
+                "    receiverIBAN VARCHAR(26),\n" +
                 "    amount INTEGER,\n" +
                 "    T_date date,\n" +
                 "    isRead bool default false,\n" +
@@ -292,36 +292,27 @@ public class DatabaseLayer {
             statement1.setDouble(3,amount);
             statement1.setTimestamp(4,currentDate);
 
-            return ;
+            statement1.execute();
+
+
+
         }catch (SQLException throwables){
             throwables.printStackTrace();
-            return ;
+
         }
 
     }
 
 
-    public boolean IBANandNSConflictControl(String IBAN){
-        try {
-            PreparedStatement statement =  connection.prepareStatement("select IBAN from accounts where IBAN = ?");
-            statement.setString(1,IBAN);
-            ResultSet rs = statement.executeQuery();
-            rs.next();
-            rs.getString(1);
-            return true;
-        } catch (SQLException | RuntimeException throwables) {
-            return false;
-        }
-    }
 
-    public boolean transacitonAmountControl(String IBAN,double transAmount){
+    public boolean transactionAmountControl(String IBAN,double transAmount){
         try{
             PreparedStatement statement=connection.prepareStatement("select amount from accounts where IBAN = ?" );
+            statement.setString(1,IBAN);
             ResultSet rs=statement.executeQuery();
             rs.next();
-           double amount=  rs.getDouble(1);
+            double amount=  rs.getDouble("amount");
             if(transAmount<=amount){
-
                 return  true;
             }else {
                 return false;
@@ -333,6 +324,43 @@ public class DatabaseLayer {
 
     }
 
+
+    public void transactionAmount(String sendIBAN,String recevIBAN,double value) {
+
+        try{
+            PreparedStatement statement=connection.prepareStatement("UPDATE accounts set amount=amount - ? where IBAN = ?");
+            PreparedStatement statement1=connection.prepareStatement("UPDATE accounts set amount=amount + ? where IBAN = ?");
+            statement.setDouble(1,value);
+            statement.setString(2,sendIBAN);
+            statement1.setDouble(1,value);
+            statement1.setString(2,recevIBAN);
+            statement.execute();
+            statement1.execute();
+
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+
+        }
+
+    }
+
+
+    public boolean currencyAccountControl(String senderIBAN,String recevIBAN){
+        try{
+            PreparedStatement statement=connection.prepareStatement("select currency from accounts where IBAN = ? and currency = (select currency from accounts where IBAN = ?)" );
+            statement.setString(1,senderIBAN);
+            statement.setString(2,recevIBAN);
+            ResultSet rs=statement.executeQuery();
+            rs.next();
+            rs.getString("currency");
+            return true;
+
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+            return false ;
+        }
+
+    }
 
 
 
@@ -362,8 +390,8 @@ public class DatabaseLayer {
             List<String[]> accountsData = new ArrayList<>();
             while (rs.next()){
                 accountsData.add(new String[]{rs.getString("IBAN"),
-                        rs.getString("currency"),
                         String.valueOf(rs.getInt("amount")),
+                        rs.getString("currency"),
                 });
             }
             return accountsData;
