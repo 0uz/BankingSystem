@@ -50,6 +50,8 @@ public class AccountViewController {
     public void  initialize(){
         IBANLabel.setText("IBAN: " + IBAN);
         MoneyLabel.setText("Money: "+ money + " " +currency);
+        IBANLabel.setTextFill(Color.BLACK);
+        MoneyLabel.setTextFill(Color.BLACK);
         accountButton();
         setCurrencyImage();
     }

@@ -226,7 +226,7 @@ public class DatabaseLayer {
             List<String[]> data = new ArrayList<>();
             while (rs.next()){
                 data.add(new String[]{rs.getString("IBAN"),
-                        String.valueOf(rs.getInt("amount")),
+                        String.valueOf(rs.getDouble("amount")),
                         rs.getString("currency")
                 });
             }
