@@ -78,10 +78,7 @@ public class MainScreenController {
     boolean[] searchControl = {false,false};
 
     public void initialize() {
-        accountPage.setVisible(false);
-        transactionPage.setVisible(false);
-        settingsPage.setVisible(false);
-        creditPage.setVisible(false);
+        passScreenHandle(true,false,false,false);
         passwordInf.setText("");
         mailInf.setText("");
         addressInf.setText("");
