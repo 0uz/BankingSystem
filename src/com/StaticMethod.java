@@ -43,6 +43,8 @@ public class StaticMethod {
         }
     }
 
+
+
     public static boolean isDouble(String s) {
         try {
             Double.parseDouble(s);

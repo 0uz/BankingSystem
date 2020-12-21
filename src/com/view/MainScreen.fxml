@@ -48,7 +48,7 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#transactionButtonAction" prefHeight="40.0" prefWidth="257.0" styleClass="buttons" stylesheets="@css/mainsc.css" text="  Credit">
+                  <Button mnemonicParsing="false" onAction="#creditButtonAction" prefHeight="40.0" prefWidth="257.0" styleClass="buttons" stylesheets="@css/mainsc.css" text="  Credit">
                      <graphic>
                         <ImageView fx:id="credit_img" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -168,6 +168,11 @@
                               <Insets left="20.0" right="40.0" />
                            </VBox.margin>
                         </TextField>
+                        <Label fx:id="NameSurInf" prefHeight="17.0" prefWidth="229.0" text="Label" visible="false">
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </Label>
                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="232.0" text="Receiver IBAN">
                            <VBox.margin>
                               <Insets left="20.0" top="40.0" />
@@ -241,9 +246,10 @@
             </HBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="transactionPage1" layoutX="220.0" layoutY="40.0" prefHeight="520.0" prefWidth="590.0" visible="false">
+      <AnchorPane fx:id="creditPage" layoutX="220.0" layoutY="40.0" prefHeight="520.0" prefWidth="590.0" visible="false">
          <children>
-            <Label layoutX="234.0" layoutY="252.0" text="BURASI CREDIT" />
+            <Label alignment="CENTER" layoutY="-4.0" prefHeight="30.0" prefWidth="570.0" style="-fx-background-color: #419A1C; -fx-background-radius: 10 10 10 10;" text="Transfer" />
+            <HBox layoutX="4.0" layoutY="36.0" prefHeight="465.0" prefWidth="570.0" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="settingsPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">

@@ -69,6 +69,8 @@ public class MainScreenController {
     public Label IBANInf;
     public Label AmountInf;
     public Label sendInf;
+    public AnchorPane creditPage;
+    public Label NameSurInf;
 
 
     DatabaseLayer layer = new DatabaseLayer();
@@ -79,6 +81,7 @@ public class MainScreenController {
         accountPage.setVisible(false);
         transactionPage.setVisible(false);
         settingsPage.setVisible(false);
+        creditPage.setVisible(false);
         passwordInf.setText("");
         mailInf.setText("");
         addressInf.setText("");
@@ -107,9 +110,10 @@ public class MainScreenController {
 
     }
 
-    public void passScreenHandle(boolean account, boolean trans, boolean settings){
+    public void passScreenHandle(boolean account, boolean trans,boolean credit, boolean settings){
         accountPage.setVisible(account);
         transactionPage.setVisible(trans);
+        creditPage.setVisible(credit);
         settingsPage.setVisible(settings);
     }
 
@@ -147,16 +151,19 @@ public class MainScreenController {
 
 
     public void accountsButtonAction(){
-        passScreenHandle(true,false,false);
+        passScreenHandle(true,false,false,false);
 
     }
 
     public void transactionButtonAction(){
-        passScreenHandle(false,true,false);
+        passScreenHandle(false,true,false,false);
+    }
+    public void creditButtonAction(){
+        passScreenHandle(false,false,true,false);
     }
 
     public void settingsButtonAction(){
-        passScreenHandle(false,false,true);
+        passScreenHandle(false,false,false,true);
     }
 
     public void exitButtonAction(){
@@ -223,12 +230,10 @@ public class MainScreenController {
     public void sendTransactionButtonHandle() {
 
 
-
-        if(layer.IBANConflictControl(recevIBAN.getText()) && layer.transactionAmountControl(recevIBAN.getText(),Double.parseDouble(recevAmount.getText())) && layer.currencyAccountControl(yourIBAN.getText(),recevIBAN.getText())){
+        if(StaticMethod.lengthController(recevNameSurname,recevNameSurname.getText(),60,6,"error","notError") && layer.IBANConflictControl(recevIBAN.getText()) && layer.transactionAmountControl(recevIBAN.getText(),Double.parseDouble(recevAmount.getText())) && layer.currencyAccountControl(yourIBAN.getText(),recevIBAN.getText())){
 
             layer.transaction(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
             layer.transactionAmount(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
-
             sendInf.setVisible(true);
             sendInf.setText("Successful!");
             sendInf.setTextFill(Color.web("#419A1C"));
@@ -250,11 +255,30 @@ public class MainScreenController {
             AmountInf.setText("This amount is too much.");
             AmountInf.setTextFill(Color.web("#FF0000"));
 
+        }if(StaticMethod.lengthController(recevNameSurname,recevNameSurname.getText(),60,6,"error","notError")==false){
+            NameSurInf.setVisible(true);
+            NameSurInf.setText("Invalid Name/Surname");
+            NameSurInf.setTextFill(Color.web("#FF0000"));
         }
+
+
+         autoRefleshForTrans();
+
          recevNameSurname.setText("");
          recevIBAN.setText("");
          recevAmount.setText("");
 
+
+
+    }
+
+    void autoRefleshForTrans(){
+        List<String[]> accountsData = layer.getAccountDataForTrans(currentUserTC);
+        int count = accountsData.size();
+        for (int i = 0 ; i < count  ; i++){
+            transAccount.getChildren().remove(0);
+        }
+        listTransAccounts();
 
     }
 
