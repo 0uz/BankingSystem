@@ -33,6 +33,7 @@
          </children>
       </VBox>
       <Label fx:id="yourMoney" layoutX="23.0" layoutY="45.0" text="Your money:" AnchorPane.topAnchor="50.0" />
+      <Label fx:id="successfulInfo" alignment="CENTER" layoutX="23.0" layoutY="292.0" prefHeight="17.0" prefWidth="169.0" text="Register Succesful!" textFill="#419a1c" visible="false" />
    </children>
    <opaqueInsets>
       <Insets />

@@ -67,10 +67,10 @@ public class MainScreenController {
     public Button refreshButton;
     public ImageView refreshIV;
     public Label IBANInf;
-    public Label AmountInf;
+    public Label amountInf;
     public Label sendInf;
     public AnchorPane creditPage;
-    public Label NameSurInf;
+    public Label nameSurInf;
 
 
     DatabaseLayer layer = new DatabaseLayer();
@@ -234,45 +234,42 @@ public class MainScreenController {
 
             layer.transaction(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
             layer.transactionAmount(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
-            sendInf.setVisible(true);
-            sendInf.setText("Successful!");
-            sendInf.setTextFill(Color.web("#419A1C"));
+            timeLineError(sendInf,"Successful!",Color.web("#419A1C"));
         }
-         if(layer.IBANConflictControl(recevIBAN.getText())==false){
-
-            IBANInf.setVisible(true);
-            IBANInf.setText("This IBAN not found.");
-            IBANInf.setTextFill(Color.web("#FF0000"));
-
+         if(!layer.IBANConflictControl(recevIBAN.getText())){
+             timeLineError(IBANInf,"This IBAN not found.",Color.RED);
         }
-         else if (layer.currencyAccountControl(yourIBAN.getText(),recevIBAN.getText())==false){
-             IBANInf.setVisible(true);
-             IBANInf.setText("The currency of Receiver IBAN and your IBAN is not match.");
-             IBANInf.setTextFill(Color.web("#FF0000"));
+         else if (!layer.currencyAccountControl(yourIBAN.getText(), recevIBAN.getText())){
+             timeLineError(IBANInf,"The currency of Receiver IBAN and your IBAN is not match.",Color.RED);
          }
-         if(layer.transactionAmountControl(yourIBAN.getText(),Double.parseDouble(recevAmount.getText()))==false){
-            AmountInf.setVisible(true);
-            AmountInf.setText("This amount is too much.");
-            AmountInf.setTextFill(Color.web("#FF0000"));
-
-        }if(StaticMethod.lengthController(recevNameSurname,recevNameSurname.getText(),60,6,"error","notError")==false){
-            NameSurInf.setVisible(true);
-            NameSurInf.setText("Invalid Name/Surname");
-            NameSurInf.setTextFill(Color.web("#FF0000"));
+         if(!StaticMethod.isDouble(recevAmount.getText())){
+             timeLineError(amountInf,"Invalid Amount.",Color.RED);
+         }else{
+             if(!layer.transactionAmountControl(yourIBAN.getText(), Double.parseDouble(recevAmount.getText()))){
+                 timeLineError(amountInf,"This amount is too much.",Color.RED);
+             }
+         }
+         if(!StaticMethod.lengthController(recevNameSurname, recevNameSurname.getText(), 60, 6, "text-fieldError", "text-field")){
+            timeLineError(nameSurInf,"Invalid Name/Surname",Color.RED);
         }
-
-
-         autoRefleshForTrans();
-
+         autoRefreshForTrans();
          recevNameSurname.setText("");
          recevIBAN.setText("");
          recevAmount.setText("");
 
-
-
     }
 
-    void autoRefleshForTrans(){
+    void timeLineError(Label node, String msg, Color color){
+        node.setVisible(true);
+        node.setText(msg);
+        node.setTextFill(color);
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), e ->{
+            node.setVisible(false);
+        }));
+        timeline.play();
+    }
+
+    void autoRefreshForTrans(){
         List<String[]> accountsData = layer.getAccountDataForTrans(currentUserTC);
         int count = accountsData.size();
         for (int i = 0 ; i < count  ; i++){

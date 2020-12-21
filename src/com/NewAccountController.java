@@ -1,6 +1,8 @@
 package com;
 
 import com.util.DatabaseLayer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -8,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -28,6 +31,8 @@ public class NewAccountController{
     public static String currentUserTC;
     static Double currentUserMoney;
     public Label yourMoney;
+    public Label successfulInfo;
+
     DatabaseLayer layer = new DatabaseLayer();
 
 
@@ -134,32 +139,46 @@ public class NewAccountController{
 
     public void submitButton(){
         StaticMethod.setCurrencies();
+        boolean succes = false;
         if(selectCBox.getSelectionModel().getSelectedItem().equals("Draw Account")){
             if(moneyTF.getText().length()!=0 && Double.parseDouble(moneyTF.getText()) <= currentUserMoney){
                 double money = StaticMethod.makeExcCalc(currencyCBox.getSelectionModel().getSelectedItem(),Double.parseDouble(moneyTF.getText()));
                 layer.addNewAccount(Double.parseDouble(currentUserTC),money,currencyCBox.getSelectionModel().getSelectedItem(),false);
-                ((Stage) cancelButton.getScene().getWindow()).close();
+                succes = true;
 
             }else{
                 StaticMethod.addCSS(moneyTF,"com/view/css/mainsc.css","error");
+                succes = false;
             }
         }else if(selectCBox.getSelectionModel().getSelectedItem().equals("Deposit Account")){
             if (moneyTF.getText().length()!=0 && Double.parseDouble(moneyTF.getText()) <= currentUserMoney){
                 double money = StaticMethod.makeExcCalc(currencyCBox.getSelectionModel().getSelectedItem(),Double.parseDouble(moneyTF.getText()));
                 layer.addNewAccount(Double.parseDouble(currentUserTC),money,currencyCBox.getSelectionModel().getSelectedItem(),true);
-                ((Stage) cancelButton.getScene().getWindow()).close();
+                succes = true;
             }else{
                 StaticMethod.addCSS(moneyTF,"com/view/css/mainsc.css","error");
+                succes = false;
             }
         }else if(selectCBox.getSelectionModel().getSelectedItem().equals("Gold Account")){
             if (goldMoneyTF.getText().length()!=0 && Double.parseDouble(goldMoneyTF.getText()) <= currentUserMoney){
                 layer.addNewGoldAccount(Double.parseDouble(currentUserTC),Double.parseDouble(goldMoneyTF.getText()));
-                ((Stage) cancelButton.getScene().getWindow()).close();
+
+                succes = true;
             }else{
                 StaticMethod.addCSS(goldMoneyTF,"com/view/css/mainsc.css","error");
+                succes = false;
             }
         }
+        if(succes){
+            submitButton.setDisable(true);
+            cancelButton.setDisable(true);
+            successfulInfo.setVisible(true);
+            Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e ->{
+                ((Stage) cancelButton.getScene().getWindow()).close();
+            }));
+            timeline.play();
 
+        }
     }
 
 
