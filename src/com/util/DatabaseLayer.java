@@ -351,10 +351,11 @@ public class DatabaseLayer {
             statement.setString(1,senderIBAN);
             statement.setString(2,recevIBAN);
             ResultSet rs=statement.executeQuery();
-            rs.next();
-            rs.getString("currency");
-            return true;
+        if(rs.next()==true){
 
+            return true;
+       }
+            return false;
         }catch (SQLException throwables){
             throwables.printStackTrace();
             return false ;
