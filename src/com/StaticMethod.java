@@ -92,8 +92,10 @@ public class StaticMethod {
     static double euro = 0;
 
     public static void setCurrencies(){
-        dollar = Double.parseDouble(API("USD","TRY"));
-        euro = Double.parseDouble(API("EUR","TRY"));
+        if (dollar == 0 || euro ==0){
+            dollar = Double.parseDouble(API("USD","TRY"));
+            euro = Double.parseDouble(API("EUR","TRY"));
+        }
     }
 
     public static double makeExcCalc(String currency , Double money){

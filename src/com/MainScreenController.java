@@ -154,6 +154,7 @@ public class MainScreenController {
 
     public void transactionButtonAction(){
         passScreenHandle(false,true,false,false);
+        autoRefreshForTrans();
     }
     public void creditButtonAction(){
         passScreenHandle(false,false,true,false);
@@ -200,6 +201,7 @@ public class MainScreenController {
             stage.initOwner(accountPage.getScene().getWindow());
             NewAccountController controller = loader.getController();
             controller.setCurrentUserData(currentUserTC);
+            controller.setParentController(this);
             stage.show();
         }
     }
@@ -225,10 +227,9 @@ public class MainScreenController {
     }
 
     public void sendTransactionButtonHandle() {
-
-
-        if(StaticMethod.lengthController(recevNameSurname,recevNameSurname.getText(),60,6,"error","notError") && layer.IBANConflictControl(recevIBAN.getText()) && layer.transactionAmountControl(recevIBAN.getText(),Double.parseDouble(recevAmount.getText())) && layer.currencyAccountControl(yourIBAN.getText(),recevIBAN.getText())){
-
+        if(StaticMethod.lengthController(recevNameSurname,recevNameSurname.getText(),60,6,"error","notError") &&
+                layer.IBANConflictControl(recevIBAN.getText()) && layer.transactionAmountControl(yourIBAN.getText(),Double.parseDouble(recevAmount.getText())) &&
+                layer.currencyAccountControl(yourIBAN.getText(),recevIBAN.getText())){
             layer.transaction(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
             layer.transactionAmount(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
             timeLineError(sendInf,"Successful!",Color.web("#419A1C"));
@@ -250,8 +251,6 @@ public class MainScreenController {
             timeLineError(nameSurInf,"Invalid Name/Surname",Color.RED);
         }
          autoRefreshForTrans();
-         recevNameSurname.setText("");
-         recevIBAN.setText("");
          recevAmount.setText("");
 
     }
@@ -267,18 +266,10 @@ public class MainScreenController {
     }
 
     void autoRefreshForTrans(){
-        List<String[]> accountsData = layer.getAccountDataForTrans(currentUserTC);
-        int count = accountsData.size();
-        for (int i = 0 ; i < count  ; i++){
-            transAccount.getChildren().remove(0);
-        }
+        transAccount.getChildren().clear();
         listTransAccounts();
 
     }
-
-
-
-
     void listAccounts()  {
         List<String[]> data = layer.getAccountData(currentUserTC);
         System.out.println(currentUserTC);
@@ -303,6 +294,7 @@ public class MainScreenController {
         myMoneyPC.getData().clear();
         myMoneyPC.getData().addAll(layer.fillPieChart(currentUserTC));
     }
+
     void listTransAccounts()  {
         List<String[]> accountsData = layer.getAccountDataForTrans(currentUserTC);
 

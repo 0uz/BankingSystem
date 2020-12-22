@@ -11,9 +11,9 @@ import java.util.List;
 
 
 public class DatabaseLayer {
-    private static final String url = "jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2382229";
-    private static final String username = "sql2382229";
-    private static final String password = "bX6!qS5!";
+    private static final String url = "jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2383499";
+    private static final String username = "sql2383499";
+    private static final String password = "pU5%bI9%";
     Connection connection;
     java.sql.Timestamp currentDate = new java.sql.Timestamp(new java.util.Date().getTime());
     public DatabaseLayer() {

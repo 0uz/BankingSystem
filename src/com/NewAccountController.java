@@ -3,6 +3,7 @@ package com;
 import com.util.DatabaseLayer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -35,7 +36,10 @@ public class NewAccountController{
 
     DatabaseLayer layer = new DatabaseLayer();
 
-
+    private MainScreenController parentController;
+    public void setParentController(MainScreenController parentController) {
+        this.parentController = parentController;
+    }
     public void setCurrentUserData(String currentUser) {
         currentUserTC = currentUser;
         currentUserMoney = layer.getMainMoney(currentUser);
@@ -75,11 +79,13 @@ public class NewAccountController{
 
     }
 
-    void makeInterestCalculation(String money){
+    void makeInterestCalculation(String moneyy){
         NumberFormat format = new DecimalFormat("#0.00");
-        yearlyEarningLabel.setText("Yearly Earning: "+(format.format((Double.parseDouble(money)*15)/100))+ " " +currencyCBox.getSelectionModel().getSelectedItem());
-        dailyEarningLabel.setText("Daily Earning: " +(format.format((Double.parseDouble(money)*15)/36500))+" " +currencyCBox.getSelectionModel().getSelectedItem());
-        boughtGoldLabel.setText("Bought Gold: "+ format.format(Double.parseDouble(money)/460) + " gram");
+        StaticMethod.setCurrencies();
+        double money = StaticMethod.makeExcCalc(currencyCBox.getSelectionModel().getSelectedItem(),Double.parseDouble(moneyy));
+        yearlyEarningLabel.setText("Yearly Earning: "+(format.format((money*15)/100))+ " " +currencyCBox.getSelectionModel().getSelectedItem());
+        dailyEarningLabel.setText("Daily Earning: " +(format.format((money*15)/36500))+" " +currencyCBox.getSelectionModel().getSelectedItem());
+        boughtGoldLabel.setText("Bought Gold: "+ format.format(money/460) + " gram");
     }
 
     void addListener(){
@@ -134,7 +140,6 @@ public class NewAccountController{
     }
     public void cancelButton(){
         ((Stage) cancelButton.getScene().getWindow()).close();
-
     }
 
     public void submitButton(){
@@ -175,12 +180,11 @@ public class NewAccountController{
             successfulInfo.setVisible(true);
             Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(2), e ->{
                 ((Stage) cancelButton.getScene().getWindow()).close();
+                parentController.refreshButton.fire();
             }));
             timeline.play();
 
         }
     }
-
-
 
 }
