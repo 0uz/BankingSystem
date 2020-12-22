@@ -15,6 +15,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Random;
 
 public class StaticMethod {
@@ -83,7 +84,8 @@ public class StaticMethod {
             reader.close();
             JSONObject object = new JSONObject(result.toString());
             NumberFormat format = new DecimalFormat("#0.0000");
-            return format.format(Double.parseDouble(object.getJSONObject("rates").get(symbol).toString()));
+            NumberFormat format1 = NumberFormat.getInstance(new Locale("EN","US"));
+            return format1.format(Double.parseDouble(format.format(Double.parseDouble(object.getJSONObject("rates").get(symbol).toString()))));
         } catch (JSONException | IOException e) {
             return null;
         }
