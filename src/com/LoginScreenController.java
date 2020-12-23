@@ -5,10 +5,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import java.io.File;
 import java.io.IOException;
 
 public class LoginScreenController {
@@ -24,6 +22,7 @@ public class LoginScreenController {
     public void initialize(){
         StaticMethod.imageLoader(logo,"images/logo.png");
         layer.createTables();
+        layer.interestQuery();
     }
 
     public void exitButton(){

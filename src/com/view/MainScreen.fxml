@@ -100,7 +100,7 @@
             </Button>
          </children>
       </HBox>
-      <AnchorPane fx:id="accountPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <AnchorPane fx:id="accountPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
             <Button fx:id="addAccountButton" layoutX="413.0" layoutY="450.0" mnemonicParsing="false" onAction="#addAccountHandle" prefHeight="40.0" prefWidth="149.0" styleClass="button2" stylesheets="@css/mainsc.css" text="Add New Account">
                <graphic>

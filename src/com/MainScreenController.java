@@ -23,7 +23,10 @@ import org.apache.commons.validator.routines.EmailValidator;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 
 public class MainScreenController {
@@ -73,6 +76,7 @@ public class MainScreenController {
     public Label nameSurInf;
 
 
+
     DatabaseLayer layer = new DatabaseLayer();
     public String currentUserTC;
     boolean[] searchControl = {false,false};
@@ -82,10 +86,10 @@ public class MainScreenController {
         passwordInf.setText("");
         mailInf.setText("");
         addressInf.setText("");
-
         currencyVBox.getChildren().addAll(new Label("USD/TRY: "+StaticMethod.API("USD","TRY")),new Label("EUR/TRY: "+StaticMethod.API("EUR","TRY")));
         addListener();
         loadImages();
+
     }
 
     void loadImages(){
@@ -97,6 +101,7 @@ public class MainScreenController {
         StaticMethod.imageLoader(newAccountIV,"images/newAccount.png");
         StaticMethod.imageLoader(refreshIV,"images/refresh.png");
     }
+
 
     public void setCurrentUserTC(String currentUserTC) {
         this.currentUserTC = currentUserTC;

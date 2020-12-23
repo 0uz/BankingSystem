@@ -29,6 +29,8 @@ public class DatabaseLayer {
         }
     }
 
+
+
     public void createTables() {
         String userTable = "CREATE TABLE IF NOT EXISTS users(\n" +
                 "    F_Name VARCHAR(20),\n" +
@@ -48,6 +50,7 @@ public class DatabaseLayer {
                 "    currency varchar(30) default 'TL',\n" +
                 "    mainAccF bool default false,\n" +
                 "    openDate date,\n" +
+                "    interestDate date default null,\n" +
                 "    interest int default 15,\n" +
                 "    depositAccF bool default false,\n" +
                 "    goldGram decimal(15,3) default 0,\n" +
@@ -90,6 +93,15 @@ public class DatabaseLayer {
 
 
 
+    }
+
+    public void interestQuery(){
+        try {
+            PreparedStatement statement = connection.prepareStatement("update accounts set amount = amount + (((amount*15)/36500)*DATEDIFF(now(),interestDate)),interestDate = now() where depositAccF = true");
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     public boolean insertUser(String FName, String LName, Double TC, String eMail, String password, Date BDate, String address, String IBAN, Double moneyAmount){
@@ -239,7 +251,7 @@ public class DatabaseLayer {
 
     }
 
-    public boolean addNewAccount(Double TC,Double amount,String currency,boolean deposit){
+    public boolean addNewDrawAccount(Double TC,Double amount,String currency,boolean deposit){
         try {
             PreparedStatement statement1 = connection.prepareStatement("insert into accounts (TC,IBAN,amount,currency,depositAccF,openDate) value (?,?,?,?,?,?)");
             PreparedStatement statement2 = connection.prepareStatement("UPDATE accounts set amount = amount - ? where TC = ? AND mainAccF = true ");
@@ -259,7 +271,27 @@ public class DatabaseLayer {
             return false;
         }
     }
-
+    public boolean addNewDepositAccount(Double TC,Double amount,String currency,boolean deposit){
+        try {
+            PreparedStatement statement1 = connection.prepareStatement("insert into accounts (TC,IBAN,amount,currency,depositAccF,openDate,interestDate) value (?,?,?,?,?,?,?)");
+            PreparedStatement statement2 = connection.prepareStatement("UPDATE accounts set amount = amount - ? where TC = ? AND mainAccF = true ");
+            statement1.setDouble(1,TC);
+            statement1.setString(2, StaticMethod.IBANCalculator());
+            statement1.setDouble(3,amount);
+            statement1.setString(4,currency);
+            statement1.setBoolean(5,deposit);
+            statement1.setTimestamp(6,currentDate);
+            statement1.setTimestamp(7,currentDate);
+            statement2.setDouble(1,amount);
+            statement2.setDouble(2,TC);
+            statement1.execute();
+            statement2.execute();
+            return true;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return false;
+        }
+    }
 
 
     public boolean addNewGoldAccount(Double TC, double money){
@@ -286,7 +318,7 @@ public class DatabaseLayer {
 
     public void transaction( String sendIBAN,String recevIBAN,double amount){
         try{
-            PreparedStatement statement1=connection.prepareStatement("insert into transactions (senderIBAN,receiverIBAN,amount,T_date) value (?,?,?,?)" );
+            PreparedStatement statement1=connection.prepareStatement("insert into transactions (senderIBAN,receiverIBAN,amount,T_date) value (?,?,?,?)");
             statement1.setString(1,sendIBAN);
             statement1.setString(2,recevIBAN);
             statement1.setDouble(3,amount);
