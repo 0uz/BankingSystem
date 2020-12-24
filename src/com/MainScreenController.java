@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -24,6 +25,8 @@ import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class MainScreenController {
@@ -71,6 +74,15 @@ public class MainScreenController {
     public Label sendInf;
     public AnchorPane creditPage;
     public Label nameSurInf;
+    public Label interestCredit;
+    public Label getCreditDate;
+    public DatePicker paymentDate;
+    public Button sendButtonCredit;
+    public Label creditName;
+    public ComboBox monthCredit;
+    public Label totalAmount;
+    public TextField creditAmount;
+    public ComboBox monthlyPayment;
 
 
 
@@ -106,6 +118,7 @@ public class MainScreenController {
         fillMainAccountInfo();
         myMoneyPC.getData().addAll(layer.fillPieChart(currentUserTC));
         listTransAccounts();
+        creditScreen();
 
     }
 
@@ -185,6 +198,11 @@ public class MainScreenController {
         toTF.textProperty().addListener((observableValue, s, t1) -> {
             searchControl[1]= StaticMethod.lengthController(toTF,t1,3,3,"text-fieldError","text-field");
             searchExcButDisable();
+        });
+
+        creditAmount.textProperty().addListener((observableValue, s, t1) -> {
+            if(StaticMethod.isDouble(t1))
+            interestCredit.setText(Double.parseDouble(t1)*115/100+"");
         });
     }
 
@@ -329,6 +347,23 @@ public class MainScreenController {
 
 
     }
+
+    public void creditScreen(){
+        String timeStamp = new SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().getTime());
+        String[] info=  layer.getUserInfo(currentUserTC);
+
+        creditName.setText(info[0]+" "+info[1]);
+        getCreditDate.setText(timeStamp);
+        monthCredit.getItems().addAll("1 Month","3 Month","6 Month","12 Month","18 Month","24 Month");
+        totalAmount.setText("Total Amount="+layer.totalAmount(Double.parseDouble(currentUserTC)) +"\n"+"You can withdraw up to thirty percent of your money.");
+        monthlyPayment.getItems().addAll("1","5","10","15","20","25");
+
+
+    }
+
+
+
+
 
 
 

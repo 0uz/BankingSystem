@@ -16,6 +16,7 @@ public class DatabaseLayer {
     private static final String password = "pU5%bI9%";
     Connection connection;
     java.sql.Timestamp currentDate = new java.sql.Timestamp(new java.util.Date().getTime());
+
     public DatabaseLayer() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -401,6 +402,22 @@ public class DatabaseLayer {
             return false ;
         }
 
+    }
+
+    public double totalAmount(Double TC){
+        try {
+
+            PreparedStatement statement=connection.prepareStatement("select SUM(amount) from accounts where TC = ? and currency = 'TL'");
+            statement.setDouble(1,TC);
+            ResultSet rs=statement.executeQuery();
+            rs.next();
+            double totalAmo=rs.getDouble("SUM(amount)");
+            return  totalAmo;
+
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+            return  0;
+        }
     }
 
 
