@@ -84,8 +84,7 @@ public class StaticMethod {
             reader.close();
             JSONObject object = new JSONObject(result.toString());
             NumberFormat format = new DecimalFormat("#0.0000");
-            NumberFormat format1 = NumberFormat.getInstance(new Locale("EN","US"));
-            return format1.format(Double.parseDouble(format.format(Double.parseDouble(object.getJSONObject("rates").get(symbol).toString()))));
+            return format.format(Double.parseDouble(object.getJSONObject("rates").get(symbol).toString()));
         } catch (JSONException | IOException e) {
             return null;
         }
@@ -95,8 +94,20 @@ public class StaticMethod {
 
     public static void setCurrencies(){
         if (dollar == 0 || euro ==0){
-            dollar = Double.parseDouble(API("USD","TRY"));
-            euro = Double.parseDouble(API("EUR","TRY"));
+            String dolarS = API("USD","TRY");
+            String euroS = API("EUR","TRY");
+            for (int i = 0;i<dolarS.length();i++){
+                if (dolarS.charAt(i) == ','){
+                    dolarS= dolarS.substring(0,i) + "." + dolarS.substring(i+1);
+                }
+            }
+            for (int i = 0;i<euroS.length();i++){
+                if (euroS.charAt(i) == ','){
+                    euroS=euroS.substring(0,i) + "." + euroS.substring(i+1);
+                }
+            }
+             dollar = Double.parseDouble(dolarS);
+             euro = Double.parseDouble(euroS);
         }
     }
 
