@@ -20,14 +20,17 @@ public class AccountViewController {
     public Label MoneyLabel;
     public Button accountButton;
     public ImageView currencyImage;
+    public Label depositLabel;
     String money;
     String IBAN;
     String currency;
+    String deposit;
 
-    public AccountViewController(String IBAN,String money,String currency) {
+    public AccountViewController(String IBAN,String money,String currency,String deposit) {
         this.money = money;
         this.IBAN = IBAN;
         this.currency=currency;
+        this.deposit=deposit;
     }
 
     void setCurrencyImage() {
@@ -57,6 +60,9 @@ public class AccountViewController {
         }else{
             MoneyLabel.setText("Money: "+ money + " " +currency);
         }
+
+        if (deposit.equals("true")) depositLabel.setVisible(true);
+
         IBANLabel.setText("IBAN: " + IBAN);
         IBANLabel.setTextFill(Color.BLACK);
         MoneyLabel.setTextFill(Color.BLACK);

@@ -282,7 +282,7 @@ public class MainScreenController {
         List<String[]> data = layer.getAccountData(currentUserTC);
         System.out.println(currentUserTC);
         for (int i = 0 ; i <data.size();i++){
-            AccountViewController control = new AccountViewController(data.get(i)[0],data.get(i)[1],data.get(i)[2]);
+            AccountViewController control = new AccountViewController(data.get(i)[0],data.get(i)[1],data.get(i)[2],data.get(i)[3]);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AccountView.fxml"));
             loader.setController(control);
             try {

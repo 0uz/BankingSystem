@@ -241,14 +241,15 @@ public class DatabaseLayer {
 
     public List<String[]> getAccountData(String TC){
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT IBAN,amount,currency from accounts where TC = ? AND mainAccF = false");
+            PreparedStatement statement = connection.prepareStatement("SELECT IBAN,amount,currency,depositAccF from accounts where TC = ? AND mainAccF = false");
             statement.setString(1,TC);
             ResultSet rs = statement.executeQuery();
             List<String[]> data = new ArrayList<>();
             while (rs.next()){
                 data.add(new String[]{rs.getString("IBAN"),
                         String.valueOf(rs.getDouble("amount")),
-                        rs.getString("currency")
+                        rs.getString("currency"),
+                        String.valueOf(rs.getBoolean("depositAccF"))
                 });
             }
             return data;

@@ -10,7 +10,7 @@
 
 <Button fx:id="accountButton" minHeight="45.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="590.0" styleClass="accView" stylesheets="@css/mainsc.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <graphic>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="524.0" spacing="10.0">
          <children>
             <ImageView fx:id="currencyImage" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                <cursor>
@@ -28,6 +28,11 @@
                      </cursor></Label>
                </children>
             </VBox>
+            <Label fx:id="depositLabel" text="Deposit Account" visible="false">
+               <HBox.margin>
+                  <Insets left="15.0" right="5.0" />
+               </HBox.margin>
+            </Label>
          </children>
          <padding>
             <Insets left="20.0" right="20.0" />
