@@ -37,7 +37,7 @@
             <Image url="@../../../images/logo.png" />
          </image>
       </ImageView>
-      <VBox layoutX="98.0" layoutY="157.0" prefHeight="410.0" prefWidth="405.0" style="-fx-border-color: #419A1C;">
+      <VBox layoutX="98.0" layoutY="157.0" prefHeight="417.0" prefWidth="405.0" style="-fx-border-color: #419A1C;">
          <children>
             <Label alignment="CENTER" prefHeight="37.0" prefWidth="440.0" style="-fx-background-color: #419A1C;" text="Secure Register" textFill="WHITE">
                <VBox.margin>
@@ -49,7 +49,7 @@
                   <Insets left="5.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="FNameTF" prefHeight="25.0" prefWidth="316.0">
+            <TextField fx:id="FNameTF" prefHeight="25.0" prefWidth="316.0" styleClass="text-field" stylesheets="@css/mainsc.css">
                <VBox.margin>
                   <Insets left="5.0" right="5.0" />
                </VBox.margin>
@@ -59,7 +59,7 @@
                   <Insets left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="LNameTF" layoutX="16.0" layoutY="75.0" prefHeight="25.0" prefWidth="316.0">
+            <TextField fx:id="LNameTF" layoutX="16.0" layoutY="75.0" prefHeight="25.0" prefWidth="316.0" styleClass="text-field" stylesheets="@css/mainsc.css">
                <VBox.margin>
                   <Insets left="5.0" right="5.0" />
                </VBox.margin>
@@ -69,7 +69,7 @@
                   <Insets left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="TCTF" layoutX="11.0" layoutY="122.0" prefHeight="25.0" prefWidth="316.0">
+            <TextField fx:id="TCTF" layoutX="11.0" layoutY="122.0" prefHeight="25.0" prefWidth="316.0" styleClass="text-field" stylesheets="@css/mainsc.css">
                <VBox.margin>
                   <Insets left="5.0" right="5.0" />
                </VBox.margin>
@@ -79,7 +79,7 @@
                   <Insets left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="mailTF" layoutX="11.0" layoutY="248.0" prefHeight="25.0" prefWidth="316.0">
+            <TextField fx:id="mailTF" layoutX="11.0" layoutY="248.0" prefHeight="25.0" prefWidth="316.0" styleClass="text-field" stylesheets="@css/mainsc.css">
                <VBox.margin>
                   <Insets left="5.0" right="5.0" />
                </VBox.margin>
@@ -89,7 +89,7 @@
                   <Insets left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <PasswordField fx:id="passwordPF">
+            <PasswordField fx:id="passwordPF" stylesheets="@css/mainsc.css">
                <VBox.margin>
                   <Insets left="5.0" right="5.0" />
                </VBox.margin>
@@ -109,16 +109,28 @@
                   <Insets left="5.0" right="5.0" top="5.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="addressTF" layoutX="11.0" layoutY="206.0" prefHeight="25.0" prefWidth="316.0">
+            <TextField fx:id="addressTF" layoutX="11.0" layoutY="206.0" prefHeight="25.0" prefWidth="316.0" stylesheets="@css/mainsc.css">
                <VBox.margin>
                   <Insets left="5.0" right="5.0" />
                </VBox.margin>
             </TextField>
-            <Button fx:id="registerButton" alignment="CENTER" mnemonicParsing="false" onAction="#registerButtonHandle" prefHeight="25.0" prefWidth="64.0" text="Register">
+            <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="403.0" spacing="10.0">
+               <children>
+                  <Button fx:id="registerButton" alignment="CENTER" mnemonicParsing="false" onAction="#registerButtonHandle" prefHeight="25.0" prefWidth="64.0" styleClass="button2" stylesheets="@css/mainsc.css" text="Register">
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#signInButtonHandle" prefHeight="25.0" prefWidth="64.0" style="-fx-background-color: #419A1C;" styleClass="button2" stylesheets="@css/mainsc.css" text="Login">
+                     <HBox.margin>
+                        <Insets left="245.0" right="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
                <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                  <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
-            </Button>
+            </HBox>
          </children>
       </VBox>
    </children>

@@ -36,7 +36,11 @@ public class RegisterScreenController {
     }
 
 
-
+    public void signInButtonHandle() throws IOException {
+        Main loader = new Main();
+        loader.myLoader("view/LoginScreen.fxml");
+        ((Stage)registerButton.getScene().getWindow()).close();
+    }
 
 
 
@@ -54,32 +58,32 @@ public class RegisterScreenController {
 
    void lengthListeners(){
         FNameTF.textProperty().addListener((observableValue, s,t1) ->{
-           disableButton[0] = StaticMethod.lengthController(FNameTF,t1,20,3,"error","notError");
+           disableButton[0] = StaticMethod.lengthController(FNameTF,t1,20,3,"text-fieldError","text-field");
            makeDisableButton();
         } );
 
         LNameTF.textProperty().addListener((observableValue, s,t1) ->{
-            disableButton[1] = StaticMethod.lengthController(LNameTF,t1,20,3,"error","notError");
+            disableButton[1] = StaticMethod.lengthController(LNameTF,t1,20,3,"text-fieldError","text-field");
             makeDisableButton();
         } );
 
             passwordPF.textProperty().addListener((observableValue, s, t1) -> {
-            disableButton[2] = StaticMethod.lengthController(passwordPF,t1,30,5,"error","notError");
+            disableButton[2] = StaticMethod.lengthController(passwordPF,t1,30,5,"text-fieldError","text-field");
             makeDisableButton();
         });
 
         addressTF.textProperty().addListener((observableValue, s, t1) ->{
-            disableButton[3] = StaticMethod.lengthController(addressTF,t1,50,5,"error","notError");
+            disableButton[3] = StaticMethod.lengthController(addressTF,t1,50,5,"text-fieldError","text-field");
             makeDisableButton();
         } );
 
         TCTF.textProperty().addListener((observableValue, s, t1) -> {
-            if (StaticMethod.lengthController(TCTF,t1,11,11,"error","notError")){
+            if (StaticMethod.lengthController(TCTF,t1,11,11,"text-fieldError","text-field")){
                 if(StaticMethod.isDouble(t1)){
-                    StaticMethod.addCSS(TCTF,"com/view/css/mainsc.css","notError");
+                    StaticMethod.addCSS(TCTF,"com/view/css/mainsc.css","text-field");
                     disableButton[4]= true;
                 }else{
-                    StaticMethod.addCSS(TCTF,"com/view/css/mainsc.css","error");
+                    StaticMethod.addCSS(TCTF,"com/view/css/mainsc.css","text-fieldError");
                     disableButton[4] = false;
                 }
             }
@@ -91,13 +95,13 @@ public class RegisterScreenController {
     void emailTFListener(){
         mailTF.textProperty().addListener((observableValue, s, t1) -> {
             if (EmailValidator.getInstance().isValid(t1)){
-                StaticMethod.addCSS(mailTF,"com/view/css/mainsc.css","notError");
+                StaticMethod.addCSS(mailTF,"com/view/css/mainsc.css","text-field");
                 disableButton[5] = true;
             }else if(t1.length()==0){
                 StaticMethod.removeCSS(mailTF);
                 disableButton[5] = false;
             }else{
-                StaticMethod.addCSS(mailTF,"com/view/css/mainsc.css","error");
+                StaticMethod.addCSS(mailTF,"com/view/css/mainsc.css","text-fieldError");
                 disableButton[5] = false;
             }
             makeDisableButton();

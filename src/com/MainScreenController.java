@@ -23,10 +23,7 @@ import org.apache.commons.validator.routines.EmailValidator;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.URL;
 import java.util.List;
 
 public class MainScreenController {
@@ -304,6 +301,7 @@ public class MainScreenController {
         listAccounts();
         myMoneyPC.getData().clear();
         myMoneyPC.getData().addAll(layer.fillPieChart(currentUserTC));
+        fillMainAccountInfo();
     }
 
     void listTransAccounts()  {
