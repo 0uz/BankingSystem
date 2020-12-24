@@ -23,6 +23,7 @@ public class LoginScreenController {
         StaticMethod.imageLoader(logo,"images/logo.png");
         layer.createTables();
         layer.interestQuery();
+        layer.goldUpdateQuery();
     }
 
     public void exitButton(){

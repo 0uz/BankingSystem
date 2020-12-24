@@ -12,6 +12,8 @@ import javafx.util.Duration;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 public class AccountViewController {
     public Label IBANLabel;
@@ -48,8 +50,14 @@ public class AccountViewController {
     }
 
     public void  initialize(){
+        if (currency.equals("Gold")){
+            double conMoney = Double.parseDouble(money)/460;
+            NumberFormat format = new DecimalFormat("#0.0000");
+            MoneyLabel.setText("Money: "+ money + " TL Gram: "+ format.format(conMoney));
+        }else{
+            MoneyLabel.setText("Money: "+ money + " " +currency);
+        }
         IBANLabel.setText("IBAN: " + IBAN);
-        MoneyLabel.setText("Money: "+ money + " " +currency);
         IBANLabel.setTextFill(Color.BLACK);
         MoneyLabel.setTextFill(Color.BLACK);
         accountButton();

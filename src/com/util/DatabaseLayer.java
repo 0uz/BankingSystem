@@ -104,6 +104,15 @@ public class DatabaseLayer {
         }
     }
 
+    public void goldUpdateQuery(){
+        try {
+            PreparedStatement statement = connection.prepareStatement("update accounts set goldGram = (amount/460) where currency = 'Gold'");
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     public boolean insertUser(String FName, String LName, Double TC, String eMail, String password, Date BDate, String address, String IBAN, Double moneyAmount){
         try {
             PreparedStatement statement = connection.prepareStatement("insert into users (F_Name, L_Name, TC, address, mail, password, B_Date) VALUES (?,?,?,?,?,?,?)");
@@ -219,7 +228,7 @@ public class DatabaseLayer {
             return new String[]{rs.getString("F_Name"),
             rs.getString("L_Name"),
             rs.getString("IBAN"),
-            String.valueOf(rs.getInt("amount")),
+            String.valueOf(rs.getDouble("amount")),
             rs.getString("mail"),
             rs.getString("address")};
 
@@ -296,15 +305,13 @@ public class DatabaseLayer {
 
     public boolean addNewGoldAccount(Double TC, double money){
         try {
-            PreparedStatement statement1 = connection.prepareStatement("insert into accounts (TC,IBAN,currency,goldGram,openDate,amount) value (?,?,?,?,?,?)");
+            PreparedStatement statement1 = connection.prepareStatement("insert into accounts (TC,IBAN,currency,openDate,amount) value (?,?,?,?,?)");
             PreparedStatement statement2 = connection.prepareStatement("UPDATE accounts set amount = amount - ? where TC = ? AND mainAccF = true ");
-            BigDecimal gram = new BigDecimal(money/460);
             statement1.setDouble(1,TC);
             statement1.setString(2, StaticMethod.IBANCalculator());
             statement1.setString(3,"Gold");
-            statement1.setBigDecimal(4, gram);
-            statement1.setTimestamp(5,currentDate);
-            statement1.setDouble(6,money);
+            statement1.setTimestamp(4,currentDate);
+            statement1.setDouble(5,money);
             statement2.setDouble(1,money);
             statement2.setDouble(2,TC);
             statement1.execute();
@@ -417,7 +424,7 @@ public class DatabaseLayer {
 
     public List<String[]> getAccountDataForTrans(String TC){
         try {
-            PreparedStatement statement = connection.prepareStatement("SELECT IBAN,amount,currency from accounts where TC = ?");
+            PreparedStatement statement = connection.prepareStatement("SELECT IBAN,amount,currency from accounts where TC = ? and depositAccF = false and currency != 'Gold'");
             statement.setString(1,TC);
             ResultSet rs = statement.executeQuery();
             List<String[]> accountsData = new ArrayList<>();
