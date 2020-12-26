@@ -524,27 +524,6 @@ public class DatabaseLayer {
             return null;
         }
 
-
-    }
-    public List<String[]> getAccountDataForChange(String TC,String IBAN){
-        try {
-            PreparedStatement statement = connection.prepareStatement("SELECT IBAN,amount,currency from accounts where TC = ? and depositAccF = false and IBAN != ?");
-            statement.setString(1,TC);
-            statement.setString(2,IBAN);
-            ResultSet rs = statement.executeQuery();
-            List<String[]> accountsData = new ArrayList<>();
-            while (rs.next()){
-                accountsData.add(new String[]{rs.getString("IBAN"),
-                        String.valueOf(rs.getInt("amount")),
-                        rs.getString("currency"),
-                });
-            }
-            return accountsData;
-        }catch (SQLException e){
-            e.printStackTrace();
-            return null;
-        }
-
     }
     public List<String[]> getAccountDataForChange(String TC,String IBAN){
         try {
