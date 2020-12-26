@@ -94,6 +94,8 @@ public class MainScreenController {
     public Label monthlyPayLabel;
     public Label titleCreditLabel;
     public HBox showCreditDetail;
+    public Button changeMoneyMain;
+    public ImageView changeMoneyIV;
 
 
     DatabaseLayer layer = new DatabaseLayer();
@@ -169,6 +171,29 @@ public class MainScreenController {
             IBANLabel.setTextFill(Color.BLACK);
             moneyLabel.setTextFill(Color.BLACK);
         });
+
+        changeMoneyMain.setOnAction(actionEvent -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/changeMoney.fxml"));
+                Parent root = loader.load();
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+                scene.setFill(Color.TRANSPARENT);
+                stage.setScene(scene);
+                stage.initStyle(StageStyle.TRANSPARENT);
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(IBANLabel.getParent().getScene().getWindow());
+                ChangeMoneyController controller = loader.getController();
+                controller.setCurrentUserData(infos[2],currentUserTC,"TL",infos[3]);
+                refreshButton.fire();
+                controller.setData();
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        StaticMethod.imageLoader(changeMoneyIV,"images/moneyChange.png");
     }
 
 
@@ -311,7 +336,8 @@ public class MainScreenController {
         List<String[]> data = layer.getAccountData(currentUserTC);
         System.out.println(currentUserTC);
         for (int i = 0 ; i <data.size();i++){
-            AccountViewController control = new AccountViewController(data.get(i)[0],data.get(i)[1],data.get(i)[2],data.get(i)[3]);
+            AccountViewController control = new AccountViewController(data.get(i)[0],data.get(i)[1],data.get(i)[2],data.get(i)[3],currentUserTC);
+            control.setParentController(this);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("view/AccountView.fxml"));
             loader.setController(control);
             try {

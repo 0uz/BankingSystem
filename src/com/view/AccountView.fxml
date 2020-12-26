@@ -16,9 +16,9 @@
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor></ImageView>
-            <VBox>
+            <VBox alignment="CENTER_LEFT" minWidth="230.0">
                <children>
-                  <Label fx:id="IBANLabel" text="Label">
+                  <Label fx:id="IBANLabel">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Label>
@@ -33,6 +33,14 @@
                   <Insets left="15.0" right="5.0" />
                </HBox.margin>
             </Label>
+            <Button fx:id="changeMoney" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" mnemonicParsing="false" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fx:id="changeMoneyIV" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" />
+               </graphic>
+               <padding>
+                  <Insets left="5.0" />
+               </padding>
+            </Button>
          </children>
          <padding>
             <Insets left="20.0" right="20.0" />
