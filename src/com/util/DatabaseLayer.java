@@ -393,12 +393,12 @@ public class DatabaseLayer {
 
     public boolean currencyAccountControl(String senderIBAN,String recevIBAN){
         try{
-            PreparedStatement statement=connection.prepareStatement("select currency from accounts where IBAN = ? and currency = (select currency from accounts where IBAN = ?)" );
+            PreparedStatement statement=connection.prepareStatement("select currency from accounts where IBAN = ? and currency = (select currency from accounts where IBAN = ?) and TC != (select TC from accounts where IBAN = ?)" );
             statement.setString(1,senderIBAN);
             statement.setString(2,recevIBAN);
+            statement.setString(3,recevIBAN);
             ResultSet rs=statement.executeQuery();
-        if(rs.next()==true){
-
+        if(rs.next()){
             return true;
        }
             return false;
@@ -408,6 +408,8 @@ public class DatabaseLayer {
         }
 
     }
+
+
 
     public double totalAmount(Double TC){
         try {
@@ -543,8 +545,29 @@ public class DatabaseLayer {
             return null;
         }
 
+    }
+    public List<String[]> getAccountDataForChange(String TC,String IBAN){
+        try {
+            PreparedStatement statement = connection.prepareStatement("SELECT IBAN,amount,currency from accounts where TC = ? and depositAccF = false and IBAN != ?");
+            statement.setString(1,TC);
+            statement.setString(2,IBAN);
+            ResultSet rs = statement.executeQuery();
+            List<String[]> accountsData = new ArrayList<>();
+            while (rs.next()){
+                accountsData.add(new String[]{rs.getString("IBAN"),
+                        String.valueOf(rs.getInt("amount")),
+                        rs.getString("currency"),
+                });
+            }
+            return accountsData;
+        }catch (SQLException e){
+            e.printStackTrace();
+            return null;
+        }
+
 
     }
+
 
 
     public void closeConnection(){
