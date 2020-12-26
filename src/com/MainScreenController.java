@@ -14,6 +14,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -27,6 +28,7 @@ import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MainScreenController {
@@ -83,7 +85,15 @@ public class MainScreenController {
     public Label totalAmount;
     public TextField creditAmount;
     public ComboBox monthlyPayment;
-
+    public VBox creditApplyVbox;
+    public Label amountPaidLayer;
+    public Label creditAmountLayer;
+    public Label restAmountLayer;
+    public Label waitingAcceptLabel;
+    public Label getCreditLayer;
+    public Label monthlyPayLabel;
+    public Label titleCreditLabel;
+    public HBox showCreditDetail;
 
 
     DatabaseLayer layer = new DatabaseLayer();
@@ -119,6 +129,7 @@ public class MainScreenController {
         myMoneyPC.getData().addAll(layer.fillPieChart(currentUserTC));
         listTransAccounts();
         creditScreen();
+        controlCredit();
 
     }
 
@@ -356,9 +367,74 @@ public class MainScreenController {
         getCreditDate.setText(timeStamp);
         monthCredit.getItems().addAll("1 Month","3 Month","6 Month","12 Month","18 Month","24 Month");
         totalAmount.setText("Total Amount="+layer.totalAmount(Double.parseDouble(currentUserTC)) +"\n"+"You can withdraw up to thirty percent of your money.");
-        monthlyPayment.getItems().addAll("1","5","10","15","20","25");
+        monthlyPayment.getItems().addAll(1,5,10,15,20,25);
+        monthCredit.getSelectionModel().select(0);
+        monthlyPayment.getSelectionModel().select(0);
 
 
+    }
+
+    public void applyCreditHandle(){
+
+      int save1=0;
+      int save2=0;
+      int mC= monthCredit.getSelectionModel().getSelectedIndex();
+      int mP= monthlyPayment.getSelectionModel().getSelectedIndex();
+      monthCredit.getSelectionModel().getSelectedItem();
+      switch (mC){
+          case 0: save1=1;  break;
+          case 1: save1=3;  break;
+          case 2: save1=6;  break;
+          case 3: save1=12; break;
+          case 4: save1=18; break;
+          case 5: save1=24; break;
+      }
+        switch (mP){
+            case 0: save2=1;  break;
+            case 1: save2=5;  break;
+            case 2: save2=10;  break;
+            case 3: save2=15; break;
+            case 4: save2=20; break;
+            case 5: save2=25; break;
+        }
+        //if(Double.parseDouble(creditAmount.getText())<=layer.totalAmount(Double.parseDouble(currentUserTC))*3/10 && StaticMethod.isDouble(creditAmount.getText()) && )
+        layer.creditApply(currentUserTC,Double.parseDouble(creditAmount.getText()), save1,Double.parseDouble(interestCredit.getText()), save2);
+
+
+   }
+
+   void controlCredit(){
+        int control =layer.controlConfirmation(currentUserTC);
+        System.out.println(control);
+        if (control == 0){
+
+            titleCreditLabel.setVisible(false);
+            showCreditDetail.setVisible(false);
+
+        }else if (control == 1){
+            creditApplyVbox.setDisable(true);
+            setCreditInfo();
+            titleCreditLabel.setText("Currennt Label");
+
+        }else{
+            creditApplyVbox.setDisable(true);
+            creditApplyVbox.setVisible(false);
+            //TODO ödeme ekranını aç
+            setCreditInfo();
+            titleCreditLabel.setText("Waiting Credit");
+
+        }
+   }
+
+    void setCreditInfo(){
+     String[] info = layer.getCreditInfo(currentUserTC);
+        creditAmountLayer.setText("Amount= "+ info[0]);
+        amountPaidLayer.setText("Amount Paid= "+info[1]);
+      int creditAmountLayer=Integer.parseInt(info[0]);
+      int amountPaidLayer=Integer.parseInt(info[1]);
+        restAmountLayer.setText("Rest of Amount= "+(creditAmountLayer-amountPaidLayer));
+        getCreditLayer.setText(info[2]);
+        monthlyPayLabel.setText(info[3]);
     }
 
 

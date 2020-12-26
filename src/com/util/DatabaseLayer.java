@@ -71,11 +71,16 @@ public class DatabaseLayer {
                 "    TC bigint(11) not null,\n" +
                 "    amount int,\n" +
                 "     creditMonths tinyint,\n" +
-                "     interest decimal(6,4),\n" +
+                "     withInterest decimal(14,2),\n" +
                 "     getCreditDate date,\n" +
+                "     paymentAmount int, \n" +
+                "     paymentDate int, \n" +
+                "     restMonth int, \n" +
                 "     confirmation bool default false,\n" +
                 "     foreign key (TC) REFERENCES users(TC)\n" +
                 ")";
+
+
 
         try {
                 Statement statement = connection.createStatement();
@@ -420,7 +425,66 @@ public class DatabaseLayer {
         }
     }
 
+    public void creditApply(String TC, double amount, int creditMonths, double withInterest,int paymentDate){
+        try {
 
+            PreparedStatement statement=connection.prepareStatement("insert into credits (TC,amount,creditMonths,withInterest,getCreditDate,paymentAmount,paymentDate,restMonth) value (?,?,?,?,?,?,?,?)");
+            statement.setString(1,TC);
+            statement.setDouble(2,amount);
+            statement.setInt(3,creditMonths);
+            statement.setDouble(4,withInterest);
+            statement.setTimestamp(5,currentDate);
+            statement.setInt(6,0);
+            statement.setInt(7,paymentDate);
+            statement.setInt(8,creditMonths);
+
+
+            statement.execute();
+
+
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+
+        }
+    }
+
+    public String[] getCreditInfo(String TC){
+        try {
+            PreparedStatement statement = connection.prepareStatement("select amount,paymentAmount,getCreditDate,paymentDate,restMonth from credits where TC = ? ");
+            statement.setString(1, TC);
+            ResultSet rs = statement.executeQuery();
+            rs.next();
+            return new String[]{
+                        rs.getString("amount"),
+                        rs.getString("paymentAmount"),
+                        rs.getString("getCreditDate"),
+                        rs.getString("paymentDate"),
+                        rs.getString("restMonth")};
+
+            }catch (SQLException throwables){
+                throwables.printStackTrace();
+            return  null;
+        }
+    }
+
+    public int controlConfirmation(String TC){
+        try {
+        PreparedStatement statement=connection.prepareStatement("select confirmation from credits where TC = ?");
+        statement.setString(1,TC);
+        ResultSet rs=statement.executeQuery();
+        rs.next();
+        rs.getInt("confirmation");
+        if(rs.getBoolean("confirmation")){
+            return  1;//accept credit
+
+        }
+            return 2; //waiting credit
+
+        }catch (SQLException | RuntimeException throwables){
+            throwables.printStackTrace();
+            return 0; //no applied credit
+        }
+    }
 
 
     public ObservableList<PieChart.Data> fillPieChart (String TC){
