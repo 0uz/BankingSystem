@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.ColorAdjust?>
@@ -64,6 +66,18 @@
                         <Insets top="10.0" />
                      </VBox.margin>
                   </Button>
+                  <Button mnemonicParsing="false" onAction="#historyButtonAction" prefHeight="40.0" prefWidth="257.0" styleClass="buttons" stylesheets="@css/mainsc.css" text="  History">
+                     <graphic>
+                        <ImageView fx:id="credit_img1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../images/credit.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Button>
                   <Button mnemonicParsing="false" onAction="#settingsButtonAction" prefHeight="40.0" prefWidth="222.0" styleClass="buttons" stylesheets="@css/mainsc.css" text="  Settings">
                      <VBox.margin>
                         <Insets top="10.0" />
@@ -102,7 +116,7 @@
             </Button>
          </children>
       </HBox>
-      <AnchorPane fx:id="accountPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <AnchorPane fx:id="accountPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
             <Button fx:id="addAccountButton" layoutX="413.0" layoutY="450.0" mnemonicParsing="false" onAction="#addAccountHandle" prefHeight="40.0" prefWidth="149.0" styleClass="button2" stylesheets="@css/mainsc.css" text="Add New Account">
                <graphic>
@@ -400,6 +414,34 @@
                   </VBox>
                </children>
             </HBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="historyPage" layoutX="271.0" layoutY="48.0" prefHeight="306.0" prefWidth="291.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+         <children>
+            <TableView fx:id="table" pickOnBounds="false" prefHeight="211.0" prefWidth="590.0" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <columns>
+                  <TableColumn prefWidth="75.0" text="SENT">
+                     <columns>
+                      <TableColumn fx:id="col_sender" editable="false" prefWidth="164.0" sortable="false" text="receiver name" />
+                      <TableColumn fx:id="col_receiver" editable="false" prefWidth="187.19998168945312" sortable="false" text="receiverIBAN" />
+                        <TableColumn fx:id="col_amount" editable="false" prefWidth="124.7999267578125" sortable="false" text="amount" />
+                        <TableColumn fx:id="col_Tdate" editable="false" prefWidth="111.9998779296875" sortable="false" text="T_date" />
+                     </columns>
+                  </TableColumn>
+              </columns>
+            </TableView>
+            <TableView fx:id="table1" layoutY="253.0" prefHeight="246.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="250.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="RECEIVED">
+                     <columns>
+                        <TableColumn fx:id="col_sender1" editable="false" prefWidth="164.0" sortable="false" text="sender name" />
+                        <TableColumn fx:id="col_receiver1" editable="false" prefWidth="187.19998168945312" sortable="false" text="receiverIBAN" />
+                        <TableColumn fx:id="col_amount1" editable="false" prefWidth="124.7999267578125" sortable="false" text="amount" />
+                        <TableColumn fx:id="col_Tdate1" editable="false" prefWidth="111.9998779296875" sortable="false" text="T_date" />
+                     </columns>
+                  </TableColumn>
+               </columns>
+            </TableView>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="settingsPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
