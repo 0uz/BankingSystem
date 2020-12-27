@@ -1,9 +1,13 @@
 package com.util;
+import com.ModelTable;
 import com.StaticMethod;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
@@ -61,7 +65,7 @@ public class DatabaseLayer {
         String transactionTable = "CREATE TABLE IF NOT EXISTS transactions(\n" +
                 "    senderIBAN VARCHAR(26) NOT NULL,\n" +
                 "    receiverIBAN VARCHAR(26),\n" +
-                "    amount INTEGER,\n" +
+                "    amount decimal(28,3),\n" +
                 "    T_date date,\n" +
                 "    isRead bool default false,\n" +
                 "    foreign key (senderIBAN) REFERENCES accounts(IBAN)\n" +
@@ -79,8 +83,6 @@ public class DatabaseLayer {
                 "     confirmation bool default false,\n" +
                 "     foreign key (TC) REFERENCES users(TC)\n" +
                 ")";
-
-
 
         try {
                 Statement statement = connection.createStatement();
@@ -371,7 +373,7 @@ public class DatabaseLayer {
     }
 
 
-    public void transactionAmount(String sendIBAN,String recevIBAN,double value) {
+    public void transactionAmountSameCur(String sendIBAN, String recevIBAN, double value) {
 
         try{
             PreparedStatement statement=connection.prepareStatement("UPDATE accounts set amount=amount - ? where IBAN = ?");
@@ -379,6 +381,24 @@ public class DatabaseLayer {
             statement.setDouble(1,value);
             statement.setString(2,sendIBAN);
             statement1.setDouble(1,value);
+            statement1.setString(2,recevIBAN);
+            statement.execute();
+            statement1.execute();
+
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+
+        }
+
+    }
+
+    public void transactionAmountDiffCur(String sendIBAN, String recevIBAN, double value , double APIValue) {
+        try{
+            PreparedStatement statement=connection.prepareStatement("UPDATE accounts set amount=amount - ? where IBAN = ?");
+            PreparedStatement statement1=connection.prepareStatement("UPDATE accounts set amount=amount + ? where IBAN = ?");
+            statement.setDouble(1,value);
+            statement.setString(2,sendIBAN);
+            statement1.setDouble(1,APIValue);
             statement1.setString(2,recevIBAN);
             statement.execute();
             statement1.execute();
@@ -408,8 +428,6 @@ public class DatabaseLayer {
         }
 
     }
-
-
 
     public double totalAmount(Double TC){
         try {
@@ -487,6 +505,29 @@ public class DatabaseLayer {
         }
     }
 
+    public ObservableList<ModelTable> fillTableCol (String TC,boolean query1){
+        try {
+            ObservableList<ModelTable> data = FXCollections.observableArrayList();
+            PreparedStatement statement;
+            if(query1) {
+                statement = connection.prepareStatement("select F_Name,L_Name,receiverIBAN,pro2.amount,pro2.T_date from users,(select TC,receiverIBAN,pro.amount,T_date from accounts,(select receiverIBAN,transactions.amount,T_date from transactions,accounts where IBAN = transactions.senderIBAN and TC = ?)pro where IBAN=pro.receiverIBAN)pro2 where pro2.TC = users.TC");
+            }
+            else{
+                statement = connection.prepareStatement("select F_Name,L_Name,receiverIBAN,amount,T_date from users,(select TC,receiverIBAN,prod2.amount,T_date from accounts,(select senderIBAN,receiverIBAN,amount,T_date from transactions, (select IBAN from accounts where TC = ?)pro where receiverIBAN = pro.IBAN)prod2 where IBAN = prod2.senderIBAN)pro3 where pro3.TC = users.TC;");
+            }
+            statement.setString(1,TC);
+            ResultSet rs = statement.executeQuery();
+            while (rs.next()){
+                data.add(new ModelTable(rs.getString("F_Name") + " " + rs.getString("L_Name"), rs.getString("receiverIBAN"), rs.getString("amount"), rs.getString("T_date")));
+            }
+            return data;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
 
     public ObservableList<PieChart.Data> fillPieChart (String TC){
         try {
@@ -523,6 +564,7 @@ public class DatabaseLayer {
             return null;
         }
 
+
     }
     public List<String[]> getAccountDataForChange(String TC,String IBAN){
         try {
@@ -545,7 +587,6 @@ public class DatabaseLayer {
 
 
     }
-
 
 
     public void closeConnection(){

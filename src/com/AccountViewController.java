@@ -116,6 +116,15 @@ public class AccountViewController {
             MoneyLabel.setTextFill(Color.BLACK);
         });
 
+        changeMoney.setOnMouseEntered(mouseEvent -> {
+            changeMoney.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 10");
+
+        });
+
+        changeMoney.setOnMouseExited(mouseEvent -> {
+            changeMoney.setStyle("-fx-background-color: transparent; -fx-border-width: 0");
+        });
+
         changeMoney.setOnAction(actionEvent -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("view/changeMoney.fxml"));

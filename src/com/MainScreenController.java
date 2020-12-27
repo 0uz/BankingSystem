@@ -3,6 +3,7 @@ package com;
 import com.util.DatabaseLayer;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -12,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -30,7 +32,6 @@ import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class MainScreenController {
@@ -38,6 +39,7 @@ public class MainScreenController {
     public AnchorPane accountPage;
     public AnchorPane transactionPage;
     public AnchorPane settingsPage;
+    public AnchorPane historyPage;
     public VBox accountVBox;
     public Label moneyLabel;
     public Label IBANLabel;
@@ -99,6 +101,26 @@ public class MainScreenController {
     public Button changeMoneyMain;
     public ImageView changeMoneyIV;
     public Label successCredit;
+    public TableView<ModelTable> table1;
+    public TableColumn<ModelTable, String> col_sender1;
+    public TableColumn<ModelTable, String> col_receiver1;
+    public TableColumn<ModelTable, String> col_amount1;
+    public TableColumn<ModelTable, String> col_Tdate1;
+    @FXML
+    private TableView<ModelTable> table;
+    @FXML
+    private TableColumn<ModelTable, String> col_sender;
+    @FXML
+    private TableColumn<ModelTable, String> col_receiver;
+    @FXML
+    private TableColumn<ModelTable, String> col_amount;
+    @FXML
+    private TableColumn<ModelTable, String> col_Tdate;
+
+
+
+
+
 
 
     DatabaseLayer layer = new DatabaseLayer();
@@ -106,7 +128,7 @@ public class MainScreenController {
     boolean[] searchControl = {false,false};
 
     public void initialize() {
-        passScreenHandle(true,false,false,false);
+        passScreenHandle(true,false,false,false,false);
         passwordInf.setText("");
         mailInf.setText("");
         addressInf.setText("");
@@ -114,8 +136,9 @@ public class MainScreenController {
         addListener();
         loadImages();
 
-
     }
+
+
 
     void loadImages(){
         StaticMethod.imageLoader(acc_img,"images/account.png");
@@ -136,13 +159,32 @@ public class MainScreenController {
         listTransAccounts();
         creditScreen();
         controlCredit();
+        fillTable();
 
     }
 
-    public void passScreenHandle(boolean account, boolean trans,boolean credit, boolean settings){
+
+    void fillTable(){
+        col_sender.setCellValueFactory(new PropertyValueFactory<>("senderName"));
+        col_receiver.setCellValueFactory(new PropertyValueFactory<>("receiverIBAN"));
+        col_amount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        col_Tdate.setCellValueFactory(new PropertyValueFactory<>("T_date"));
+
+        col_sender1.setCellValueFactory(new PropertyValueFactory<>("senderName"));
+        col_receiver1.setCellValueFactory(new PropertyValueFactory<>("receiverIBAN"));
+        col_amount1.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        col_Tdate1.setCellValueFactory(new PropertyValueFactory<>("T_date"));
+
+        table.setItems(layer.fillTableCol(currentUserTC,true));
+        table1.setItems(layer.fillTableCol(currentUserTC,false));
+
+    }
+
+    public void passScreenHandle(boolean account, boolean trans,boolean credit, boolean history, boolean settings){
         accountPage.setVisible(account);
         transactionPage.setVisible(trans);
         creditPage.setVisible(credit);
+        historyPage.setVisible(history);
         settingsPage.setVisible(settings);
     }
 
@@ -176,6 +218,15 @@ public class MainScreenController {
             moneyLabel.setTextFill(Color.BLACK);
         });
 
+        changeMoneyMain.setOnMouseEntered(mouseEvent -> {
+            changeMoneyMain.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 10");
+
+        });
+
+        changeMoneyMain.setOnMouseExited(mouseEvent -> {
+            changeMoneyMain.setStyle("-fx-background-color: transparent; -fx-border-width: 0");
+        });
+
         changeMoneyMain.setOnAction(actionEvent -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("view/changeMoney.fxml"));
@@ -203,21 +254,27 @@ public class MainScreenController {
 
 
     public void accountsButtonAction(){
-        passScreenHandle(true,false,false,false);
-
+        passScreenHandle(true,false,false,false,false);
     }
 
     public void transactionButtonAction(){
-        passScreenHandle(false,true,false,false);
+        passScreenHandle(false,true,false,false,false);
         autoRefreshForTrans();
     }
     public void creditButtonAction(){
-        passScreenHandle(false,false,true,false);
+        passScreenHandle(false,false,true,false,false);
     }
 
+    public void historyButtonAction() { passScreenHandle(false,false,false,true,false);
+    table.getItems().clear();
+    table1.getItems().clear();
+    fillTable();}
+
     public void settingsButtonAction(){
-        passScreenHandle(false,false,false,true);
+        passScreenHandle(false,false,false,false,true);
     }
+
+
 
     public void exitButtonAction(){
         System.exit(1);
@@ -310,7 +367,7 @@ public class MainScreenController {
             check=false;
         }
         if(check==true){ layer.transaction(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
-            layer.transactionAmount(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
+            layer.transactionAmountSameCur(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
             timeLineError(sendInf,"Successful!",Color.web("#419A1C"),recevNameSurname);
             recevIBAN.setText("");
             recevAmount.setText("");

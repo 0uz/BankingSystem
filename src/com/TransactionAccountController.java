@@ -21,6 +21,11 @@ public class TransactionAccountController {
         accCurrency.setText(accCurencyy);
         accButton();
     }
+    private ChangeMoneyController parentController;
+    public void setParentController(ChangeMoneyController parentController) {
+        this.parentController = parentController;
+    }
+
 
     public TransactionAccountController(String accIBANN, String accAmountt, String accCurencyy,Label label) {
         this.accIBANN = accIBANN;
@@ -32,7 +37,8 @@ public class TransactionAccountController {
     public void accButton(){
         accButton.setOnAction(actionEvent -> {
            IBANLabel.setText(accIBANN);
-
+           parentController.toCurreny = accCurencyy;
+           System.out.println(parentController.toCurreny);
         });
 
         accButton.setOnMouseEntered(mouseEvent -> {

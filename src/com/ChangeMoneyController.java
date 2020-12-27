@@ -21,6 +21,7 @@ public class ChangeMoneyController {
     public Button submitButton;
     public Button cancelButton;
     public Label moneyLabel;
+    public String toCurreny;
     String IBAN, TC, currency, money;
     DatabaseLayer layer = new DatabaseLayer();
 
@@ -42,6 +43,7 @@ public class ChangeMoneyController {
             TransactionAccountController controller = new TransactionAccountController(accountsDatum[0], accountsDatum[1], accountsDatum[2],yourIBAN);
             FXMLLoader loader = new FXMLLoader(getClass().getResource("view/TransactionAccount.fxml"));
             loader.setController(controller);
+            controller.setParentController(this);
             moneyLabel.setText("Money: "+ money);
             try {
                 accountsVbox.getChildren().add(loader.load());
@@ -67,16 +69,18 @@ public class ChangeMoneyController {
 
    public void submitButtonHandle(){
        if (isDouble && yourIBAN.getText().length()>10){
+           StaticMethod.setCurrencies();
+           Double mainMoney = Double.parseDouble(amountTF.getText());
            Double money = Double.parseDouble(amountTF.getText());
           if (layer.transactionAmountControl(IBAN,money)){
               if (currency.equals("TL") || currency.equals("Gold")){
-                  money=StaticMethod.makeExcCalc("TL",money);
+                  money=StaticMethod.makeExcCalcWithBase("TRY",toCurreny,money);
               }else if(currency.equals("Dollar")){
-                  money=StaticMethod.makeExcCalc("Dollar",money);
+                  money=StaticMethod.makeExcCalcWithBase("USD",toCurreny,money);
               }else{
-                  money=StaticMethod.makeExcCalc("Euro",money);
+                  money=StaticMethod.makeExcCalcWithBase("EUR",toCurreny,money);
               }
-              layer.transactionAmount(IBAN, yourIBAN.getText(),money);
+              layer.transactionAmountDiffCur(IBAN, yourIBAN.getText(),mainMoney,money);
               layer.transaction(IBAN,yourIBAN.getText(),money);
               submitButton.setDisable(true);
               cancelButton.setDisable(true);
