@@ -121,8 +121,26 @@ public class StaticMethod {
         }
     }
 
+    public static double makeExcCalcWithBase(String baseCurrency ,String toCurrency, Double money){
+        String moneyRate;
+        if (toCurrency.equals("TL")||toCurrency.equals("Gold")){
+            moneyRate = API(baseCurrency,"TRY");
+        }else if(toCurrency.equals("Dollar")){
+            moneyRate = API(baseCurrency,"USD");
+        }else{
+            moneyRate = API(baseCurrency,"EUR");
+        }
+        System.out.println(moneyRate);
+        for (int i = 0;i<moneyRate.length();i++){
+            if (moneyRate.charAt(i) == ','){
+                moneyRate= moneyRate.substring(0,i) + "." + moneyRate.substring(i+1);
+            }
+        }
+        return money * Double.parseDouble(moneyRate);
+    }
+
     static void imageLoader(ImageView image, String path){
-        File file = new File(path);
+        File file = new File("./"+path);
         Image imageFile = new Image(file.toURI().toString());
         image.setImage(imageFile);
     }

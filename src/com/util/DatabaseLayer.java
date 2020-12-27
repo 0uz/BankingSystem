@@ -61,7 +61,7 @@ public class DatabaseLayer {
         String transactionTable = "CREATE TABLE IF NOT EXISTS transactions(\n" +
                 "    senderIBAN VARCHAR(26) NOT NULL,\n" +
                 "    receiverIBAN VARCHAR(26),\n" +
-                "    amount INTEGER,\n" +
+                "    amount decimal(28,3),\n" +
                 "    T_date date,\n" +
                 "    isRead bool default false,\n" +
                 "    foreign key (senderIBAN) REFERENCES accounts(IBAN)\n" +
@@ -79,8 +79,6 @@ public class DatabaseLayer {
                 "     confirmation bool default false,\n" +
                 "     foreign key (TC) REFERENCES users(TC)\n" +
                 ")";
-
-
 
         try {
                 Statement statement = connection.createStatement();
@@ -371,7 +369,7 @@ public class DatabaseLayer {
     }
 
 
-    public void transactionAmount(String sendIBAN,String recevIBAN,double value) {
+    public void transactionAmountSameCur(String sendIBAN, String recevIBAN, double value) {
 
         try{
             PreparedStatement statement=connection.prepareStatement("UPDATE accounts set amount=amount - ? where IBAN = ?");
@@ -379,6 +377,24 @@ public class DatabaseLayer {
             statement.setDouble(1,value);
             statement.setString(2,sendIBAN);
             statement1.setDouble(1,value);
+            statement1.setString(2,recevIBAN);
+            statement.execute();
+            statement1.execute();
+
+        }catch (SQLException throwables){
+            throwables.printStackTrace();
+
+        }
+
+    }
+
+    public void transactionAmountDiffCur(String sendIBAN, String recevIBAN, double value , double APIValue) {
+        try{
+            PreparedStatement statement=connection.prepareStatement("UPDATE accounts set amount=amount - ? where IBAN = ?");
+            PreparedStatement statement1=connection.prepareStatement("UPDATE accounts set amount=amount + ? where IBAN = ?");
+            statement.setDouble(1,value);
+            statement.setString(2,sendIBAN);
+            statement1.setDouble(1,APIValue);
             statement1.setString(2,recevIBAN);
             statement.execute();
             statement1.execute();
@@ -408,8 +424,6 @@ public class DatabaseLayer {
         }
 
     }
-
-
 
     public double totalAmount(Double TC){
         try {
@@ -524,6 +538,7 @@ public class DatabaseLayer {
             return null;
         }
 
+
     }
     public List<String[]> getAccountDataForChange(String TC,String IBAN){
         try {
@@ -546,7 +561,6 @@ public class DatabaseLayer {
 
 
     }
-
 
 
     public void closeConnection(){

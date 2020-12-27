@@ -18,8 +18,8 @@
             <Label text="Money" />
             <TextField fx:id="moneyTF" prefHeight="25.0" prefWidth="150.0" />
             <Label fx:id="interestLabel" text="Interest %15/year" />
-            <Label fx:id="dailyEarningLabel" text="Günlük Kazanç" />
-            <Label fx:id="yearlyEarningLabel" text="Yıllık Kazanç" />
+            <Label fx:id="dailyEarningLabel" text="Daily earn" />
+            <Label fx:id="yearlyEarningLabel" text="Yearly earn" />
          </children>
       </VBox>
       <Button fx:id="submitButton" layoutX="10.0" layoutY="261.0" mnemonicParsing="false" onAction="#submitButton" prefHeight="25.0" prefWidth="77.0" style="-fx-background-color: #419A1C;" text="Submit" textFill="WHITE" AnchorPane.leftAnchor="20.0" />

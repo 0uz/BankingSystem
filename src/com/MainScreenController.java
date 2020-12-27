@@ -28,7 +28,6 @@ import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 public class MainScreenController {
@@ -173,6 +172,15 @@ public class MainScreenController {
             moneyLabel.setTextFill(Color.BLACK);
         });
 
+        changeMoneyMain.setOnMouseEntered(mouseEvent -> {
+            changeMoneyMain.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 10");
+
+        });
+
+        changeMoneyMain.setOnMouseExited(mouseEvent -> {
+            changeMoneyMain.setStyle("-fx-background-color: transparent; -fx-border-width: 0");
+        });
+
         changeMoneyMain.setOnAction(actionEvent -> {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("view/changeMoney.fxml"));
@@ -307,7 +315,7 @@ public class MainScreenController {
             check=false;
         }
         if(check==true){ layer.transaction(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
-            layer.transactionAmount(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
+            layer.transactionAmountSameCur(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
             timeLineError(sendInf,"Successful!",Color.web("#419A1C"),recevNameSurname);
             recevIBAN.setText("");
             recevAmount.setText("");
