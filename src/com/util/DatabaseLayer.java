@@ -474,16 +474,15 @@ public class DatabaseLayer {
         PreparedStatement statement=connection.prepareStatement("select confirmation from credits where TC = ?");
         statement.setString(1,TC);
         ResultSet rs=statement.executeQuery();
-        rs.next();
-        rs.getInt("confirmation");
-        if(rs.getBoolean("confirmation")){
-            return  1;//accept credit
+            rs.next();
 
-        }
+            if(rs.getBoolean("confirmation")) {
+                return 1;//accept credit//
+            }else
             return 2; //waiting credit
 
-        }catch (SQLException | RuntimeException throwables){
-            throwables.printStackTrace();
+        }catch (SQLException   throwables){
+
             return 0; //no applied credit
         }
     }

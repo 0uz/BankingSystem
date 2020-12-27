@@ -22,6 +22,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.apache.commons.validator.routines.EmailValidator;
+
+import javax.swing.text.rtf.RTFEditorKit;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -96,6 +98,7 @@ public class MainScreenController {
     public HBox showCreditDetail;
     public Button changeMoneyMain;
     public ImageView changeMoneyIV;
+    public Label successCredit;
 
 
     DatabaseLayer layer = new DatabaseLayer();
@@ -403,6 +406,8 @@ public class MainScreenController {
 
     public void applyCreditHandle(){
 
+
+
       int save1=0;
       int save2=0;
       int mC= monthCredit.getSelectionModel().getSelectedIndex();
@@ -424,10 +429,26 @@ public class MainScreenController {
             case 4: save2=20; break;
             case 5: save2=25; break;
         }
-        //if(Double.parseDouble(creditAmount.getText())<=layer.totalAmount(Double.parseDouble(currentUserTC))*3/10 && StaticMethod.isDouble(creditAmount.getText()) && )
-        layer.creditApply(currentUserTC,Double.parseDouble(creditAmount.getText()), save1,Double.parseDouble(interestCredit.getText()), save2);
+        if( StaticMethod.isDouble(creditAmount.getText())) {
+            if(Double.parseDouble(creditAmount.getText())<=(layer.totalAmount(Double.parseDouble(currentUserTC))*3/10) ) {
+                layer.creditApply(currentUserTC, Double.parseDouble(creditAmount.getText()), save1, Double.parseDouble(interestCredit.getText()), save2);
 
+                setCreditInfo();
+                creditApplyVbox.setDisable(true);
+                showCreditDetail.setVisible(true);
+                titleCreditLabel.setVisible(true);
+                titleCreditLabel.setText("Current Label");
+            }
+            else{
 
+                timeLineError(totalAmount,"You can withdraw up to thirty percent of your money.",Color.RED,creditAmount);
+              //  totalAmount.setText("Total Amount="+layer.totalAmount(Double.parseDouble(currentUserTC)) +"\n"+"You can withdraw up to thirty percent of your money.");
+
+            }
+        }else{
+            timeLineError(totalAmount,"Invalid value.",Color.RED,creditAmount);
+           // totalAmount.setText("Total Amount="+layer.totalAmount(Double.parseDouble(currentUserTC)) +"\n"+"You can withdraw up to thirty percent of your money.");
+        }
    }
 
    void controlCredit(){
@@ -440,8 +461,9 @@ public class MainScreenController {
 
         }else if (control == 1){
             creditApplyVbox.setDisable(true);
+            creditApplyVbox.setVisible(false);
             setCreditInfo();
-            titleCreditLabel.setText("Currennt Label");
+            titleCreditLabel.setText("Accepted Credit");
 
         }else{
             creditApplyVbox.setDisable(true);
