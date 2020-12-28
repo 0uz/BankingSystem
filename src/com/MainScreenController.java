@@ -1,6 +1,7 @@
 package com;
 
 import com.util.DatabaseLayer;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.fxml.FXML;
@@ -25,7 +26,6 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import org.apache.commons.validator.routines.EmailValidator;
 
-import javax.swing.text.rtf.RTFEditorKit;
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -160,7 +160,8 @@ public class MainScreenController {
         creditScreen();
         controlCredit();
         fillTable();
-
+        notificationHandle();
+        notificationScreen();
     }
 
 
@@ -386,6 +387,41 @@ public class MainScreenController {
             node.setVisible(false);
         }));
         timeline.play();
+    }
+
+    Timeline notifTimeline;
+    boolean firsOpen = true;
+    void notificationHandle(){
+        notifTimeline = new Timeline(new KeyFrame(Duration.seconds(10), actionEvent -> {
+           if (!firsOpen) notificationScreen();
+       }));
+        notifTimeline.setCycleCount(Animation.INDEFINITE);
+        notifTimeline.play();
+    }
+
+    void notificationScreen(){
+        try {
+            List<String[]> data = layer.getNotificationData(currentUserTC);
+            if (data.size()!=0){
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("view/Notification.fxml"));
+                Parent root =loader.load();
+                Stage stage = new Stage();
+                Scene scene = new Scene(root);
+                scene.setFill(Color.TRANSPARENT);
+                stage.setScene(scene);
+                stage.initStyle(StageStyle.TRANSPARENT);
+                stage.initModality(Modality.WINDOW_MODAL);
+                stage.initOwner(accountPage.getScene().getWindow());
+                NotificationController controller = loader.getController();
+                controller.setData(data);
+                controller.setParentController(this);
+                stage.show();
+                notifTimeline.stop();
+            }
+            firsOpen=false;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     void autoRefreshForTrans(){

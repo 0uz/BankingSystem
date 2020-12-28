@@ -10,8 +10,13 @@ import javafx.scene.control.TableView;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 
 public class DatabaseLayer {
@@ -19,7 +24,9 @@ public class DatabaseLayer {
     private static final String username = "sql2383499";
     private static final String password = "pU5%bI9%";
     Connection connection;
+    Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+3"));
     java.sql.Timestamp currentDate = new java.sql.Timestamp(new java.util.Date().getTime());
+
 
     public DatabaseLayer() {
         try {
@@ -63,17 +70,18 @@ public class DatabaseLayer {
                 ");";
 
         String transactionTable = "CREATE TABLE IF NOT EXISTS transactions(\n" +
+                "     notID int not null auto_increment PRIMARY KEY,"+
                 "    senderIBAN VARCHAR(26) NOT NULL,\n" +
                 "    receiverIBAN VARCHAR(26),\n" +
                 "    amount decimal(28,3),\n" +
-                "    T_date date,\n" +
+                "    T_date datetime,\n" +
                 "    isRead bool default false,\n" +
                 "    foreign key (senderIBAN) REFERENCES accounts(IBAN)\n" +
                 ")";
 
         String creditTable = "CREATE TABLE IF NOT EXISTS credits(\n" +
-                "    TC bigint(11) not null,\n" +
-                "    amount int,\n" +
+                "     TC bigint(11) not null,\n" +
+                "     amount int,\n" +
                 "     creditMonths tinyint,\n" +
                 "     withInterest decimal(14,2),\n" +
                 "     getCreditDate date,\n" +
@@ -135,7 +143,7 @@ public class DatabaseLayer {
             statement2.setDouble(1,TC);
             statement2.setString(2,IBAN);
             statement2.setDouble(3,moneyAmount);
-            statement2.setTimestamp(4,currentDate);
+            statement2.setTimestamp(4,currentDate,cal);
             statement2.setBoolean(5,true);
             statement.execute();
             statement2.execute();
@@ -278,7 +286,7 @@ public class DatabaseLayer {
             statement1.setDouble(3,amount);
             statement1.setString(4,currency);
             statement1.setBoolean(5,deposit);
-            statement1.setTimestamp(6,currentDate);
+            statement1.setTimestamp(6,currentDate,cal);
             statement2.setDouble(1,amount);
             statement2.setDouble(2,TC);
             statement1.execute();
@@ -298,8 +306,8 @@ public class DatabaseLayer {
             statement1.setDouble(3,amount);
             statement1.setString(4,currency);
             statement1.setBoolean(5,deposit);
-            statement1.setTimestamp(6,currentDate);
-            statement1.setTimestamp(7,currentDate);
+            statement1.setTimestamp(6,currentDate,cal);
+            statement1.setTimestamp(7,currentDate,cal);
             statement2.setDouble(1,amount);
             statement2.setDouble(2,TC);
             statement1.execute();
@@ -319,7 +327,7 @@ public class DatabaseLayer {
             statement1.setDouble(1,TC);
             statement1.setString(2, StaticMethod.IBANCalculator());
             statement1.setString(3,"Gold");
-            statement1.setTimestamp(4,currentDate);
+            statement1.setTimestamp(4,currentDate,cal);
             statement1.setDouble(5,money);
             statement2.setDouble(1,money);
             statement2.setDouble(2,TC);
@@ -338,7 +346,7 @@ public class DatabaseLayer {
             statement1.setString(1,sendIBAN);
             statement1.setString(2,recevIBAN);
             statement1.setDouble(3,amount);
-            statement1.setTimestamp(4,currentDate);
+            statement1.setTimestamp(4,currentDate,cal);
 
             statement1.execute();
 
@@ -453,7 +461,7 @@ public class DatabaseLayer {
             statement.setDouble(2,amount);
             statement.setInt(3,creditMonths);
             statement.setDouble(4,withInterest);
-            statement.setTimestamp(5,currentDate);
+            statement.setTimestamp(5,currentDate,cal);
             statement.setInt(6,0);
             statement.setInt(7,paymentDate);
             statement.setInt(8,creditMonths);
@@ -517,11 +525,14 @@ public class DatabaseLayer {
             }
             statement.setString(1,TC);
             ResultSet rs = statement.executeQuery();
+            SimpleDateFormat fromDB = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             while (rs.next()){
-                data.add(new ModelTable(rs.getString("F_Name") + " " + rs.getString("L_Name"), rs.getString("receiverIBAN"), rs.getString("amount"), rs.getString("T_date")));
+                String date = myFormat.format(fromDB.parse(rs.getString("T_Date")));
+                data.add(new ModelTable(rs.getString("F_Name") + " " + rs.getString("L_Name"), rs.getString("receiverIBAN"), rs.getString("amount"),date));
             }
             return data;
-        } catch (SQLException e) {
+        } catch (SQLException | ParseException e) {
             e.printStackTrace();
             return null;
         }
@@ -552,6 +563,7 @@ public class DatabaseLayer {
             statement.setString(1,TC);
             ResultSet rs = statement.executeQuery();
             List<String[]> accountsData = new ArrayList<>();
+
             while (rs.next()){
                 accountsData.add(new String[]{rs.getString("IBAN"),
                         String.valueOf(rs.getInt("amount")),
@@ -566,6 +578,41 @@ public class DatabaseLayer {
 
 
     }
+    public List<String[]> getNotificationData(String TC){
+        try {
+            PreparedStatement statement = connection.prepareStatement("select F_Name,L_Name,amount,T_date,notID from users,(select TC,prod2.amount,T_date,notID from accounts,(select senderIBAN,amount,T_date,notID from transactions, (select IBAN from accounts where TC = ?)pro where receiverIBAN = pro.IBAN and isRead = false)prod2 where IBAN = prod2.senderIBAN)pro3 where pro3.TC = users.TC");
+            statement.setString(1,TC);
+            ResultSet rs = statement.executeQuery();
+            List<String[]> data = new ArrayList<>();
+            SimpleDateFormat fromDB = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            while (rs.next()){
+                String date = myFormat.format(fromDB.parse(rs.getString("T_Date")));
+                data.add(new String[]{rs.getString("F_Name"),
+                        rs.getString("L_Name"),
+                        rs.getString("amount"),
+                        date,
+                        rs.getString("notID")
+                });
+            }
+            return data;
+        }catch (SQLException | ParseException e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public void notificationUpdate(int notID){
+        try {
+            PreparedStatement statement = connection.prepareStatement("update transactions set isRead = true where notID = ?");
+            statement.setInt(1,notID);
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+
     public List<String[]> getAccountDataForChange(String TC,String IBAN){
         try {
             PreparedStatement statement = connection.prepareStatement("SELECT IBAN,amount,currency from accounts where TC = ? and depositAccF = false and IBAN != ?");

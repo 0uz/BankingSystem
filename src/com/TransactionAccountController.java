@@ -37,8 +37,7 @@ public class TransactionAccountController {
     public void accButton(){
         accButton.setOnAction(actionEvent -> {
            IBANLabel.setText(accIBANN);
-           parentController.toCurreny = accCurencyy;
-           System.out.println(parentController.toCurreny);
+           if (parentController!=null)parentController.toCurreny = accCurencyy;
         });
 
         accButton.setOnMouseEntered(mouseEvent -> {
