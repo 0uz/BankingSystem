@@ -529,7 +529,12 @@ public class DatabaseLayer {
             SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             while (rs.next()){
                 String date = myFormat.format(fromDB.parse(rs.getString("T_Date")));
-                data.add(new ModelTable(rs.getString("F_Name") + " " + rs.getString("L_Name"), rs.getString("receiverIBAN"), rs.getString("amount"),date));
+                if(query1){
+                    data.add(new ModelTable(rs.getString("F_Name") + " " + rs.getString("L_Name"), rs.getString("receiverIBAN"),"-" + rs.getString("amount"),date));
+                }
+                else{
+                    data.add(new ModelTable(rs.getString("F_Name") + " " + rs.getString("L_Name"), rs.getString("receiverIBAN"),"+" + rs.getString("amount"),date));
+                }
             }
             return data;
         } catch (SQLException | ParseException e) {
