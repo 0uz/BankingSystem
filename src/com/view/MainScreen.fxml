@@ -54,7 +54,7 @@
                   </Button>
                   <Button mnemonicParsing="false" onAction="#creditButtonAction" prefHeight="40.0" prefWidth="257.0" styleClass="buttons" stylesheets="@css/mainsc.css" text="  Credit">
                      <graphic>
-                        <ImageView fx:id="credit_img" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="credit_img" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../../../images/credit.png" />
                            </image></ImageView>
@@ -68,15 +68,18 @@
                   </Button>
                   <Button mnemonicParsing="false" onAction="#historyButtonAction" prefHeight="40.0" prefWidth="257.0" styleClass="buttons" stylesheets="@css/mainsc.css" text="  History">
                      <graphic>
-                        <ImageView fx:id="credit_img1" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fx:id="historyIV" fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../images/credit.png" />
+                              <Image url="@../../../images/transaction-history.png" />
                            </image>
                         </ImageView>
                      </graphic>
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#settingsButtonAction" prefHeight="40.0" prefWidth="222.0" styleClass="buttons" stylesheets="@css/mainsc.css" text="  Settings">
                      <VBox.margin>

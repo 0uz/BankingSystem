@@ -106,6 +106,7 @@ public class MainScreenController {
     public TableColumn<ModelTable, String> col_receiver1;
     public TableColumn<ModelTable, String> col_amount1;
     public TableColumn<ModelTable, String> col_Tdate1;
+    public ImageView historyIV;
     @FXML
     private TableView<ModelTable> table;
     @FXML
@@ -148,6 +149,7 @@ public class MainScreenController {
         StaticMethod.imageLoader(logo,"images/logo.png");
         StaticMethod.imageLoader(newAccountIV,"images/newAccount.png");
         StaticMethod.imageLoader(refreshIV,"images/refresh.png");
+        StaticMethod.imageLoader(historyIV,"images/transaction-history.png");
     }
 
 
