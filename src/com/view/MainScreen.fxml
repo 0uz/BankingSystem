@@ -421,26 +421,26 @@
       </AnchorPane>
       <AnchorPane fx:id="historyPage" layoutX="271.0" layoutY="48.0" prefHeight="306.0" prefWidth="291.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
-            <TableView fx:id="table" layoutX="5.0" prefHeight="250.0" prefWidth="580.0" stylesheets="@css/mainsc.css" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="0.0">
+            <TableView fx:id="table" layoutX="5.0" prefHeight="250.0" prefWidth="580.0" stylesheets="@css/mainsc.css" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0">
               <columns>
-                  <TableColumn maxWidth="590.0" prefWidth="590.0" text="SENT">
+                  <TableColumn maxWidth="580.0" prefWidth="580.0" resizable="false" text="SENT">
                      <columns>
-                      <TableColumn fx:id="col_sender" editable="false" prefWidth="164.0" sortable="false" text="receiver name" />
-                      <TableColumn fx:id="col_receiver" editable="false" prefWidth="187.19998168945312" sortable="false" text="receiverIBAN" />
-                        <TableColumn fx:id="col_amount" editable="false" prefWidth="124.7999267578125" sortable="false" text="amount" />
-                        <TableColumn fx:id="col_Tdate" editable="false" prefWidth="98.4000244140625" sortable="false" text="T_date" />
+                      <TableColumn fx:id="col_sender" editable="false" prefWidth="150.0" resizable="false" sortable="false" text="Receiver Name" />
+                      <TableColumn fx:id="col_receiver" editable="false" prefWidth="180.0" resizable="false" sortable="false" text="Receiver IBAN" />
+                        <TableColumn fx:id="col_amount" editable="false" prefWidth="119.0" resizable="false" sortable="false" text="Amount" />
+                        <TableColumn fx:id="col_Tdate" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Date" />
                      </columns>
                   </TableColumn>
               </columns>
             </TableView>
-            <TableView fx:id="table1" layoutX="5.0" layoutY="250.0" prefHeight="250.0" prefWidth="580.0" stylesheets="@css/mainsc.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="250.0">
+            <TableView fx:id="table1" layoutX="5.0" layoutY="250.0" prefHeight="250.0" prefWidth="580.0" stylesheets="@css/mainsc.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="250.0">
                <columns>
-                  <TableColumn prefWidth="75.0" text="RECEIVED">
+                  <TableColumn maxWidth="580.0" prefWidth="580.0" resizable="false" text="RECEIVED">
                      <columns>
-                        <TableColumn fx:id="col_sender1" editable="false" prefWidth="164.0" sortable="false" text="sender name" />
-                        <TableColumn fx:id="col_receiver1" editable="false" prefWidth="187.19998168945312" sortable="false" text="receiverIBAN" />
-                        <TableColumn fx:id="col_amount1" editable="false" prefWidth="124.7999267578125" sortable="false" text="amount" />
-                        <TableColumn fx:id="col_Tdate1" editable="false" prefWidth="108.800048828125" sortable="false" text="T_date" />
+                        <TableColumn fx:id="col_sender1" editable="false" prefWidth="150.0" resizable="false" sortable="false" text="Sender Name" />
+                        <TableColumn fx:id="col_receiver1" editable="false" prefWidth="180.0" resizable="false" sortable="false" text="Receiver IBAN" />
+                        <TableColumn fx:id="col_amount1" editable="false" prefWidth="119.0" resizable="false" sortable="false" text="Amount" />
+                        <TableColumn fx:id="col_Tdate1" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Date" />
                      </columns>
                   </TableColumn>
                </columns>
