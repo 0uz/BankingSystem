@@ -1,5 +1,7 @@
 package com.util;
+import com.CreditTable;
 import com.ModelTable;
+import com.PaymentTable;
 import com.StaticMethod;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,9 +22,9 @@ import java.util.TimeZone;
 
 
 public class DatabaseLayer {
-    private static final String url = "jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2383499";
-    private static final String username = "sql2383499";
-    private static final String password = "pU5%bI9%";
+    private static final String url = "jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2384227";
+    private static final String username = "sql2384227";
+    private static final String password = "nG8%iA3*";
     Connection connection;
     Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+3"));
     java.sql.Timestamp currentDate = new java.sql.Timestamp(new java.util.Date().getTime());
@@ -80,6 +82,7 @@ public class DatabaseLayer {
                 ")";
 
         String creditTable = "CREATE TABLE IF NOT EXISTS credits(\n" +
+                "     creditID int not null auto_increment PRIMARY KEY,\n" +
                 "     TC bigint(11) not null,\n" +
                 "     amount int,\n" +
                 "     creditMonths tinyint,\n" +
@@ -90,7 +93,17 @@ public class DatabaseLayer {
                 "     restMonth int, \n" +
                 "     confirmation bool default false,\n" +
                 "     foreign key (TC) REFERENCES users(TC)\n" +
+
                 ")";
+
+        String creditPayment= "CREATE TABLE IF NOT EXISTS creditPayment (\n" +
+                "    amount decimal(28,2),\n" +
+                "    paymentDate date,\n" +
+                "    creditID int,\n" +
+                "    isPaid boolean default false, \n"+
+                "    foreign key (creditID) references  credits(creditID)\n" +
+                ")";
+
 
         try {
                 Statement statement = connection.createStatement();
@@ -98,6 +111,7 @@ public class DatabaseLayer {
                         statement.execute(accountTable);
                         statement.execute(transactionTable);
                         statement.execute(creditTable);
+                        statement.execute(creditPayment);
         }catch (SQLException e){
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -465,9 +479,19 @@ public class DatabaseLayer {
             statement.setInt(6,0);
             statement.setInt(7,paymentDate);
             statement.setInt(8,creditMonths);
-
-
+            PreparedStatement statement1;
             statement.execute();
+            Date date=new Date(currentDate.getYear(),currentDate.getMonth(),paymentDate);
+            for(int i=1;i<=creditMonths;i++){
+                statement1=connection.prepareStatement("insert into creditPayment(amount, paymentDate, creditID) values ((SELECT withInterest from credits where TC = ?)/(select creditMonths from credits where TC = ?),date_add(?,INTERVAL ? MONTH ),(SELECT creditID from credits where TC=?))");
+                statement1.setString(1,TC);
+                statement1.setString(2,TC);
+                statement1.setTimestamp(3,new Timestamp(date.getTime()),cal);
+                statement1.setInt(4,i);
+                statement1.setString(5,TC);
+                statement1.execute();
+            }
+
 
 
         }catch (SQLException throwables){
@@ -478,16 +502,17 @@ public class DatabaseLayer {
 
     public String[] getCreditInfo(String TC){
         try {
-            PreparedStatement statement = connection.prepareStatement("select amount,paymentAmount,getCreditDate,paymentDate,restMonth from credits where TC = ? ");
+            PreparedStatement statement = connection.prepareStatement("select withInterest,paymentAmount,getCreditDate,paymentDate,restMonth,creditMonths from credits where TC = ? ");
             statement.setString(1, TC);
             ResultSet rs = statement.executeQuery();
             rs.next();
             return new String[]{
-                        rs.getString("amount"),
+                        rs.getString("withInterest"),
                         rs.getString("paymentAmount"),
                         rs.getString("getCreditDate"),
                         rs.getString("paymentDate"),
-                        rs.getString("restMonth")};
+                        rs.getString("restMonth"),
+                        rs.getString("creditMonths")};
 
             }catch (SQLException throwables){
                 throwables.printStackTrace();
@@ -634,6 +659,43 @@ public class DatabaseLayer {
             return accountsData;
         }catch (SQLException e){
             e.printStackTrace();
+            return null;
+        }
+
+
+    }
+
+    public ObservableList<PaymentTable> paymentTable(String TC){
+        try {
+            PreparedStatement statement=connection.prepareStatement("Select IBAN,currency,amount from accounts where TC = ? and depositAccF=false and currency='TL' ");
+            statement.setString(1,TC);
+            ResultSet rs=statement.executeQuery();
+            ObservableList<PaymentTable> data=FXCollections.observableArrayList();
+            while (rs.next()){
+                data.add(new PaymentTable(rs.getString("IBAN"),rs.getString("currency"),rs.getDouble("amount")));
+            }
+            return data;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
+    }
+
+    public ObservableList<CreditTable> creditTable(String TC){
+        try {
+
+          PreparedStatement  statement = connection.prepareStatement("Select creditPayment.amount,creditPayment.paymentDate,creditPayment.amount*0.02*DATEDIFF(now(),creditPayment.paymentDate) as fee  from creditPayment,credits where credits.creditID=creditPayment.creditID and TC = ?");
+            statement.setString(1,TC);
+            ResultSet rs=statement.executeQuery();
+            ObservableList<CreditTable> data=FXCollections.observableArrayList();
+            while(rs.next()){
+                double fee=rs.getDouble("fee");
+                if(fee<0) fee=0;
+                data.add(new CreditTable(rs.getDouble("amount"),fee,rs.getDate("paymentDate")));
+            }
+            return data;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
             return null;
         }
 

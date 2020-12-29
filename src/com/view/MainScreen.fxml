@@ -15,6 +15,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -284,90 +285,138 @@
             </HBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="creditPage" layoutX="220.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false">
+      <AnchorPane fx:id="creditPage" layoutX="220.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0">
          <children>
             <Label alignment="CENTER" layoutX="17.0" layoutY="-1.0" prefHeight="30.0" prefWidth="542.0" style="-fx-background-color: #419A1C; -fx-background-radius: 10 10 10 10;" text="Credit" />
             <HBox layoutX="-7.0" layoutY="29.0" prefHeight="495.0" prefWidth="590.0">
                <children>
-                  <VBox fx:id="creditApplyVbox" prefHeight="479.0" prefWidth="292.0" style="-fx-border-color: transparent #419A1C transparent  transparent;">
+                  <Pane prefHeight="495.0" prefWidth="385.0">
                      <children>
-                        <Label alignment="CENTER" prefHeight="26.0" prefWidth="228.0" text="Name Surname">
-                           <VBox.margin>
-                              <Insets left="20.0" top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="creditName" alignment="CENTER" prefHeight="17.0" prefWidth="229.0" text="Label">
-                           <VBox.margin>
-                              <Insets left="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="233.0" text="Amount">
-                           <VBox.margin>
-                              <Insets left="20.0" top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <TextField fx:id="creditAmount" prefHeight="25.0" prefWidth="169.0">
-                           <VBox.margin>
-                              <Insets left="50.0" right="70.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <Label fx:id="totalAmount" prefHeight="52.0" prefWidth="170.0" text="Hesaptaki para" wrapText="true">
-                           <VBox.margin>
-                              <Insets left="50.0" right="70.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="233.0" text="Month">
-                           <VBox.margin>
-                              <Insets left="20.0" top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <ComboBox fx:id="monthCredit" prefWidth="150.0">
-                           <VBox.margin>
-                              <Insets left="55.0" />
-                           </VBox.margin>
-                        </ComboBox>
-                        <Label alignment="CENTER" prefHeight="22.0" prefWidth="222.0" text="Interest   %15">
-                           <VBox.margin>
-                              <Insets left="20.0" top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="interestCredit" alignment="CENTER" prefHeight="22.0" prefWidth="228.0">
-                           <VBox.margin>
-                              <Insets left="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="229.0" text="Get Credit Date">
-                           <VBox.margin>
-                              <Insets left="20.0" top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label fx:id="getCreditDate" alignment="CENTER" prefHeight="17.0" prefWidth="234.0" text="tarih">
-                           <VBox.margin>
-                              <Insets left="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <Label alignment="CENTER" prefHeight="17.0" prefWidth="236.0" text="Monthly Payment Day">
-                           <VBox.margin>
-                              <Insets left="20.0" top="20.0" />
-                           </VBox.margin>
-                        </Label>
-                        <ComboBox fx:id="monthlyPayment" prefWidth="150.0">
-                           <VBox.margin>
-                              <Insets left="55.0" />
-                           </VBox.margin>
-                        </ComboBox>
-                        <Button fx:id="sendButtonCredit" mnemonicParsing="false" onAction="#applyCreditHandle" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #1761A0; -fx-background-radius: 10;" text="Apply" textFill="#fff7f7">
-                           <VBox.margin>
-                              <Insets left="35.0" top="20.0" />
-                           </VBox.margin>
-                        </Button>
+                        <VBox fx:id="creditApplyVbox" disable="true" prefHeight="479.0" prefWidth="292.0" style="-fx-border-color: transparent #419A1C transparent  transparent;" visible="false">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="26.0" prefWidth="228.0" text="Name Surname">
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="creditName" alignment="CENTER" prefHeight="17.0" prefWidth="229.0" text="Label">
+                                 <VBox.margin>
+                                    <Insets left="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="233.0" text="Amount">
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TextField fx:id="creditAmount" prefHeight="25.0" prefWidth="169.0">
+                                 <VBox.margin>
+                                    <Insets left="50.0" right="70.0" />
+                                 </VBox.margin>
+                              </TextField>
+                              <Label fx:id="totalAmount" prefHeight="52.0" prefWidth="170.0" text="Hesaptaki para" wrapText="true">
+                                 <VBox.margin>
+                                    <Insets left="50.0" right="70.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="233.0" text="Month">
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <ComboBox fx:id="monthCredit" prefWidth="150.0">
+                                 <VBox.margin>
+                                    <Insets left="55.0" />
+                                 </VBox.margin>
+                              </ComboBox>
+                              <Label alignment="CENTER" prefHeight="22.0" prefWidth="222.0" text="Interest   %15">
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="interestCredit" alignment="CENTER" prefHeight="22.0" prefWidth="228.0">
+                                 <VBox.margin>
+                                    <Insets left="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="229.0" text="Get Credit Date">
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="getCreditDate" alignment="CENTER" prefHeight="17.0" prefWidth="234.0" text="tarih">
+                                 <VBox.margin>
+                                    <Insets left="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label alignment="CENTER" prefHeight="17.0" prefWidth="236.0" text="Monthly Payment Day">
+                                 <VBox.margin>
+                                    <Insets left="20.0" top="20.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <ComboBox fx:id="monthlyPayment" prefWidth="150.0">
+                                 <VBox.margin>
+                                    <Insets left="55.0" />
+                                 </VBox.margin>
+                              </ComboBox>
+                              <Button fx:id="sendButtonCredit" mnemonicParsing="false" onAction="#applyCreditHandle" prefHeight="25.0" prefWidth="75.0" style="-fx-background-color: #1761A0; -fx-background-radius: 10;" text="Apply" textFill="#fff7f7">
+                                 <VBox.margin>
+                                    <Insets left="35.0" top="20.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
+                        <VBox fx:id="paymentVbox" prefHeight="495.0" prefWidth="292.0">
+                           <children>
+                              <Label alignment="CENTER" prefHeight="19.0" prefWidth="227.0" style="-fx-background-color: #419A1C; -fx-background-radius: 10;" text="Repayment Credit" textFill="WHITE">
+                                 <VBox.margin>
+                                    <Insets left="40.0" top="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label text="Select Account">
+                                 <VBox.margin>
+                                    <Insets left="10.0" top="5.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TableView fx:id="selectAccountTable" prefHeight="137.0" prefWidth="282.0">
+                                <columns>
+                                  <TableColumn fx:id="ibanTable" prefWidth="121.0" text="Accounts IBAN" />
+                                  <TableColumn fx:id="amountAcTable" prefWidth="90.0" text="Amount" />
+                                    <TableColumn fx:id="currencyTable" prefWidth="81.0" text="Currency" />
+                                </columns>
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </VBox.margin>
+                              </TableView>
+                              <Label prefHeight="17.0" prefWidth="103.0" text="Select Credit Bills">
+                                 <VBox.margin>
+                                    <Insets left="5.0" top="15.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <TableView fx:id="selectCreditTable" prefHeight="142.0" prefWidth="282.0">
+                                <columns>
+                                    <TableColumn fx:id="paymentDateCol" prefWidth="116.0" text="Payment due Date" />
+                                  <TableColumn fx:id="amountCol" prefWidth="89.0" text="Amount" />
+                                  <TableColumn fx:id="feeCol" text="Late Fee " />
+                                </columns>
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </VBox.margin>
+                              </TableView>
+                              <Button mnemonicParsing="false" onAction="#paymentButtonHandle" text="Payment">
+                                 <VBox.margin>
+                                    <Insets left="5.0" top="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                        </VBox>
                      </children>
-                  </VBox>
-                  <VBox prefHeight="495.0" prefWidth="299.0" style="-fx-border-color: transparent #419A1C transparent transparent;">
+                  </Pane>
+                  <VBox prefHeight="495.0" prefWidth="389.0" style="-fx-border-color: transparent #419A1C transparent transparent;">
                      <children>
                         <Label fx:id="titleCreditLabel" alignment="CENTER" prefHeight="17.0" prefWidth="223.0" style="-fx-background-color: #419A1C; -fx-background-radius: 10;" text="Accepted or Waiting Credits" textFill="#fffdfd">
                            <VBox.margin>
-                              <Insets left="40.0" top="25.0" />
+                              <Insets left="40.0" top="15.0" />
                            </VBox.margin>
                         </Label>
                         <HBox fx:id="showCreditDetail" prefHeight="91.0" prefWidth="287.0" style="-fx-background-color: #1761A0; -fx-background-radius: 10;">
@@ -377,15 +426,23 @@
                                     <Label fx:id="creditAmountLayer" prefHeight="22.0" prefWidth="158.0" text="Amount: " textFill="WHITE">
                                        <VBox.margin>
                                           <Insets left="5.0" />
-                                       </VBox.margin></Label>
-                                    <Label fx:id="amountPaidLayer" prefHeight="26.0" prefWidth="158.0" text="Amount Paid: " textFill="WHITE">
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="amountPaidLayer" prefHeight="19.0" prefWidth="153.0" text="Amount Paid: " textFill="WHITE">
                                        <VBox.margin>
                                           <Insets left="5.0" />
-                                       </VBox.margin></Label>
-                                    <Label fx:id="restAmountLayer" prefHeight="26.0" prefWidth="158.0" text="Rest of Amount: " textFill="WHITE">
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="restAmountLayer" prefHeight="21.0" prefWidth="153.0" text="Rest of Amount: " textFill="WHITE">
                                        <VBox.margin>
                                           <Insets left="5.0" />
-                                       </VBox.margin></Label>
+                                       </VBox.margin>
+                                    </Label>
+                                    <Label fx:id="creditMonthsLabel" prefHeight="17.0" prefWidth="143.0" text="Credit Months:" textFill="#fffefe">
+                                       <VBox.margin>
+                                          <Insets left="5.0" />
+                                       </VBox.margin>
+                                    </Label>
                                  </children>
                               </VBox>
                               <VBox prefHeight="75.0" prefWidth="128.0">
@@ -393,19 +450,23 @@
                                     <Label text="Get Credit Date" textFill="#fffafa">
                                        <VBox.margin>
                                           <Insets left="5.0" />
-                                       </VBox.margin></Label>
+                                       </VBox.margin>
+                                    </Label>
                                     <Label fx:id="getCreditLayer" text="Label" textFill="#f8f8f8">
                                        <VBox.margin>
                                           <Insets left="5.0" />
-                                       </VBox.margin></Label>
+                                       </VBox.margin>
+                                    </Label>
                                     <Label text="Monthly Payment Day" textFill="WHITE">
                                        <VBox.margin>
-                                          <Insets left="5.0" />
-                                       </VBox.margin></Label>
+                                          <Insets left="5.0" top="10.0" />
+                                       </VBox.margin>
+                                    </Label>
                                     <Label fx:id="monthlyPayLabel" text="Label" textFill="WHITE">
                                        <VBox.margin>
                                           <Insets left="5.0" />
-                                       </VBox.margin></Label>
+                                       </VBox.margin>
+                                    </Label>
                                  </children>
                               </VBox>
                            </children>
@@ -419,7 +480,7 @@
             </HBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="historyPage" layoutX="271.0" layoutY="48.0" prefHeight="306.0" prefWidth="291.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+      <AnchorPane fx:id="historyPage" layoutX="271.0" layoutY="48.0" prefHeight="306.0" prefWidth="291.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
          <children>
             <TableView fx:id="table" layoutX="5.0" prefHeight="250.0" prefWidth="580.0" stylesheets="@css/mainsc.css" AnchorPane.bottomAnchor="250.0" AnchorPane.leftAnchor="3.0" AnchorPane.rightAnchor="3.0" AnchorPane.topAnchor="0.0">
               <columns>

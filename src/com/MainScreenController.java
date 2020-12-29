@@ -4,6 +4,9 @@ import com.util.DatabaseLayer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.Observable;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,6 +35,7 @@ import java.awt.datatransfer.StringSelection;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class MainScreenController {
@@ -107,6 +111,16 @@ public class MainScreenController {
     public TableColumn<ModelTable, String> col_amount1;
     public TableColumn<ModelTable, String> col_Tdate1;
     public ImageView historyIV;
+    public Label creditMonthsLabel;
+    public VBox paymentVbox;
+    public TableView<PaymentTable> selectAccountTable;
+    public TableColumn<PaymentTable, String> ibanTable;
+    public TableColumn<PaymentTable, Double> amountAcTable;
+    public TableColumn<PaymentTable, String> currencyTable;
+    public TableView<CreditTable> selectCreditTable;
+    public TableColumn<CreditTable, Date> paymentDateCol;
+    public TableColumn<CreditTable, Double> amountCol;
+    public TableColumn<CreditTable, Double> feeCol;
     @FXML
     private TableView<ModelTable> table;
     @FXML
@@ -181,7 +195,20 @@ public class MainScreenController {
         table.setItems(layer.fillTableCol(currentUserTC,true));
         table1.setItems(layer.fillTableCol(currentUserTC,false));
 
+        ibanTable.setCellValueFactory(new  PropertyValueFactory<>("IBAN"));
+        amountAcTable.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        currencyTable.setCellValueFactory(new PropertyValueFactory<>("currency"));
+
+
+        paymentDateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+        amountCol.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        feeCol.setCellValueFactory(new PropertyValueFactory<>("lateFee"));
+
+        selectAccountTable.setItems(layer.paymentTable(currentUserTC));
+        selectCreditTable.setItems(layer.creditTable(currentUserTC));
     }
+
+
 
     public void passScreenHandle(boolean account, boolean trans,boolean credit, boolean history, boolean settings){
         accountPage.setVisible(account);
@@ -530,6 +557,7 @@ public class MainScreenController {
 
                 setCreditInfo();
                 creditApplyVbox.setDisable(true);
+                creditApplyVbox.setVisible(true);
                 showCreditDetail.setVisible(true);
                 titleCreditLabel.setVisible(true);
                 titleCreditLabel.setText("Current Label");
@@ -553,17 +581,22 @@ public class MainScreenController {
 
             titleCreditLabel.setVisible(false);
             showCreditDetail.setVisible(false);
+            paymentVbox.setVisible(false);
+            creditApplyVbox.setVisible(true);
+            creditApplyVbox.setDisable(false);
 
         }else if (control == 1){
             creditApplyVbox.setDisable(true);
             creditApplyVbox.setVisible(false);
             setCreditInfo();
             titleCreditLabel.setText("Accepted Credit");
+            paymentVbox.setVisible(true);
 
         }else{
             creditApplyVbox.setDisable(true);
             creditApplyVbox.setVisible(false);
             //TODO ödeme ekranını aç
+            paymentVbox.setVisible(false);
             setCreditInfo();
             titleCreditLabel.setText("Waiting Credit");
 
@@ -572,13 +605,23 @@ public class MainScreenController {
 
     void setCreditInfo(){
      String[] info = layer.getCreditInfo(currentUserTC);
-        creditAmountLayer.setText("Amount= "+ info[0]);
-        amountPaidLayer.setText("Amount Paid= "+info[1]);
-      int creditAmountLayer=Integer.parseInt(info[0]);
-      int amountPaidLayer=Integer.parseInt(info[1]);
-        restAmountLayer.setText("Rest of Amount= "+(creditAmountLayer-amountPaidLayer));
+        creditAmountLayer.setText("Amount: "+ info[0]);
+        amountPaidLayer.setText("Amount Paid: "+info[1]);
+      double creditAmountLayer=Double.parseDouble(info[0]);
+      double amountPaidLayer=Double.parseDouble(info[1]);
+        restAmountLayer.setText("Rest of Amount: "+(creditAmountLayer-amountPaidLayer));
         getCreditLayer.setText(info[2]);
-        monthlyPayLabel.setText(info[3]);
+        monthlyPayLabel.setText(info[3]+". Days");
+        creditMonthsLabel.setText("Credit Months: "+info[4]);
+    }
+
+    public void paymentButtonHandle(){
+        ObservableList<ModelTable> data=table.getSelectionModel().getSelectedItems();
+
+        for(ModelTable i:data){
+        System.out.println(i.amount);
+        }
+
     }
 
 
