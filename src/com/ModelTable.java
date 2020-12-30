@@ -1,7 +1,5 @@
 package com;
 
-import java.util.Date;
-
 public class ModelTable {
     String senderName, receiverIBAN, amount, T_date;
 
@@ -46,4 +44,3 @@ public class ModelTable {
 
 
 }
-

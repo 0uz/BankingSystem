@@ -140,9 +140,11 @@ public class MainScreenController {
 
 
 
+
     DatabaseLayer layer = new DatabaseLayer();
     public String currentUserTC;
     boolean[] searchControl = {false,false};
+    int currentUserCreditID;
 
     public void initialize() {
         passScreenHandle(true,false,false,false,false);
@@ -209,6 +211,10 @@ public class MainScreenController {
         selectAccountTable.setItems(layer.paymentTable(currentUserTC));
         selectCreditTable.setItems(layer.creditTable(currentUserTC));
         selectCreditTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        selectAccountTable.setPlaceholder(new Label("You don't have TL Account!"));
+        selectCreditTable.setPlaceholder(new Label("You don't have credit payment"));
+        table.setPlaceholder(new Label("You don't have transaction history"));
+        table1.setPlaceholder(new Label("You don't have transaction history"));
     }
 
 
@@ -251,14 +257,9 @@ public class MainScreenController {
             moneyLabel.setTextFill(Color.BLACK);
         });
 
-        changeMoneyMain.setOnMouseEntered(mouseEvent -> {
-            changeMoneyMain.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 10");
+        changeMoneyMain.setOnMouseEntered(mouseEvent -> changeMoneyMain.setStyle("-fx-background-color: transparent; -fx-border-color: black; -fx-border-width: 2; -fx-border-radius: 10"));
 
-        });
-
-        changeMoneyMain.setOnMouseExited(mouseEvent -> {
-            changeMoneyMain.setStyle("-fx-background-color: transparent; -fx-border-width: 0");
-        });
+        changeMoneyMain.setOnMouseExited(mouseEvent -> changeMoneyMain.setStyle("-fx-background-color: transparent; -fx-border-width: 0"));
 
         changeMoneyMain.setOnAction(actionEvent -> {
             try {
@@ -399,7 +400,7 @@ public class MainScreenController {
             timeLineError(nameSurInf,"Invalid Name/Surname",Color.RED,recevNameSurname);
             check=false;
         }
-        if(check==true){ layer.transaction(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
+        if(check){ layer.transaction(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
             layer.transactionAmountSameCur(yourIBAN.getText(),recevIBAN.getText(),Double.parseDouble(recevAmount.getText()));
             timeLineError(sendInf,"Successful!",Color.web("#419A1C"),recevNameSurname);
             recevIBAN.setText("");
@@ -415,9 +416,7 @@ public class MainScreenController {
         node.setText(msg);
         node.setTextFill(color);
         tf.setText("");
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), e ->{
-            node.setVisible(false);
-        }));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), e -> node.setVisible(false)));
         timeline.play();
     }
 
@@ -531,8 +530,6 @@ public class MainScreenController {
 
     public void applyCreditHandle(){
 
-
-
       int save1=0;
       int save2=0;
       int mC= monthCredit.getSelectionModel().getSelectedIndex();
@@ -557,7 +554,6 @@ public class MainScreenController {
         if( StaticMethod.isDouble(creditAmount.getText())) {
             if(Double.parseDouble(creditAmount.getText())<=(layer.totalAmount(Double.parseDouble(currentUserTC))*3/10) ) {
                 layer.creditApply(currentUserTC, Double.parseDouble(creditAmount.getText()), save1, Double.parseDouble(interestCredit.getText()), save2);
-
                 setCreditInfo();
                 creditApplyVbox.setDisable(true);
                 creditApplyVbox.setVisible(true);
@@ -598,7 +594,6 @@ public class MainScreenController {
         }else{
             creditApplyVbox.setDisable(true);
             creditApplyVbox.setVisible(false);
-            //TODO ödeme ekranını aç
             paymentVbox.setVisible(false);
             setCreditInfo();
             titleCreditLabel.setText("Waiting Credit");
@@ -610,28 +605,41 @@ public class MainScreenController {
      String[] info = layer.getCreditInfo(currentUserTC);
         creditAmountLayer.setText("Amount: "+ info[0]);
         amountPaidLayer.setText("Amount Paid: "+info[1]);
-      double creditAmountLayer=Double.parseDouble(info[0]);
-      double amountPaidLayer=Double.parseDouble(info[1]);
+        double creditAmountLayer=Double.parseDouble(info[0]);
+        double amountPaidLayer=Double.parseDouble(info[1]);
         restAmountLayer.setText("Rest of Amount: "+(creditAmountLayer-amountPaidLayer));
         getCreditLayer.setText(info[2]);
         monthlyPayLabel.setText(info[3]+". Days");
         creditMonthsLabel.setText("Credit Months: "+info[4]);
+        currentUserCreditID = Integer.parseInt(info[6]);
     }
 
     public void paymentButtonHandle(){
-        Double amount=   selectAccountTable.getSelectionModel().getSelectedItem().amount;
+        Double amount = null;
+        String IBAN = null;
+        try{
+            amount= selectAccountTable.getSelectionModel().getSelectedItem().amount;
+            IBAN = selectAccountTable.getSelectionModel().getSelectedItem().IBAN;
+        }catch (NullPointerException e){
+            timeLineError(warText ,"Please select account",Color.RED,recevIBAN);
+        }
         ObservableList<CreditTable> data=selectCreditTable.getSelectionModel().getSelectedItems();
-        double topAmount=0;
-        for(CreditTable i:data){
-            topAmount+=i.amount;
-            topAmount+=i.lateFee;
-        }
-        if(amount>=topAmount){
-            for (CreditTable i:data) layer.paymentCredit(i.date);
 
-            timeLineError(successText,"Success!",Color.GREEN,recevIBAN);
+        double sumAmount=0;
+        double sumLatefee=0;
+        for(CreditTable i:data){
+            sumAmount+=i.amount + i.lateFee;
+            sumLatefee = i.lateFee;
         }
-        else{
+        if(amount>=sumAmount && !IBAN.isEmpty()){
+            for (CreditTable i:data){
+                layer.paymentCredit(currentUserTC, (java.sql.Date) i.date);
+            }
+            layer.payCredit(currentUserTC,sumAmount,IBAN,currentUserCreditID,sumLatefee);
+            timeLineError(successText,"Success!",Color.GREEN,recevIBAN);
+            fillTable();
+            setCreditInfo();
+        }else{
             timeLineError(warText,"Please select another account. Your amount is not enough!",Color.RED,recevIBAN);
         }
 

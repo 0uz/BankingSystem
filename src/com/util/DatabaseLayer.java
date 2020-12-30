@@ -1,8 +1,6 @@
 package com.util;
-import com.CreditTable;
-import com.ModelTable;
-import com.PaymentTable;
-import com.StaticMethod;
+import com.*;
+import com.mysql.cj.jdbc.ClientPreparedStatement;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
@@ -88,7 +86,7 @@ public class DatabaseLayer {
                 "     creditMonths tinyint,\n" +
                 "     withInterest decimal(14,2),\n" +
                 "     getCreditDate date,\n" +
-                "     paymentAmount int, \n" +
+                "     paidAmount int, \n" +
                 "     paymentDate int, \n" +
                 "     restMonth int, \n" +
                 "     confirmation bool default false,\n" +
@@ -143,6 +141,15 @@ public class DatabaseLayer {
         }
     }
 
+    public void updateCredit(){
+        try {
+            PreparedStatement statement =  connection.prepareStatement("update credits set isPaid=true where withInterest = paidAmount");
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
     public boolean insertUser(String FName, String LName, Double TC, String eMail, String password, Date BDate, String address, String IBAN, Double moneyAmount){
         try {
             PreparedStatement statement = connection.prepareStatement("insert into users (F_Name, L_Name, TC, address, mail, password, B_Date) VALUES (?,?,?,?,?,?,?)");
@@ -182,20 +189,55 @@ public class DatabaseLayer {
             return 0.0;
         }
     }
+
+
+
     public boolean loginUserControl(Double TC , String password){
         try {
-            PreparedStatement statement =  connection.prepareStatement("select password,TC from users where password = ? AND TC = ?");
+            PreparedStatement statement =  connection.prepareStatement("select password,TC from users where password = ? AND TC = ? AND admin_F = false");
             statement.setString(1,password);
             statement.setDouble(2,TC);
             ResultSet rs = statement.executeQuery();
             rs.next();
-            System.out.println(rs.getString(2));
+            rs.getString("TC");
             return true;
         } catch (SQLException | RuntimeException throwables) {
             return false;
         }
 
     }
+
+    public boolean loginAdminControl(Double TC , String password){
+        try {
+            PreparedStatement statement =  connection.prepareStatement("select password,TC from users where password = ? AND TC = ? AND admin_F = true");
+            statement.setString(1,password);
+            statement.setDouble(2,TC);
+            ResultSet rs = statement.executeQuery();
+            rs.next();
+            rs.getString("TC");
+            return true;
+        } catch (SQLException | RuntimeException throwables) {
+            return false;
+        }
+
+    }
+
+    public void updateCreditControl(String TC,boolean confirmation){
+        try {
+            PreparedStatement statement;
+            if (confirmation){
+                statement = connection.prepareStatement("UPDATE credits set confirmation = true where TC = ?");
+            }else{
+                statement = connection.prepareStatement("UPDATE credits set confirmation = true, isPaid= true where TC = ?");
+            }
+            statement.setString(1,TC);
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+
 
     public boolean updatePassword(Double TC, String password){
         try {
@@ -470,7 +512,7 @@ public class DatabaseLayer {
     public void creditApply(String TC, double amount, int creditMonths, double withInterest,int paymentDate){
         try {
 
-            PreparedStatement statement=connection.prepareStatement("insert into credits (TC,amount,creditMonths,withInterest,getCreditDate,paymentAmount,paymentDate,restMonth) value (?,?,?,?,?,?,?,?)");
+            PreparedStatement statement=connection.prepareStatement("insert into credits (TC,amount,creditMonths,withInterest,getCreditDate,paidAmount,paymentDate,restMonth) value (?,?,?,?,?,?,?,?)");
             statement.setString(1,TC);
             statement.setDouble(2,amount);
             statement.setInt(3,creditMonths);
@@ -479,19 +521,8 @@ public class DatabaseLayer {
             statement.setInt(6,0);
             statement.setInt(7,paymentDate);
             statement.setInt(8,creditMonths);
-            PreparedStatement statement1;
-            statement.execute();
-            Date date=new Date(currentDate.getYear(),currentDate.getMonth(),paymentDate);
-            for(int i=1;i<=creditMonths;i++){
-                statement1=connection.prepareStatement("insert into creditPayment(amount, paymentDate, creditID) values ((SELECT withInterest from credits where TC = ?)/(select creditMonths from credits where TC = ?),date_add(?,INTERVAL ? MONTH ),(SELECT creditID from credits where TC=?))");
-                statement1.setString(1,TC);
-                statement1.setString(2,TC);
-                statement1.setTimestamp(3,new Timestamp(date.getTime()),cal);
-                statement1.setInt(4,i);
-                statement1.setString(5,TC);
-                statement1.execute();
-            }
 
+            statement.execute();
 
 
         }catch (SQLException throwables){
@@ -500,19 +531,39 @@ public class DatabaseLayer {
         }
     }
 
+    public void creditPaymentCreate(int paymentDate,int creditMonths,int creditID){
+        Date date=new Date(currentDate.getYear(),currentDate.getMonth(),paymentDate);
+        PreparedStatement statement1;
+        for(int i=1;i<=creditMonths;i++){
+            try {
+                statement1=connection.prepareStatement("insert into creditPayment(amount, paymentDate, creditID) values ((SELECT withInterest from credits where creditID = ?)/(select creditMonths from credits where creditID = ?),date_add(?,INTERVAL ? MONTH ),?)");
+                statement1.setInt(1,creditID);
+                statement1.setInt(2,creditID);
+                statement1.setTimestamp(3,new Timestamp(date.getTime()),cal);
+                statement1.setInt(4,i);
+                statement1.setInt(5,creditID);
+                statement1.execute();
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+            }
+
+        }
+    }
+
     public String[] getCreditInfo(String TC){
         try {
-            PreparedStatement statement = connection.prepareStatement("select withInterest,paymentAmount,getCreditDate,paymentDate,restMonth,creditMonths from credits where TC = ? ");
+            PreparedStatement statement = connection.prepareStatement("select creditID,withInterest,paidAmount,getCreditDate,paymentDate,restMonth,creditMonths from credits where TC = ? and isPaid = false");
             statement.setString(1, TC);
             ResultSet rs = statement.executeQuery();
             rs.next();
             return new String[]{
                         rs.getString("withInterest"),
-                        rs.getString("paymentAmount"),
+                        rs.getString("paidAmount"),
                         rs.getString("getCreditDate"),
                         rs.getString("paymentDate"),
                         rs.getString("restMonth"),
-                        rs.getString("creditMonths")};
+                        rs.getString("creditMonths"),
+                        rs.getString("creditID")};
 
             }catch (SQLException throwables){
                 throwables.printStackTrace();
@@ -522,17 +573,17 @@ public class DatabaseLayer {
 
     public int controlConfirmation(String TC){
         try {
-        PreparedStatement statement=connection.prepareStatement("select confirmation from credits where TC = ?");
+        PreparedStatement statement=connection.prepareStatement("select confirmation from credits where TC = ? and isPaid = false");
         statement.setString(1,TC);
         ResultSet rs=statement.executeQuery();
             rs.next();
 
             if(rs.getBoolean("confirmation")) {
-                return 1;//accept credit//
+               return 1; //accepted
             }else
             return 2; //waiting credit
 
-        }catch (SQLException   throwables){
+        }catch (SQLException throwables){
 
             return 0; //no applied credit
         }
@@ -684,7 +735,7 @@ public class DatabaseLayer {
     public ObservableList<CreditTable> creditTable(String TC){
         try {
 
-          PreparedStatement  statement = connection.prepareStatement("Select creditPayment.amount,creditPayment.paymentDate,creditPayment.amount*0.02*DATEDIFF(now(),creditPayment.paymentDate) as fee  from creditPayment,credits where credits.creditID=creditPayment.creditID and TC = ? and isPaid = false");
+          PreparedStatement  statement = connection.prepareStatement("Select creditPayment.amount,creditPayment.paymentDate,creditPayment.amount*0.02*DATEDIFF(now(),creditPayment.paymentDate) as fee  from creditPayment,credits where credits.creditID=creditPayment.creditID and TC = ? and creditPayment.isPaid = false");
             statement.setString(1,TC);
             ResultSet rs=statement.executeQuery();
             ObservableList<CreditTable> data=FXCollections.observableArrayList();
@@ -702,12 +753,61 @@ public class DatabaseLayer {
 
     }
 
-    public void paymentCredit(String IBAN,double amount,java.util.Date date){
+    public void paymentCredit(String TC,Date date){
         try {
-           // PreparedStatement statement1=connection.prepareStatement("update ")
-            PreparedStatement statement=connection.prepareStatement("update creditPayment set isPaid=true where paymentDate = ?");
-            statement.setDate(1, (Date) date);
+            PreparedStatement statement=connection.prepareStatement("update creditPayment set isPaid=true where paymentDate = ? and creditID =(select creditID from credits where TC = ? and isPaid = false);");
+            statement.setDate(1,date);
+            statement.setString(2,TC);
             statement.execute();
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+    public void payCredit(String TC ,double amount,String IBAN,int creditID,double latefee){
+        try {
+            PreparedStatement statement1 = connection.prepareStatement("update accounts set amount = amount - ? where IBAN =?");
+            PreparedStatement statement2 = connection.prepareStatement("update credits set paidAmount = paidAmount + ? , withInterest = withInterest + ? where creditID =?");
+
+            statement1.setDouble(1,amount);
+            statement1.setString(2,IBAN);
+            statement2.setDouble(1,amount);
+            statement2.setDouble(2,latefee);
+            statement2.setInt(3,creditID);
+            statement1.execute();
+            statement2.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public ObservableList<AdminTable> adminTable(){
+        try {
+
+            PreparedStatement  statement = connection.prepareStatement("select TC,amount,withInterest,creditMonths,getCreditDate,paymentDate,creditID from credits where confirmation = false");
+            ResultSet rs=statement.executeQuery();
+            ObservableList<AdminTable> data=FXCollections.observableArrayList();
+            while(rs.next()){
+                data.add(new AdminTable(rs.getString("TC"),rs.getDouble("amount"),rs.getDouble("withInterest"),rs.getInt("creditMonths"),rs.getInt("paymentDate"),rs.getDate("getCreditDate"),rs.getInt("creditID")));
+            }
+            return data;
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+            return null;
+        }
+
+
+    }
+
+    public void creditConfirmationAdmin(String TC,double amount,int paymentDate, int creditMonths, int creditID){
+        try {
+            PreparedStatement statement = connection.prepareStatement("update accounts set amount = amount + ? where TC = ? and mainAccF = true");
+            statement.setDouble(1,amount);
+            statement.setString(2,TC);
+            statement.execute();
+            creditPaymentCreate(paymentDate,creditMonths,creditID);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

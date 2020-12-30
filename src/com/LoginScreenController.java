@@ -24,6 +24,7 @@ public class LoginScreenController {
         layer.createTables();
         layer.interestQuery();
         layer.goldUpdateQuery();
+        layer.updateCredit();
     }
 
     public void exitButton(){
@@ -52,7 +53,13 @@ public class LoginScreenController {
                    MainScreenController controller = loader.myLoader("view/MainScreen.fxml").getController();
                    controller.setCurrentUserTC(TCTF.getText());
                    ((Stage)exitButton.getScene().getWindow()).close();
-               }else{
+               }else if(layer.loginAdminControl(Double.parseDouble(TCTF.getText()),passwordPF.getText())){
+                   Main loader = new Main();
+                   AdminScreenController controller = loader.myLoader("view/AdminScreen.fxml").getController();
+                   controller.setCurrentUserTC(TCTF.getText());
+                   ((Stage)exitButton.getScene().getWindow()).close();
+               }
+               else{
                    loginWrongL.setVisible(true);
                }
            }else{

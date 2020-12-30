@@ -368,7 +368,7 @@
                         </VBox>
                         <VBox fx:id="paymentVbox" prefHeight="495.0" prefWidth="292.0">
                            <children>
-                              <Label alignment="CENTER" prefHeight="19.0" prefWidth="227.0" style="-fx-background-color: #419A1C; -fx-background-radius: 10;" text="Repayment Credit" textFill="WHITE">
+                              <Label alignment="CENTER" prefHeight="19.0" prefWidth="227.0" style="-fx-background-color: #419A1C; -fx-background-radius: 10;" text="Payment Credit" textFill="WHITE">
                                  <VBox.margin>
                                     <Insets left="40.0" top="15.0" />
                                  </VBox.margin>
@@ -378,11 +378,11 @@
                                     <Insets left="10.0" top="5.0" />
                                  </VBox.margin>
                               </Label>
-                              <TableView fx:id="selectAccountTable" prefHeight="137.0" prefWidth="282.0">
+                              <TableView fx:id="selectAccountTable" prefHeight="137.0" prefWidth="280.0">
                                 <columns>
-                                  <TableColumn fx:id="ibanTable" prefWidth="121.0" text="Accounts IBAN" />
-                                  <TableColumn fx:id="amountAcTable" prefWidth="90.0" text="Amount" />
-                                    <TableColumn fx:id="currencyTable" prefWidth="81.0" text="Currency" />
+                                  <TableColumn fx:id="ibanTable" editable="false" prefWidth="130.0" resizable="false" sortable="false" text="Accounts IBAN" />
+                                  <TableColumn fx:id="amountAcTable" editable="false" prefWidth="85.0" resizable="false" sortable="false" text="Amount" />
+                                    <TableColumn fx:id="currencyTable" editable="false" prefWidth="65.0" resizable="false" sortable="false" text="Currency" />
                                 </columns>
                                  <VBox.margin>
                                     <Insets left="5.0" right="5.0" />
@@ -398,11 +398,11 @@
                                     <Insets left="5.0" top="25.0" />
                                  </VBox.margin>
                               </Label>
-                              <TableView fx:id="selectCreditTable" prefHeight="142.0" prefWidth="282.0">
+                              <TableView fx:id="selectCreditTable" prefHeight="142.0" prefWidth="280.0">
                                 <columns>
-                                    <TableColumn fx:id="paymentDateCol" prefWidth="116.0" text="Payment due Date" />
-                                  <TableColumn fx:id="amountCol" prefWidth="89.0" text="Amount" />
-                                  <TableColumn fx:id="feeCol" text="Late Fee " />
+                                    <TableColumn fx:id="paymentDateCol" editable="false" prefWidth="100.0" resizable="false" text="Due Date" />
+                                  <TableColumn fx:id="amountCol" editable="false" prefWidth="100.0" resizable="false" sortable="false" text="Amount" />
+                                  <TableColumn fx:id="feeCol" editable="false" resizable="false" sortable="false" text="Late Fee " />
                                 </columns>
                                  <VBox.margin>
                                     <Insets left="5.0" right="5.0" />
