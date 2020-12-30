@@ -684,7 +684,7 @@ public class DatabaseLayer {
     public ObservableList<CreditTable> creditTable(String TC){
         try {
 
-          PreparedStatement  statement = connection.prepareStatement("Select creditPayment.amount,creditPayment.paymentDate,creditPayment.amount*0.02*DATEDIFF(now(),creditPayment.paymentDate) as fee  from creditPayment,credits where credits.creditID=creditPayment.creditID and TC = ?");
+          PreparedStatement  statement = connection.prepareStatement("Select creditPayment.amount,creditPayment.paymentDate,creditPayment.amount*0.02*DATEDIFF(now(),creditPayment.paymentDate) as fee  from creditPayment,credits where credits.creditID=creditPayment.creditID and TC = ? and isPaid = false");
             statement.setString(1,TC);
             ResultSet rs=statement.executeQuery();
             ObservableList<CreditTable> data=FXCollections.observableArrayList();
@@ -701,6 +701,20 @@ public class DatabaseLayer {
 
 
     }
+
+    public void paymentCredit(String IBAN,double amount,java.util.Date date){
+        try {
+           // PreparedStatement statement1=connection.prepareStatement("update ")
+            PreparedStatement statement=connection.prepareStatement("update creditPayment set isPaid=true where paymentDate = ?");
+            statement.setDate(1, (Date) date);
+            statement.execute();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+
 
 
     public void closeConnection(){

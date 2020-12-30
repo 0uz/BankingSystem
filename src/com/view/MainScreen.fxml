@@ -388,9 +388,14 @@
                                     <Insets left="5.0" right="5.0" />
                                  </VBox.margin>
                               </TableView>
+                              <Label fx:id="warText" text="Please select another account. Your amount is not enough!" textFill="#fc0606" visible="false" wrapText="true">
+                                 <VBox.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </VBox.margin>
+                              </Label>
                               <Label prefHeight="17.0" prefWidth="103.0" text="Select Credit Bills">
                                  <VBox.margin>
-                                    <Insets left="5.0" top="15.0" />
+                                    <Insets left="5.0" top="25.0" />
                                  </VBox.margin>
                               </Label>
                               <TableView fx:id="selectCreditTable" prefHeight="142.0" prefWidth="282.0">
@@ -408,6 +413,11 @@
                                     <Insets left="5.0" top="5.0" />
                                  </VBox.margin>
                               </Button>
+                              <Label fx:id="successText" prefHeight="17.0" prefWidth="63.0" text="Success!" textFill="GREEN" visible="false">
+                                 <VBox.margin>
+                                    <Insets left="7.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
                            </children>
                         </VBox>
                      </children>

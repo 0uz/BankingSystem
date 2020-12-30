@@ -121,6 +121,8 @@ public class MainScreenController {
     public TableColumn<CreditTable, Date> paymentDateCol;
     public TableColumn<CreditTable, Double> amountCol;
     public TableColumn<CreditTable, Double> feeCol;
+    public Label warText;
+    public Label successText;
     @FXML
     private TableView<ModelTable> table;
     @FXML
@@ -206,6 +208,7 @@ public class MainScreenController {
 
         selectAccountTable.setItems(layer.paymentTable(currentUserTC));
         selectCreditTable.setItems(layer.creditTable(currentUserTC));
+        selectCreditTable.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
 
@@ -616,10 +619,20 @@ public class MainScreenController {
     }
 
     public void paymentButtonHandle(){
-        ObservableList<ModelTable> data=table.getSelectionModel().getSelectedItems();
+        Double amount=   selectAccountTable.getSelectionModel().getSelectedItem().amount;
+        ObservableList<CreditTable> data=selectCreditTable.getSelectionModel().getSelectedItems();
+        double topAmount=0;
+        for(CreditTable i:data){
+            topAmount+=i.amount;
+            topAmount+=i.lateFee;
+        }
+        if(amount>=topAmount){
+            for (CreditTable i:data) layer.paymentCredit(i.date);
 
-        for(ModelTable i:data){
-        System.out.println(i.amount);
+            timeLineError(successText,"Success!",Color.GREEN,recevIBAN);
+        }
+        else{
+            timeLineError(warText,"Please select another account. Your amount is not enough!",Color.RED,recevIBAN);
         }
 
     }
