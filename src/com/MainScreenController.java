@@ -37,6 +37,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public class MainScreenController {
 
@@ -123,6 +124,7 @@ public class MainScreenController {
     public TableColumn<CreditTable, Double> feeCol;
     public Label warText;
     public Label successText;
+    public ImageView logoutIV;
     @FXML
     private TableView<ModelTable> table;
     @FXML
@@ -168,6 +170,7 @@ public class MainScreenController {
         StaticMethod.imageLoader(newAccountIV,"images/newAccount.png");
         StaticMethod.imageLoader(refreshIV,"images/refresh.png");
         StaticMethod.imageLoader(historyIV,"images/transaction-history.png");
+        StaticMethod.imageLoader(logoutIV,"images/exit.png");
     }
 
 
@@ -462,7 +465,6 @@ public class MainScreenController {
     }
     void listAccounts()  {
         List<String[]> data = layer.getAccountData(currentUserTC);
-        System.out.println(currentUserTC);
         for (int i = 0 ; i <data.size();i++){
             AccountViewController control = new AccountViewController(data.get(i)[0],data.get(i)[1],data.get(i)[2],data.get(i)[3],currentUserTC);
             control.setParentController(this);
@@ -476,7 +478,6 @@ public class MainScreenController {
         }
     }
     public void refreshButtonHandle(){
-        System.out.println(accountVBox.getChildren().size());
         int count = accountVBox.getChildren().size();
         for (int i = 2 ; i < count  ; i++){
             accountVBox.getChildren().remove(2);
@@ -575,7 +576,6 @@ public class MainScreenController {
 
    void controlCredit(){
         int control =layer.controlConfirmation(currentUserTC);
-        System.out.println(control);
         if (control == 0){
 
             titleCreditLabel.setVisible(false);
@@ -704,6 +704,24 @@ public class MainScreenController {
             mailInf.setText("Enter a valid mail!!");
             mailInf.setTextFill(Color.web("#FF0000"));
 
+        }
+    }
+
+    public void logoutButton(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Log out");
+        alert.setHeaderText("Are you sure log out");
+        alert.setContentText(null);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            Main main = new Main();
+            try {
+                main.myLoader("view/LoginScreen.fxml");
+                ((Stage)refreshButton.getScene().getWindow()).close();
+            } catch (IOException e) {
+                System.exit(1);
+            }
         }
     }
 

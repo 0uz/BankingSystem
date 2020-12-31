@@ -96,6 +96,21 @@
                         <Font name="System Bold" size="12.0" />
                      </font>
                   </Button>
+                  <Button layoutX="10.0" layoutY="260.0" mnemonicParsing="false" onAction="#logoutButton" prefHeight="40.0" prefWidth="222.0" styleClass="buttons" stylesheets="@css/mainsc.css" text="Log out">
+                     <graphic>
+                        <ImageView fx:id="logoutIV" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../../Downloads/exit.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Button>
                </children></VBox>
             <Label fx:id="welcomeLabel" alignment="CENTER" layoutX="9.0" layoutY="170.0" prefHeight="26.0" prefWidth="200.0" text="Label" textAlignment="CENTER" wrapText="true" AnchorPane.bottomAnchor="354.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="170.0">
                <font>
