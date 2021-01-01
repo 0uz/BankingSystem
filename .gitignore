@@ -4,3 +4,4 @@ artifacts/
 !/.idea/misc.xml
 !/.idea/dataSources.xml
 !/.idea/sqldialects.xml
+/.env

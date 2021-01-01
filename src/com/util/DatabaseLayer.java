@@ -1,6 +1,7 @@
 package com.util;
 import com.*;
 import com.mysql.cj.jdbc.ClientPreparedStatement;
+import io.github.cdimascio.dotenv.Dotenv;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.chart.PieChart;
@@ -10,19 +11,18 @@ import javafx.scene.control.TableView;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-import java.util.TimeZone;
+import java.util.*;
 
 
 public class DatabaseLayer {
-    private static final String url = "jdbc:mysql://sql2.freemysqlhosting.net:3306/sql2384227";
-    private static final String username = "sql2384227";
-    private static final String password = "nG8%iA3*";
+    Dotenv env = Dotenv.configure().directory("./././.env").ignoreIfMalformed().ignoreIfMissing().load();
+    private final String url = env.get("DBurl");
+    private final String username = env.get("DBusername");
+    private final String password = env.get("DBpassword");
     Connection connection;
     Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT+3"));
     java.sql.Timestamp currentDate = new java.sql.Timestamp(new java.util.Date().getTime());
