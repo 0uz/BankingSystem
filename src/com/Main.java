@@ -4,9 +4,12 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
+import java.io.File;
 import java.io.IOException;
 
 public class Main extends Application {
@@ -27,6 +30,7 @@ public class Main extends Application {
         scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);
         stage.initStyle(StageStyle.TRANSPARENT);
+        stage.getIcons().add(new Image(new File("./images/logoWin.png").toURI().toString()));
         stage.show();
 
         root.setOnMousePressed(event -> {

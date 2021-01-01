@@ -21,9 +21,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.MainScreenController">
    <children>
-      <AnchorPane prefHeight="550.0" prefWidth="210.0" styleClass="leftUnderPane" stylesheets="@css/mainsc.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane prefHeight="550.0" prefWidth="210.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <VBox alignment="TOP_CENTER" prefHeight="348.0" prefWidth="210.0" styleClass="leftUpPane" stylesheets="@css/mainsc.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <VBox alignment="TOP_CENTER" layoutX="-6.0" prefHeight="354.0" prefWidth="210.0" styleClass="leftUpPane" stylesheets="@css/mainsc.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
                <children>
                   <Button mnemonicParsing="false" onAction="#accountsButtonAction" prefHeight="40.0" prefWidth="263.0" styleClass="buttons" stylesheets="@css/mainsc.css" text=" Accounts" textFill="WHITE">
                      <VBox.margin>
@@ -116,6 +116,11 @@
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Label>
+            <ImageView fx:id="logoIV" fitHeight="105.0" fitWidth="190.0" layoutX="10.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../images/logo.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
       <HBox alignment="CENTER" layoutX="724.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -135,7 +140,7 @@
             </Button>
          </children>
       </HBox>
-      <AnchorPane fx:id="accountPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+      <AnchorPane fx:id="accountPage" layoutX="210.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="210.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
          <children>
             <Button fx:id="addAccountButton" layoutX="413.0" layoutY="450.0" mnemonicParsing="false" onAction="#addAccountHandle" prefHeight="40.0" prefWidth="149.0" styleClass="button2" stylesheets="@css/mainsc.css" text="Add New Account">
                <graphic>
@@ -300,7 +305,7 @@
             </HBox>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="creditPage" layoutX="220.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0">
+      <AnchorPane fx:id="creditPage" layoutX="220.0" layoutY="30.0" prefHeight="520.0" prefWidth="590.0" visible="false">
          <children>
             <Label alignment="CENTER" layoutX="17.0" layoutY="-1.0" prefHeight="30.0" prefWidth="542.0" style="-fx-background-color: #419A1C; -fx-background-radius: 10 10 10 10;" text="Credit" />
             <HBox layoutX="-7.0" layoutY="29.0" prefHeight="495.0" prefWidth="590.0">

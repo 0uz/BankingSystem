@@ -125,6 +125,7 @@ public class MainScreenController {
     public Label warText;
     public Label successText;
     public ImageView logoutIV;
+    public ImageView logoIV;
     @FXML
     private TableView<ModelTable> table;
     @FXML
@@ -171,6 +172,7 @@ public class MainScreenController {
         StaticMethod.imageLoader(refreshIV,"images/refresh.png");
         StaticMethod.imageLoader(historyIV,"images/transaction-history.png");
         StaticMethod.imageLoader(logoutIV,"images/exit.png");
+        StaticMethod.imageLoader(logoIV,"images/logo.png");
     }
 
 
@@ -521,7 +523,7 @@ public class MainScreenController {
         creditName.setText(info[0]+" "+info[1]);
         getCreditDate.setText(timeStamp);
         monthCredit.getItems().addAll("1 Month","3 Month","6 Month","12 Month","18 Month","24 Month");
-        totalAmount.setText("Total Amount="+layer.totalAmount(Double.parseDouble(currentUserTC)) +"\n"+"You can withdraw up to thirty percent of your money.");
+        totalAmount.setText("Total Amount="+layer.totalAmount(Double.parseDouble(currentUserTC)) +"\n"+"You can withdraw up to %30 of your money.");
         monthlyPayment.getItems().addAll(1,5,10,15,20,25);
         monthCredit.getSelectionModel().select(0);
         monthlyPayment.getSelectionModel().select(0);
@@ -576,6 +578,7 @@ public class MainScreenController {
 
    void controlCredit(){
         int control =layer.controlConfirmation(currentUserTC);
+        System.out.println(control);
         if (control == 0){
 
             titleCreditLabel.setVisible(false);
@@ -599,6 +602,7 @@ public class MainScreenController {
             titleCreditLabel.setText("Waiting Credit");
 
         }
+
    }
 
     void setCreditInfo(){
@@ -712,6 +716,7 @@ public class MainScreenController {
         alert.setTitle("Log out");
         alert.setHeaderText("Are you sure log out");
         alert.setContentText(null);
+        alert.initOwner(refreshButton.getScene().getWindow());
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK){

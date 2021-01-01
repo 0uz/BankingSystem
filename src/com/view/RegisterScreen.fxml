@@ -116,12 +116,12 @@
             </TextField>
             <HBox alignment="CENTER_LEFT" prefHeight="28.0" prefWidth="403.0" spacing="10.0">
                <children>
-                  <Button fx:id="registerButton" alignment="CENTER" mnemonicParsing="false" onAction="#registerButtonHandle" prefHeight="25.0" prefWidth="64.0" styleClass="button2" stylesheets="@css/mainsc.css" text="Register">
+                  <Button fx:id="registerButton" alignment="CENTER" mnemonicParsing="false" onAction="#registerButtonHandle" prefHeight="25.0" prefWidth="64.0" style="-fx-background-color: #419A1C;" styleClass="button2" stylesheets="@css/mainsc.css" text="Register">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#signInButtonHandle" prefHeight="25.0" prefWidth="64.0" style="-fx-background-color: #419A1C;" styleClass="button2" stylesheets="@css/mainsc.css" text="Login">
+                  <Button alignment="CENTER" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#signInButtonHandle" prefHeight="25.0" prefWidth="64.0" styleClass="button2" stylesheets="@css/mainsc.css" text="Back">
                      <HBox.margin>
                         <Insets left="245.0" right="10.0" />
                      </HBox.margin>
