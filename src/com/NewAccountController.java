@@ -146,7 +146,7 @@ public class NewAccountController{
         if(selectCBox.getSelectionModel().getSelectedItem().equals("Draw Account")){
             if(moneyTF.getText().length()!=0 && Double.parseDouble(moneyTF.getText()) <= currentUserMoney){
                 double money = StaticMethod.makeExcCalc(currencyCBox.getSelectionModel().getSelectedItem(),Double.parseDouble(moneyTF.getText()));
-                layer.addNewDrawAccount(Double.parseDouble(currentUserTC),money,currencyCBox.getSelectionModel().getSelectedItem(),false);
+                layer.addNewDrawAccount(Double.parseDouble(currentUserTC),Double.parseDouble(moneyTF.getText()),money,currencyCBox.getSelectionModel().getSelectedItem(),false);
                 succes = true;
 
             }else{
@@ -156,7 +156,7 @@ public class NewAccountController{
         }else if(selectCBox.getSelectionModel().getSelectedItem().equals("Deposit Account")){
             if (moneyTF.getText().length()!=0 && Double.parseDouble(moneyTF.getText()) <= currentUserMoney){
                 double money = StaticMethod.makeExcCalc(currencyCBox.getSelectionModel().getSelectedItem(),Double.parseDouble(moneyTF.getText()));
-                layer.addNewDepositAccount(Double.parseDouble(currentUserTC),money,currencyCBox.getSelectionModel().getSelectedItem(),true);
+                layer.addNewDepositAccount(Double.parseDouble(currentUserTC),Double.parseDouble(moneyTF.getText()),money,currencyCBox.getSelectionModel().getSelectedItem(),true);
                 succes = true;
             }else{
                 StaticMethod.addCSS(moneyTF,"com/view/css/mainsc.css","error");

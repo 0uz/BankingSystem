@@ -333,17 +333,17 @@ public class DatabaseLayer {
 
     }
 
-    public boolean addNewDrawAccount(Double TC,Double amount,String currency,boolean deposit){
+    public boolean addNewDrawAccount(Double TC,Double money,Double currAmount,String currency,boolean deposit){
         try {
             PreparedStatement statement1 = connection.prepareStatement("insert into accounts (TC,IBAN,amount,currency,depositAccF,openDate) value (?,?,?,?,?,?)");
             PreparedStatement statement2 = connection.prepareStatement("UPDATE accounts set amount = amount - ? where TC = ? AND mainAccF = true ");
             statement1.setDouble(1,TC);
             statement1.setString(2, StaticMethod.IBANCalculator());
-            statement1.setDouble(3,amount);
+            statement1.setDouble(3,currAmount);
             statement1.setString(4,currency);
             statement1.setBoolean(5,deposit);
             statement1.setTimestamp(6,currentDate,cal);
-            statement2.setDouble(1,amount);
+            statement2.setDouble(1,money);
             statement2.setDouble(2,TC);
             statement1.execute();
             statement2.execute();
@@ -353,18 +353,18 @@ public class DatabaseLayer {
             return false;
         }
     }
-    public boolean addNewDepositAccount(Double TC,Double amount,String currency,boolean deposit){
+    public boolean addNewDepositAccount(Double TC,Double money,Double currAmount,String currency,boolean deposit){
         try {
             PreparedStatement statement1 = connection.prepareStatement("insert into accounts (TC,IBAN,amount,currency,depositAccF,openDate,interestDate) value (?,?,?,?,?,?,?)");
             PreparedStatement statement2 = connection.prepareStatement("UPDATE accounts set amount = amount - ? where TC = ? AND mainAccF = true ");
             statement1.setDouble(1,TC);
             statement1.setString(2, StaticMethod.IBANCalculator());
-            statement1.setDouble(3,amount);
+            statement1.setDouble(3,currAmount);
             statement1.setString(4,currency);
             statement1.setBoolean(5,deposit);
             statement1.setTimestamp(6,currentDate,cal);
             statement1.setTimestamp(7,currentDate,cal);
-            statement2.setDouble(1,amount);
+            statement2.setDouble(1,money);
             statement2.setDouble(2,TC);
             statement1.execute();
             statement2.execute();

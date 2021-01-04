@@ -73,7 +73,7 @@ public class RegisterScreenController {
         });
 
         addressTF.textProperty().addListener((observableValue, s, t1) ->{
-            disableButton[3] = StaticMethod.lengthController(addressTF,t1,50,5,"text-fieldError","text-field");
+            disableButton[3] = StaticMethod.lengthController(addressTF,t1,100,5,"text-fieldError","text-field");
             makeDisableButton();
         } );
 
