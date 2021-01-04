@@ -19,7 +19,7 @@ import java.util.*;
 
 
 public class DatabaseLayer {
-    Dotenv env = Dotenv.configure().directory("./././.env").ignoreIfMalformed().ignoreIfMissing().load();
+    Dotenv env = Dotenv.configure().directory("./././..env").ignoreIfMalformed().ignoreIfMissing().load();
     private final String url = env.get("DBurl");
     private final String username = env.get("DBusername");
     private final String password = env.get("DBpassword");
@@ -125,7 +125,8 @@ public class DatabaseLayer {
 
     public void interestQuery(){
         try {
-            PreparedStatement statement = connection.prepareStatement("update accounts set amount = amount + (((amount*15)/36500)*DATEDIFF(now(),interestDate)),interestDate = now() where depositAccF = true");
+            PreparedStatement statement = connection.prepareStatement("update accounts set amount = amount + (((amount*15)/36500)*DATEDIFF(now(),interestDate))," +
+                                                                            "interestDate = now() where depositAccF = true");
             statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -536,7 +537,9 @@ public class DatabaseLayer {
         PreparedStatement statement1;
         for(int i=1;i<=creditMonths;i++){
             try {
-                statement1=connection.prepareStatement("insert into creditPayment(amount, paymentDate, creditID) values ((SELECT withInterest from credits where creditID = ?)/(select creditMonths from credits where creditID = ?),date_add(?,INTERVAL ? MONTH ),?)");
+                statement1=connection.prepareStatement("insert into creditPayment(amount, paymentDate, creditID) values (" +
+                                                           "(select withInterest from credits where creditID = ?)/(select creditMonths from credits where creditID = ?)," +
+                                                                "date_add(?,INTERVAL ? MONTH ),?)");
                 statement1.setInt(1,creditID);
                 statement1.setInt(2,creditID);
                 statement1.setTimestamp(3,new Timestamp(date.getTime()),cal);
@@ -597,7 +600,11 @@ public class DatabaseLayer {
                 statement = connection.prepareStatement("select F_Name,L_Name,receiverIBAN,pro2.amount,pro2.T_date from users,(select TC,receiverIBAN,pro.amount,T_date from accounts,(select receiverIBAN,transactions.amount,T_date from transactions,accounts where IBAN = transactions.senderIBAN and TC = ?)pro where IBAN=pro.receiverIBAN)pro2 where pro2.TC = users.TC");
             }
             else{
-                statement = connection.prepareStatement("select F_Name,L_Name,receiverIBAN,amount,T_date from users,(select TC,receiverIBAN,prod2.amount,T_date from accounts,(select senderIBAN,receiverIBAN,amount,T_date from transactions, (select IBAN from accounts where TC = ?)pro where receiverIBAN = pro.IBAN)prod2 where IBAN = prod2.senderIBAN)pro3 where pro3.TC = users.TC;");
+                statement = connection.prepareStatement("select F_Name,L_Name,receiverIBAN,amount,T_date from users," +
+                                                                "(select TC,receiverIBAN,prod2.amount,T_date from accounts," +
+                                                                    "(select senderIBAN,receiverIBAN,amount,T_date from transactions, " +
+                                                                        "(select IBAN from accounts where TC = ?)pro where receiverIBAN = pro.IBAN)prod2 " +
+                                                            "where IBAN = prod2.senderIBAN)pro3 where pro3.TC = users.TC;");
             }
             statement.setString(1,TC);
             ResultSet rs = statement.executeQuery();
@@ -661,7 +668,12 @@ public class DatabaseLayer {
     }
     public List<String[]> getNotificationData(String TC){
         try {
-            PreparedStatement statement = connection.prepareStatement("select F_Name,L_Name,amount,T_date,notID from users,(select TC,prod2.amount,T_date,notID from accounts,(select senderIBAN,amount,T_date,notID from transactions, (select IBAN from accounts where TC = ?)pro where receiverIBAN = pro.IBAN and isRead = false)prod2 where IBAN = prod2.senderIBAN)pro3 where pro3.TC = users.TC");
+            PreparedStatement statement = connection.prepareStatement("select F_Name,L_Name,amount,T_date,notID from users," +
+                                                                            "(select TC,prod2.amount,T_date,notID from accounts," +
+                                                                                "(select senderIBAN,amount,T_date,notID from transactions, " +
+                                                                                    "(select IBAN from accounts where TC = ?)pro " +
+                                                                                "where receiverIBAN = pro.IBAN and isRead = false)prod2 " +
+                                                                          "where IBAN = prod2.senderIBAN)pro3 where pro3.TC = users.TC");
             statement.setString(1,TC);
             ResultSet rs = statement.executeQuery();
             List<String[]> data = new ArrayList<>();
@@ -735,7 +747,10 @@ public class DatabaseLayer {
     public ObservableList<CreditTable> creditTable(String TC){
         try {
 
-          PreparedStatement  statement = connection.prepareStatement("Select creditPayment.amount,creditPayment.paymentDate,creditPayment.amount*0.02*DATEDIFF(now(),creditPayment.paymentDate) as fee  from creditPayment,credits where credits.creditID=creditPayment.creditID and TC = ? and creditPayment.isPaid = false");
+          PreparedStatement  statement = connection.prepareStatement("Select creditPayment.amount,creditPayment.paymentDate," +
+                                                                            "creditPayment.amount*0.02*DATEDIFF(now(),creditPayment.paymentDate) as fee  " +
+                                                                         "from creditPayment,credits " +
+                                                                         "where credits.creditID=creditPayment.creditID and TC = ? and creditPayment.isPaid = false");
             statement.setString(1,TC);
             ResultSet rs=statement.executeQuery();
             ObservableList<CreditTable> data=FXCollections.observableArrayList();

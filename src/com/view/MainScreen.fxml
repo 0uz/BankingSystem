@@ -203,10 +203,10 @@
                   </HBox>
                </children>
             </VBox>
-            <PieChart fx:id="myMoneyPC" labelLineLength="5.0" labelsVisible="false" layoutX="14.0" layoutY="324.0" prefHeight="195.0" prefWidth="250.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
-            <VBox fx:id="currencyVBox" layoutX="262.0" layoutY="336.0" prefHeight="170.0" prefWidth="137.0" spacing="3.0" />
-            <TextField fx:id="baseTF" layoutX="413.0" layoutY="336.0" promptText="Base: USD etc." styleClass="text-field" stylesheets="@css/mainsc.css" />
-            <TextField fx:id="toTF" layoutX="413.0" layoutY="369.0" promptText="To : TRY etc." styleClass="text-field" stylesheets="@css/mainsc.css" />
+            <PieChart fx:id="myMoneyPC" labelLineLength="5.0" labelsVisible="false" layoutX="14.0" layoutY="324.0" prefHeight="195.0" prefWidth="250.0" AnchorPane.bottomAnchor="2.0" AnchorPane.leftAnchor="10.0" />
+            <VBox fx:id="currencyVBox" layoutX="262.0" layoutY="341.0" prefHeight="170.0" prefWidth="137.0" spacing="3.0" />
+            <TextField fx:id="baseTF" layoutX="413.0" layoutY="343.0" promptText="Base: USD etc." styleClass="text-field" stylesheets="@css/mainsc.css" />
+            <TextField fx:id="toTF" layoutX="413.0" layoutY="376.0" promptText="To : TRY etc." styleClass="text-field" stylesheets="@css/mainsc.css" />
             <Button fx:id="currencySearchButton" alignment="CENTER" layoutX="413.0" layoutY="408.0" mnemonicParsing="false" onAction="#searchExcButton" prefHeight="27.0" prefWidth="149.0" styleClass="button2" stylesheets="@css/mainsc.css" text="Search" />
          </children>
       </AnchorPane>
@@ -518,8 +518,8 @@
                      <columns>
                       <TableColumn fx:id="col_sender" editable="false" prefWidth="150.0" resizable="false" sortable="false" text="Receiver Name" />
                       <TableColumn fx:id="col_receiver" editable="false" prefWidth="180.0" resizable="false" sortable="false" text="Receiver IBAN" />
-                        <TableColumn fx:id="col_amount" editable="false" prefWidth="119.0" resizable="false" sortable="false" text="Amount" />
-                        <TableColumn fx:id="col_Tdate" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Date" />
+                        <TableColumn fx:id="col_amount" editable="false" prefWidth="130.0" resizable="false" sortable="false" text="Amount" />
+                        <TableColumn fx:id="col_Tdate" editable="false" prefWidth="120.0" sortable="false" text="Date" />
                      </columns>
                   </TableColumn>
               </columns>
@@ -530,7 +530,7 @@
                      <columns>
                         <TableColumn fx:id="col_sender1" editable="false" prefWidth="150.0" resizable="false" sortable="false" text="Sender Name" />
                         <TableColumn fx:id="col_receiver1" editable="false" prefWidth="180.0" resizable="false" sortable="false" text="Receiver IBAN" />
-                        <TableColumn fx:id="col_amount1" editable="false" prefWidth="119.0" resizable="false" sortable="false" text="Amount" />
+                        <TableColumn fx:id="col_amount1" editable="false" prefWidth="130.0" resizable="false" sortable="false" text="Amount" />
                         <TableColumn fx:id="col_Tdate1" editable="false" prefWidth="120.0" resizable="false" sortable="false" text="Date" />
                      </columns>
                   </TableColumn>
