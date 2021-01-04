@@ -6,7 +6,9 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Date;
+import java.util.Optional;
 
 public class AdminScreenController {
     public TableColumn<AdminTable,String> TCCol;
@@ -75,5 +77,24 @@ public class AdminScreenController {
     public void minimizeButtonAction(){
         Stage stage = (Stage) exitButton.getScene().getWindow();
         stage.setIconified(true);
+    }
+
+    public void logoutButton(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Log out");
+        alert.setHeaderText("Are you sure log out");
+        alert.setContentText(null);
+        alert.initOwner(exitButton.getScene().getWindow());
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            Main main = new Main();
+            try {
+                main.myLoader("view/LoginScreen.fxml");
+                ((Stage)exitButton.getScene().getWindow()).close();
+            } catch (IOException e) {
+                System.exit(1);
+            }
+        }
     }
 }

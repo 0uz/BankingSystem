@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.AdminScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="359.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.AdminScreenController">
    <children>
       <TableView fx:id="table" layoutX="-4.0" layoutY="80.0" prefHeight="200.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
         <columns>
@@ -21,7 +21,7 @@
             <TableColumn fx:id="creditDateCol" prefWidth="126.0" text="Credit Date" />
         </columns>
       </TableView>
-      <Button layoutX="14.0" layoutY="303.0" mnemonicParsing="false" onAction="#acceptButtonHandle" prefHeight="25.0" prefWidth="70.0" styleClass="button2" stylesheets="@css/mainsc.css" text="Accept" />
+      <Button layoutX="14.0" layoutY="303.0" mnemonicParsing="false" onAction="#acceptButtonHandle" prefHeight="25.0" prefWidth="70.0" style="-fx-background-color: #419A1C;" styleClass="button2" stylesheets="@css/mainsc.css" text="Accept" />
       <Button layoutX="114.0" layoutY="303.0" mnemonicParsing="false" onAction="#rejectButtonHandle" prefHeight="25.0" prefWidth="70.0" styleClass="button2" stylesheets="@css/mainsc.css" text="Reject" />
       <HBox alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="600.0">
          <children>
@@ -46,5 +46,6 @@
             <Font size="14.0" />
          </font>
       </Label>
+      <Button fx:id="logoutButton" layoutX="528.0" layoutY="303.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" styleClass="button2" stylesheets="@css/mainsc.css" text="Logout" />
    </children>
 </AnchorPane>

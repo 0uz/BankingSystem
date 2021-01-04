@@ -100,7 +100,7 @@
                      <graphic>
                         <ImageView fx:id="logoutIV" fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Downloads/exit.png" />
+                              <Image url="@../../../images/exit.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -116,7 +116,7 @@
                <font>
                   <Font name="System Bold" size="13.0" />
                </font></Label>
-            <ImageView fx:id="logoIV" fitHeight="105.0" fitWidth="190.0" layoutX="10.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="logoIV" fitHeight="91.0" fitWidth="158.0" layoutX="26.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../images/logo.png" />
                </image>
