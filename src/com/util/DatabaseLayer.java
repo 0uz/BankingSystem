@@ -88,6 +88,7 @@ public class DatabaseLayer {
                 "     getCreditDate date,\n" +
                 "     paidAmount int, \n" +
                 "     paymentDate int, \n" +
+                "     isPaid boolean default false, \n"+
                 "     restMonth int, \n" +
                 "     confirmation bool default false,\n" +
                 "     foreign key (TC) REFERENCES users(TC)\n" +
@@ -144,7 +145,7 @@ public class DatabaseLayer {
 
     public void updateCredit(){
         try {
-            PreparedStatement statement =  connection.prepareStatement("update credits set isPaid=true where withInterest = paidAmount");
+            PreparedStatement statement =  connection.prepareStatement("update credits set isPaid = true where withInterest = paidAmount");
             statement.execute();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
